@@ -1,0 +1,23 @@
+# Clinical Trial Site Recommender - Dependencies
+
+# Supabase
+supabase>=2.0.0
+
+# HTTP client
+httpx>=0.25.0
+
+# Environment variables
+python-dotenv>=1.0.0
+
+# Async support
+asyncio-throttle>=1.0.0
+
+# Streaming JSON parser (for large bulk files)
+ijson>=3.2.0
+
+# OpenAI (for embeddings)
+openai>=1.0.0
+
+# Data processing (for later phases)
+# pandas>=2.0.0
+# numpy>=1.24.0
