@@ -1,4 +1,4 @@
-# Clinical Trial Site Recommender
+# FirstPatient
 
 AI-powered system that recommends optimal PI + clinical trial site combinations for biotech sponsors.
 
@@ -8,6 +8,18 @@ AI-powered system that recommends optimal PI + clinical trial site combinations 
 - **PI-Site Linking**: Infers relationships between investigators and sites using multiple strategies
 - **Performance Metrics**: Tracks completion rates, trial counts, and experience by indication
 - **Semantic Search**: Find PIs by expertise using natural language queries
+- **Conversational Interface**: ChatGPT-style UI for natural language trial queries
+
+## Current Status
+
+| Component | Status |
+|-----------|--------|
+| Data ingestion (1000 trials) | ✅ Complete |
+| PI-Site linking (3 strategies) | ✅ Complete |
+| Vector embeddings (trials + PIs) | ✅ Complete |
+| Hybrid recommendation engine | ✅ Complete |
+| FastAPI backend | 🚧 In Progress |
+| React frontend | 🚧 In Progress |
 
 ## Architecture
 
@@ -109,14 +121,22 @@ for r in results:
 ## Project Structure
 
 ```
-ClinicalTrialProject/
-├── docs/
-│   └── DESIGN_DOCUMENT.md        # Full system design
-├── supabase/
-│   └── migrations/
-│       ├── 001_initial_schema.sql
-│       └── 002_add_embeddings.sql
-├── src/
+FirstPatient/
+├── api/                          # FastAPI backend
+│   ├── main.py                   # App entry point
+│   ├── routes/
+│   │   ├── recommendations.py    # POST /api/recommendations
+│   │   ├── trials.py             # GET /api/trials
+│   │   └── investigators.py      # GET /api/investigators
+│   └── schemas.py                # Pydantic models
+├── web/                          # React frontend
+│   ├── src/
+│   │   ├── components/           # UI components
+│   │   ├── pages/                # Page views
+│   │   └── api/                  # API client
+│   ├── package.json
+│   └── tailwind.config.js
+├── src/                          # Core Python logic
 │   ├── config.py                 # Configuration
 │   ├── db/
 │   │   └── supabase_client.py
@@ -128,6 +148,12 @@ ClinicalTrialProject/
 │   │   └── generator.py          # OpenAI embedding generation
 │   └── recommendations/
 │       └── recommender.py        # Hybrid search engine
+├── supabase/
+│   └── migrations/
+│       ├── 001_initial_schema.sql
+│       ├── 002_add_embeddings.sql
+│       ├── 003_drop_raw_json.sql
+│       └── 004_fix_recommendation_function.sql
 ├── scripts/
 │   ├── generate_embeddings.py    # Generate embeddings for DB
 │   └── analyze_data_structure.py # Data analysis utilities
@@ -170,20 +196,42 @@ ClinicalTrialProject/
 
 ## Tech Stack
 
-- **Database**: Supabase (PostgreSQL + pgvector)
-- **Embeddings**: OpenAI text-embedding-3-small (1536 dimensions)
-- **Data Source**: ClinicalTrials.gov API v2
-- **Language**: Python 3.11+
+| Layer | Technology |
+|-------|------------|
+| **Database** | Supabase (PostgreSQL + pgvector) |
+| **Embeddings** | OpenAI text-embedding-3-small (1536 dim) |
+| **Backend** | FastAPI + Uvicorn |
+| **Frontend** | React 18 + Vite + TypeScript |
+| **Styling** | TailwindCSS |
+| **Data Source** | ClinicalTrials.gov API v2 |
 
-## Development Status
+## API Endpoints
 
-- [x] Data ingestion pipeline
-- [x] PI-Site linking (3 strategies)
-- [x] Vector embeddings schema
-- [x] Hybrid recommendation engine
-- [ ] Metrics computation
-- [ ] API endpoints
-- [ ] Frontend UI
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `POST` | `/api/recommendations` | Get PI+Site recommendations for a query |
+| `GET` | `/api/trials` | List/search trials |
+| `GET` | `/api/trials/{nct_id}` | Get trial details |
+| `GET` | `/api/investigators` | Search investigators |
+
+## UI Design
+
+**Design Philosophy:**
+- Clean, professional white & blue color scheme
+- ChatGPT-inspired conversational layout
+- No AI-generated icons/images
+- Lucide React for minimal, consistent icons
+
+**Color Palette:**
+- Background: White (`#FFFFFF`)
+- Sidebar: Light gray (`#F8FAFC`)
+- Primary accent: Blue (`#2563EB`)
+- Text: Dark gray (`#1E293B`)
+
+**Layout:**
+- Left sidebar: Search history, navigation
+- Main area: Search input, results
+- Result cards: PI name, site, location, score breakdown
 
 ## Future Ideas
 
@@ -191,4 +239,5 @@ ClinicalTrialProject/
 - **Sponsor matching**: Factor in prior work with similar sponsors
 - **Geographic optimization**: Multi-site trial planning
 - **Real-time updates**: Sync with ClinicalTrials.gov changes
-- **LLM-powered insights**: Natural language trial summaries
+- **Conversation history**: Save and revisit past searches
+- **PI profiles**: Detailed view of investigator experience
