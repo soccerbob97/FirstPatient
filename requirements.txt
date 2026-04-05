@@ -1,4 +1,4 @@
-# Clinical Trial Site Recommender - Dependencies
+# FirstPatient - Dependencies
 
 # Supabase
 supabase>=2.0.0
@@ -17,6 +17,10 @@ ijson>=3.2.0
 
 # OpenAI (for embeddings)
 openai>=1.0.0
+
+# FastAPI backend
+fastapi>=0.109.0
+uvicorn[standard]>=0.27.0
 
 # Data processing (for later phases)
 # pandas>=2.0.0
