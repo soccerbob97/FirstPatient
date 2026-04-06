@@ -23,40 +23,49 @@ def generate_trial_embeddings(batch_size: int = 50, limit: int = None):
     """
     client = get_supabase_admin_client()
     
-    # Get trials without embeddings
-    query = client.table("trials").select("id, nct_id, brief_title, brief_summary, conditions, phase, study_type").is_("embedding", "null")
+    total_processed = 0
+    target = limit or float('inf')
     
-    if limit:
-        query = query.limit(limit)
-    
-    result = query.execute()
-    trials = result.data
-    
-    print(f"Found {len(trials)} trials without embeddings")
-    
-    if not trials:
-        return
-    
-    # Process in batches
-    for i in range(0, len(trials), batch_size):
-        batch = trials[i:i + batch_size]
+    while total_processed < target:
+        # Fetch batch of trials without embeddings (Supabase limits to 1000 per query)
+        fetch_size = min(1000, int(target - total_processed)) if limit else 1000
         
-        # Build texts for embedding
-        texts = [build_trial_text_for_embedding(t) for t in batch]
+        result = client.table("trials").select(
+            "id, nct_id, brief_title, brief_summary, conditions, phase, study_type"
+        ).is_("embedding", "null").limit(fetch_size).execute()
         
-        # Generate embeddings
-        embeddings = get_embeddings_batch(texts)
+        trials = result.data
         
-        # Update database
-        for trial, embedding in zip(batch, embeddings):
-            if embedding:
-                client.table("trials").update({
-                    "embedding": embedding
-                }).eq("id", trial["id"]).execute()
+        if not trials:
+            print("No more trials without embeddings")
+            break
         
-        print(f"Processed {min(i + batch_size, len(trials))}/{len(trials)} trials")
+        print(f"Fetched {len(trials)} trials without embeddings (total processed: {total_processed})")
+        
+        # Process in batches
+        for i in range(0, len(trials), batch_size):
+            batch = trials[i:i + batch_size]
+            
+            # Build texts for embedding
+            texts = [build_trial_text_for_embedding(t) for t in batch]
+            
+            # Generate embeddings
+            embeddings = get_embeddings_batch(texts)
+            
+            # Update database
+            for trial, embedding in zip(batch, embeddings):
+                if embedding:
+                    client.table("trials").update({
+                        "embedding": embedding
+                    }).eq("id", trial["id"]).execute()
+            
+            total_processed += len(batch)
+            print(f"Processed {total_processed} trials")
+            
+            if total_processed >= target:
+                break
     
-    print("Trial embeddings complete!")
+    print(f"Trial embeddings complete! Total: {total_processed}")
 
 
 def generate_investigator_embeddings(batch_size: int = 20, limit: int = None):

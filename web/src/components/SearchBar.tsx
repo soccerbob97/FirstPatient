@@ -20,6 +20,7 @@ export function SearchBar({
     e.preventDefault();
     if (query.trim() && !isLoading) {
       onSearch(query.trim());
+      setQuery(''); // Clear input after sending
     }
   };
 

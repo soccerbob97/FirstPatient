@@ -233,11 +233,133 @@ FirstPatient/
 - Main area: Search input, results
 - Result cards: PI name, site, location, score breakdown
 
+## Roadmap: Conversational Chat Feature
+
+### Overview
+
+Transform the search interface into a conversational assistant that guides users through PI+Site discovery. The chatbot will have database access to answer follow-up questions about recommendations.
+
+### Example Flow
+
+```
+User: "Phase 2 diabetes trial in the United States"
+
+→ System fetches recommendations, displays PI+Site cards
+
+Assistant: "I found 10 PI+Site recommendations for Phase 2 diabetes trials 
+in the US. The top match is Dr. Smith at Mount Sinai with a 56% relevance 
+score and 12 completed trials in metabolic disorders."
+
+User: "Tell me more about Dr. Smith's experience with diabetes trials"
+
+→ System queries database for Dr. Smith's trial history
+
+Assistant: "Dr. Smith has been involved in 8 diabetes-related trials over 
+the past 5 years, including 3 Phase 2 studies. Their completion rate is 87%, 
+and they've worked with Novo Nordisk and Eli Lilly."
+
+User: "Which sites have the highest completion rates?"
+
+→ System analyzes recommendation data
+
+Assistant: "Among your recommendations, the top 3 sites by completion rate are:
+1. Mayo Clinic (94%) - Dr. Johnson
+2. Cleveland Clinic (91%) - Dr. Williams  
+3. Mount Sinai (87%) - Dr. Smith"
+
+User: "Compare Mount Sinai vs Mayo Clinic for this trial"
+
+→ System queries both sites' metrics
+
+Assistant: "Here's a comparison..."
+```
+
+### Architecture
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    FRONTEND (React)                         │
+│  ┌─────────────────────────────────────────────────────┐   │
+│  │  Conversation UI (message bubbles)                   │   │
+│  │  - User messages (right-aligned)                     │   │
+│  │  - Assistant messages (left-aligned)                 │   │
+│  │  - Recommendation cards (inline)                     │   │
+│  └─────────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────────┘
+                            │
+                            ▼
+┌─────────────────────────────────────────────────────────────┐
+│                    BACKEND (FastAPI)                        │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────────┐  │
+│  │ /api/chat    │  │ /api/recs    │  │ Tool Functions   │  │
+│  │              │  │              │  │ - query_trials   │  │
+│  │ Orchestrates │  │ Hybrid       │  │ - get_pi_details │  │
+│  │ conversation │  │ recommender  │  │ - compare_sites  │  │
+│  └──────────────┘  └──────────────┘  └──────────────────┘  │
+└─────────────────────────────────────────────────────────────┘
+                            │
+                            ▼
+┌─────────────────────────────────────────────────────────────┐
+│                    LLM (Model-Agnostic)                     │
+│  - OpenAI GPT-4 / GPT-3.5                                   │
+│  - Anthropic Claude                                         │
+│  - Local models via OpenAI-compatible API                   │
+│  - Function calling for database queries                    │
+└─────────────────────────────────────────────────────────────┘
+                            │
+                            ▼
+┌─────────────────────────────────────────────────────────────┐
+│                    DATABASE (Supabase)                      │
+│  - conversations (chat history)                             │
+│  - messages (individual messages)                           │
+│  - trials, investigators, sites (existing)                  │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Implementation Plan
+
+#### Phase 1: Database Schema
+- [ ] Create `conversations` table (id, user_id, title, created_at)
+- [ ] Create `messages` table (id, conversation_id, role, content, metadata)
+- [ ] Add indexes for efficient retrieval
+
+#### Phase 2: Backend Chat Endpoint
+- [ ] Create `POST /api/chat` endpoint
+- [ ] Implement model-agnostic LLM client (OpenAI SDK compatible)
+- [ ] Define tool functions for database queries:
+  - `get_recommendations` - trigger hybrid search
+  - `get_investigator_details` - fetch PI info
+  - `get_site_details` - fetch site info  
+  - `compare_options` - side-by-side comparison
+  - `query_trials` - search trial history
+- [ ] System prompt with context about recommendations
+
+#### Phase 3: Frontend Conversation UI
+- [ ] Convert results view to message bubbles
+- [ ] User messages right-aligned, assistant left-aligned
+- [ ] Recommendation cards rendered inline in conversation
+- [ ] Typing indicator during LLM response
+- [ ] "New Chat" button resets conversation
+
+#### Phase 4: Persistence & History
+- [ ] Save conversations to database
+- [ ] Load conversation history in sidebar
+- [ ] Resume previous conversations
+
+### Technical Decisions
+
+| Decision | Choice | Rationale |
+|----------|--------|-----------|  
+| LLM Integration | OpenAI SDK | Model-agnostic, supports GPT, Claude, local models |
+| Function Calling | OpenAI tools format | Standard format, works across providers |
+| Message Storage | Supabase | Already using for data, real-time subscriptions |
+| Streaming | SSE | Real-time token streaming for better UX |
+
 ## Future Ideas
 
 - **Enrollment speed prediction**: Estimate time to hit enrollment targets
 - **Sponsor matching**: Factor in prior work with similar sponsors
 - **Geographic optimization**: Multi-site trial planning
 - **Real-time updates**: Sync with ClinicalTrials.gov changes
-- **Conversation history**: Save and revisit past searches
 - **PI profiles**: Detailed view of investigator experience
+- **Export**: Download recommendations as PDF/CSV

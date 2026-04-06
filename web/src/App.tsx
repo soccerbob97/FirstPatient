@@ -1,242 +1,349 @@
-import { useState, useCallback, useEffect, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { Sidebar } from './components/Sidebar';
 import { SearchBar } from './components/SearchBar';
+import { ChatMessage } from './components/ChatMessage';
 import { FilterPanel } from './components/FilterPanel';
-import { RecommendationCard } from './components/RecommendationCard';
-import { getRecommendations, type Recommendation } from './api/client';
+import { 
+  sendChatMessage, 
+  listConversations,
+  getConversation,
+  saveConversation,
+  type ChatMessage as ChatMessageType
+} from './api/chat';
 
-// Phase detection patterns
-const PHASE_PATTERNS: { pattern: RegExp; value: string }[] = [
-  { pattern: /\b(early\s*phase\s*1|phase\s*1a|phase\s*1b)\b/i, value: 'EARLY_PHASE1' },
-  { pattern: /\bphase\s*1\b/i, value: 'PHASE1' },
-  { pattern: /\bphase\s*2\b/i, value: 'PHASE2' },
-  { pattern: /\bphase\s*3\b/i, value: 'PHASE3' },
-  { pattern: /\bphase\s*4\b/i, value: 'PHASE4' },
-];
-
-// Country detection patterns
-const COUNTRY_PATTERNS: { pattern: RegExp; value: string }[] = [
-  { pattern: /\b(united\s*states|usa|u\.s\.a\.|u\.s\.|america)\b/i, value: 'United States' },
-  { pattern: /\bchina\b/i, value: 'China' },
-  { pattern: /\bgermany\b/i, value: 'Germany' },
-  { pattern: /\bfrance\b/i, value: 'France' },
-  { pattern: /\b(united\s*kingdom|uk|u\.k\.|britain|england)\b/i, value: 'United Kingdom' },
-  { pattern: /\bjapan\b/i, value: 'Japan' },
-  { pattern: /\bcanada\b/i, value: 'Canada' },
-  { pattern: /\baustralia\b/i, value: 'Australia' },
-  { pattern: /\bitaly\b/i, value: 'Italy' },
-  { pattern: /\bspain\b/i, value: 'Spain' },
-];
-
-function detectFiltersFromQuery(query: string): { phase: string; country: string } {
-  let phase = '';
-  let country = '';
-
-  // Detect phase
-  for (const { pattern, value } of PHASE_PATTERNS) {
-    if (pattern.test(query)) {
-      phase = value;
-      break;
-    }
-  }
-
-  // Detect country
-  for (const { pattern, value } of COUNTRY_PATTERNS) {
-    if (pattern.test(query)) {
-      country = value;
-      break;
-    }
-  }
-
-  return { phase, country };
-}
-
-interface SearchHistoryItem {
+interface Conversation {
   id: string;
-  query: string;
+  title: string;
+  messages: ChatMessageType[];
   timestamp: Date;
-  results: Recommendation[];
 }
 
 function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
-  const [currentQuery, setCurrentQuery] = useState('');
-  const [searchHistory, setSearchHistory] = useState<SearchHistoryItem[]>([]);
+  const [messages, setMessages] = useState<ChatMessageType[]>([]);
+  const [conversations, setConversations] = useState<Conversation[]>([]);
+  const [currentConversationId, setCurrentConversationId] = useState<string | null>(null);
+  const [dbAvailable, setDbAvailable] = useState(false);
   const [phase, setPhase] = useState('');
   const [country, setCountry] = useState('');
   
-  const isFirstRender = useRef(true);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const executeSearch = useCallback(async (query: string, phaseFilter: string, countryFilter: string, addToHistory = true) => {
-    if (!query.trim()) return;
+  // Load conversations from server on mount
+  useEffect(() => {
+    async function loadConversations() {
+      try {
+        const result = await listConversations();
+        if (!result.error && result.conversations.length > 0) {
+          setDbAvailable(true);
+          setConversations(result.conversations.map(c => ({
+            id: c.id,
+            title: c.title,
+            messages: [],
+            timestamp: new Date(c.updated_at)
+          })));
+        }
+      } catch {
+        // DB tables don't exist yet, use in-memory only
+        setDbAvailable(false);
+      }
+    }
+    loadConversations();
+  }, []);
+
+  // Scroll to bottom when messages change
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
+
+  // Extract filters from query text
+  const extractFiltersFromQuery = (query: string) => {
+    const lowerQuery = query.toLowerCase();
     
+    // Country detection
+    const countryPatterns: Record<string, string> = {
+      'united states': 'United States',
+      'us': 'United States',
+      'usa': 'United States',
+      'united kingdom': 'United Kingdom',
+      'uk': 'United Kingdom',
+      'germany': 'Germany',
+      'france': 'France',
+      'japan': 'Japan',
+      'china': 'China',
+      'canada': 'Canada',
+      'australia': 'Australia',
+    };
+    
+    // Phase detection
+    const phasePatterns: Record<string, string> = {
+      'phase 1': 'PHASE1',
+      'phase1': 'PHASE1',
+      'phase i': 'PHASE1',
+      'phase 2': 'PHASE2',
+      'phase2': 'PHASE2',
+      'phase ii': 'PHASE2',
+      'phase 3': 'PHASE3',
+      'phase3': 'PHASE3',
+      'phase iii': 'PHASE3',
+      'phase 4': 'PHASE4',
+      'phase4': 'PHASE4',
+      'phase iv': 'PHASE4',
+      'early phase': 'EARLY_PHASE1',
+    };
+    
+    let detectedCountry: string | undefined;
+    let detectedPhase: string | undefined;
+    
+    for (const [pattern, value] of Object.entries(countryPatterns)) {
+      if (lowerQuery.includes(pattern)) {
+        detectedCountry = value;
+        break;
+      }
+    }
+    
+    for (const [pattern, value] of Object.entries(phasePatterns)) {
+      if (lowerQuery.includes(pattern)) {
+        detectedPhase = value;
+        break;
+      }
+    }
+    
+    return { country: detectedCountry, phase: detectedPhase };
+  };
+
+  const handleSendMessage = useCallback(async (content: string) => {
+    if (!content.trim() || isLoading) return;
+
+    // Extract and set filters from query
+    const extractedFilters = extractFiltersFromQuery(content);
+    if (extractedFilters.country) setCountry(extractedFilters.country);
+    if (extractedFilters.phase) setPhase(extractedFilters.phase);
+
+    // Add user message
+    const userMessage: ChatMessageType = {
+      role: 'user',
+      content,
+      timestamp: new Date(),
+    };
+    
+    setMessages((prev) => [...prev, userMessage]);
     setIsLoading(true);
     setError(null);
-    setCurrentQuery(query);
 
     try {
-      const response = await getRecommendations({
-        query,
-        phase: phaseFilter || undefined,
-        country: countryFilter || undefined,
-        max_results: 10,
-      });
+      // Build message history for API
+      const apiMessages = [...messages, userMessage].map((m) => ({
+        role: m.role,
+        content: m.content,
+      }));
 
-      setRecommendations(response.recommendations);
+      // Use extracted filters or existing state
+      const filters = { 
+        phase: extractedFilters.phase || phase || undefined, 
+        country: extractedFilters.country || country || undefined 
+      };
+      const response = await sendChatMessage(apiMessages, filters);
 
-      if (addToHistory) {
-        const historyItem: SearchHistoryItem = {
-          id: Date.now().toString(),
-          query,
+      // Add assistant message
+      const assistantMessage: ChatMessageType = {
+        role: 'assistant',
+        content: response.message,
+        recommendations: response.recommendations || undefined,
+        timestamp: new Date(),
+      };
+
+      setMessages((prev) => [...prev, assistantMessage]);
+
+      // Update conversation history
+      const allMessages = [...messages, userMessage, assistantMessage];
+      if (!currentConversationId) {
+        const title = content.slice(0, 50) + (content.length > 50 ? '...' : '');
+        const localId = Date.now().toString();
+        
+        const newConversation: Conversation = {
+          id: localId,
+          title,
+          messages: allMessages,
           timestamp: new Date(),
-          results: response.recommendations,
         };
-        setSearchHistory((prev) => [historyItem, ...prev.slice(0, 9)]);
+        setConversations((prev) => [newConversation, ...prev]);
+        setCurrentConversationId(localId);
+        
+        // Try to save to server if DB is available
+        if (dbAvailable) {
+          try {
+            const result = await saveConversation(title, allMessages);
+            // Update with server ID
+            setConversations((prev) => prev.map(c => 
+              c.id === localId ? { ...c, id: result.conversation_id } : c
+            ));
+            setCurrentConversationId(result.conversation_id);
+          } catch {
+            // Keep using local ID
+          }
+        }
+      } else {
+        setConversations((prev) =>
+          prev.map((c) =>
+            c.id === currentConversationId
+              ? { ...c, messages: allMessages }
+              : c
+          )
+        );
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
-      setRecommendations([]);
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [messages, isLoading, currentConversationId, dbAvailable]);
 
-  useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
+  const handleNewChat = () => {
+    setMessages([]);
+    setCurrentConversationId(null);
+    setError(null);
+  };
+
+  const handleSelectConversation = async (id: string) => {
+    // First check local cache
+    const localConv = conversations.find((c) => c.id === id);
+    if (localConv && localConv.messages.length > 0) {
+      setMessages(localConv.messages);
+      setCurrentConversationId(id);
       return;
     }
     
-    if (currentQuery) {
-      executeSearch(currentQuery, phase, country, false);
-    }
-  }, [phase, country]);
-
-  const handleSearch = useCallback((query: string) => {
-    // Auto-detect filters from query text
-    const detected = detectFiltersFromQuery(query);
-    
-    // Use detected values, or keep existing if not detected
-    const newPhase = detected.phase || phase;
-    const newCountry = detected.country || country;
-    
-    // Update filter state if detected
-    if (detected.phase) setPhase(detected.phase);
-    if (detected.country) setCountry(detected.country);
-    
-    executeSearch(query, newPhase, newCountry, true);
-  }, [executeSearch, phase, country]);
-
-  const handleNewSearch = () => {
-    setRecommendations([]);
-    setCurrentQuery('');
-    setError(null);
-    setPhase('');
-    setCountry('');
-  };
-
-  const handleSelectSearch = (id: string) => {
-    const item = searchHistory.find((h) => h.id === id);
-    if (item) {
-      setCurrentQuery(item.query);
-      setRecommendations(item.results);
+    // Try to load from server if DB is available
+    if (dbAvailable) {
+      try {
+        const result = await getConversation(id);
+        const loadedMessages = result.messages.map(m => ({
+          role: m.role as 'user' | 'assistant',
+          content: m.content,
+          recommendations: (m as any).metadata?.recommendations,
+          timestamp: new Date((m as any).created_at)
+        }));
+        setMessages(loadedMessages);
+        setCurrentConversationId(id);
+        
+        // Update local cache
+        setConversations(prev => prev.map(c => 
+          c.id === id ? { ...c, messages: loadedMessages } : c
+        ));
+      } catch {
+        // Fall back to local
+        if (localConv) {
+          setMessages(localConv.messages);
+          setCurrentConversationId(id);
+        }
+      }
+    } else if (localConv) {
+      setMessages(localConv.messages);
+      setCurrentConversationId(id);
     }
   };
 
-  const hasResults = recommendations.length > 0;
-  const showWelcome = !hasResults && !isLoading && !error && !currentQuery;
+  const showWelcome = messages.length === 0 && !isLoading;
+
+  // Convert conversations to search history format for Sidebar
+  const searchHistory = conversations.map((c) => ({
+    id: c.id,
+    query: c.title,
+    timestamp: c.timestamp,
+    results: c.messages.find((m) => m.recommendations)?.recommendations || [],
+  }));
 
   return (
     <div className="flex h-screen bg-white">
       <Sidebar
         searchHistory={searchHistory}
-        onNewSearch={handleNewSearch}
-        onSelectSearch={handleSelectSearch}
+        onNewSearch={handleNewChat}
+        onSelectSearch={handleSelectConversation}
       />
 
       <main className="flex-1 flex flex-col overflow-hidden">
-        {/* Welcome State - Search bar centered in middle */}
+        {/* Welcome State */}
         {showWelcome && (
           <div className="flex-1 flex flex-col items-center justify-center px-6">
             <h1 className="text-3xl font-semibold text-slate-800 mb-4 text-center">
               Find your ideal clinical trial team
             </h1>
             <p className="text-slate-500 mb-8 max-w-md mx-auto text-center">
-              Describe your trial and we'll recommend the best Principal Investigators and sites based on experience and expertise.
+              Ask me about finding Principal Investigators and sites for your clinical trial. I can help you search, compare options, and get detailed information.
             </p>
             <div className="w-full max-w-2xl">
-              <SearchBar onSearch={handleSearch} isLoading={isLoading} />
+              <SearchBar onSearch={handleSendMessage} isLoading={isLoading} placeholder="Ask about PIs, sites, or clinical trials..." />
+            </div>
+            <div className="mt-6 flex flex-wrap gap-2 justify-center max-w-xl">
+              {[
+                'Phase 2 diabetes trial in the US',
+                'Oncology investigators in Germany',
+                'Compare top cardiology sites',
+              ].map((suggestion) => (
+                <button
+                  key={suggestion}
+                  onClick={() => handleSendMessage(suggestion)}
+                  className="px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-full transition-colors"
+                >
+                  {suggestion}
+                </button>
+              ))}
             </div>
           </div>
         )}
 
-        {/* Results State - Search bar at bottom */}
+        {/* Chat State */}
         {!showWelcome && (
           <div className="flex-1 flex flex-col overflow-hidden">
-            {/* Scrollable Results Area */}
+            {/* Messages Area */}
             <div className="flex-1 overflow-y-auto">
-              <div className="max-w-3xl mx-auto px-6 py-6 pb-4">
-                {/* Results Header */}
-                <div className="mb-4">
-                  <h2 className="text-lg font-medium text-slate-700">
-                    Results for "{currentQuery}"
-                  </h2>
-                  {hasResults && !isLoading && (
-                    <p className="text-sm text-slate-500 mt-1">
-                      Found {recommendations.length} recommendations
-                    </p>
-                  )}
-                </div>
+              <div className="max-w-3xl mx-auto px-6 py-6 space-y-6">
+                {messages.map((message, index) => (
+                  <ChatMessage key={index} message={message} />
+                ))}
+
+                {/* Loading indicator */}
+                {isLoading && (
+                  <div className="flex gap-4">
+                    <div className="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center">
+                      <div className="w-4 h-4 border-2 border-slate-400 border-t-transparent rounded-full animate-spin" />
+                    </div>
+                    <div className="bg-slate-100 rounded-2xl rounded-bl-md px-4 py-3">
+                      <div className="flex gap-1">
+                        <span className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                        <span className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                        <span className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                      </div>
+                    </div>
+                  </div>
+                )}
 
                 {/* Error */}
                 {error && (
-                  <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6">
+                  <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
                     {error}
                   </div>
                 )}
 
-                {/* Loading */}
-                {isLoading && (
-                  <div className="text-center py-12">
-                    <div className="inline-block animate-spin rounded-full h-8 w-8 border-4 border-blue-600 border-t-transparent"></div>
-                    <p className="mt-4 text-slate-500">Finding the best matches...</p>
-                  </div>
-                )}
-
-                {/* Results */}
-                {hasResults && !isLoading && (
-                  <div className="space-y-4">
-                    {recommendations.map((rec, index) => (
-                      <RecommendationCard
-                        key={`${rec.investigator.id}-${rec.site.id}`}
-                        recommendation={rec}
-                        rank={index + 1}
-                      />
-                    ))}
-                  </div>
-                )}
+                <div ref={messagesEndRef} />
               </div>
             </div>
 
-            {/* Bottom Search Bar with Filters */}
-            <div className="flex-shrink-0 bg-white">
-              <div className="max-w-3xl mx-auto px-6 py-4">
-                {/* Filters - above search bar, expanding upward */}
-                <div className="mb-3">
-                  <FilterPanel
-                    phase={phase}
-                    country={country}
-                    onPhaseChange={setPhase}
-                    onCountryChange={setCountry}
-                  />
-                </div>
-                {/* Search Bar */}
-                <SearchBar 
-                  onSearch={handleSearch} 
+            {/* Bottom Input with Filters */}
+            <div className="flex-shrink-0 bg-white border-t border-slate-200">
+              <div className="max-w-3xl mx-auto px-6 py-4 space-y-3">
+                <FilterPanel
+                  phase={phase}
+                  country={country}
+                  onPhaseChange={setPhase}
+                  onCountryChange={setCountry}
+                />
+                <SearchBar
+                  onSearch={handleSendMessage}
                   isLoading={isLoading}
-                  defaultValue={currentQuery}
+                  placeholder="Ask a follow-up question..."
                 />
               </div>
             </div>

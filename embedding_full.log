@@ -1,0 +1,741 @@
+🚀 Reliable Embedding Generator
+  Trials without embeddings: 512,234
+  Batch size: 500 (large batches to OpenAI)
+  DB threads: 10 (with retry logic)
+  Estimated time: ~5.7 hours
+
+Batch 1: 500/500 | Total: 500/500 | Rate: 10.9/sec | ETA: 13.0h
+Batch 2: 500/500 | Total: 1,000/1,000 | Rate: 12.0/sec | ETA: 11.9h
+Batch 3: 500/500 | Total: 1,500/1,500 | Rate: 11.8/sec | ETA: 12.0h
+Batch 4: 500/500 | Total: 2,000/2,000 | Rate: 12.1/sec | ETA: 11.7h
+Batch 5: 500/500 | Total: 2,500/2,500 | Rate: 12.5/sec | ETA: 11.3h
+Batch 6: 498/500 | Total: 2,998/3,000 | Rate: 12.8/sec | ETA: 11.1h
+Batch 7: 500/500 | Total: 3,498/3,500 | Rate: 13.1/sec | ETA: 10.8h
+Batch 8: 500/500 | Total: 3,998/4,000 | Rate: 13.0/sec | ETA: 10.9h
+Batch 9: 500/500 | Total: 4,498/4,500 | Rate: 12.6/sec | ETA: 11.2h
+Batch 10: 500/500 | Total: 4,998/5,000 | Rate: 12.3/sec | ETA: 11.4h
+  💾 Checkpoint saved
+Batch 11: 500/500 | Total: 5,498/5,500 | Rate: 12.3/sec | ETA: 11.5h
+Batch 12: 500/500 | Total: 5,998/6,000 | Rate: 12.1/sec | ETA: 11.6h
+Batch 13: 500/500 | Total: 6,498/6,500 | Rate: 12.0/sec | ETA: 11.8h
+Batch 14: 500/500 | Total: 6,998/7,000 | Rate: 11.9/sec | ETA: 11.8h
+Batch 15: 500/500 | Total: 7,498/7,500 | Rate: 11.9/sec | ETA: 11.8h
+Batch 16: 500/500 | Total: 7,998/8,000 | Rate: 11.4/sec | ETA: 12.3h
+Batch 17: 500/500 | Total: 8,498/8,500 | Rate: 10.1/sec | ETA: 13.9h
+Batch 18: 499/500 | Total: 8,997/9,000 | Rate: 10.0/sec | ETA: 13.9h
+Batch 19: 498/500 | Total: 9,495/9,500 | Rate: 9.9/sec | ETA: 14.2h
+Batch 20: 500/500 | Total: 9,995/10,000 | Rate: 9.7/sec | ETA: 14.4h
+  💾 Checkpoint saved
+Batch 21: 500/500 | Total: 10,495/10,500 | Rate: 9.4/sec | ETA: 14.8h
+Batch 22: 500/500 | Total: 10,995/11,000 | Rate: 9.3/sec | ETA: 14.9h
+Batch 23: 500/500 | Total: 11,495/11,500 | Rate: 9.3/sec | ETA: 15.0h
+Batch 24: 500/500 | Total: 11,995/12,000 | Rate: 9.1/sec | ETA: 15.3h
+Batch 25: 500/500 | Total: 12,495/12,500 | Rate: 9.0/sec | ETA: 15.4h
+Batch 26: 500/500 | Total: 12,995/13,000 | Rate: 9.1/sec | ETA: 15.2h
+Batch 27: 500/500 | Total: 13,495/13,500 | Rate: 9.2/sec | ETA: 15.1h
+Batch 28: 500/500 | Total: 13,995/14,000 | Rate: 9.2/sec | ETA: 15.0h
+Batch 29: 500/500 | Total: 14,495/14,500 | Rate: 9.3/sec | ETA: 14.9h
+Batch 30: 500/500 | Total: 14,995/15,000 | Rate: 9.4/sec | ETA: 14.8h
+  💾 Checkpoint saved
+Batch 31: 500/500 | Total: 15,495/15,500 | Rate: 9.3/sec | ETA: 14.8h
+Batch 32: 498/500 | Total: 15,993/16,000 | Rate: 9.4/sec | ETA: 14.7h
+Batch 33: 500/500 | Total: 16,493/16,500 | Rate: 9.4/sec | ETA: 14.7h
+Batch 34: 500/500 | Total: 16,993/17,000 | Rate: 9.4/sec | ETA: 14.7h
+Batch 35: 500/500 | Total: 17,493/17,500 | Rate: 9.4/sec | ETA: 14.6h
+Batch 36: 500/500 | Total: 17,993/18,000 | Rate: 9.5/sec | ETA: 14.4h
+Batch 37: 500/500 | Total: 18,493/18,500 | Rate: 9.7/sec | ETA: 14.2h
+Batch 38: 495/500 | Total: 18,988/19,000 | Rate: 8.4/sec | ETA: 16.4h
+Batch 39: 8/500 | Total: 18,996/19,500 | Rate: 1.4/sec | ETA: 97.1h
+Traceback (most recent call last):
+  File "/Users/harshakaranth/Harsha/Projects/ClinicalTrialProject/venv/lib/python3.13/site-packages/httpx/_transports/default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "/Users/harshakaranth/Harsha/Projects/ClinicalTrialProject/venv/lib/python3.13/site-packages/httpx/_transports/default.py", line 250, in handle_request
+    resp = self._pool.handle_request(req)
+  File "/Users/harshakaranth/Harsha/Projects/ClinicalTrialProject/venv/lib/python3.13/site-packages/httpcore/_sync/connection_pool.py", line 256, in handle_request
+    raise exc from None
+  File "/Users/harshakaranth/Harsha/Projects/ClinicalTrialProject/venv/lib/python3.13/site-packages/httpcore/_sync/connection_pool.py", line 236, in handle_request
+    response = connection.handle_request(
+        pool_request.request
+    )
+  File "/Users/harshakaranth/Harsha/Projects/ClinicalTrialProject/venv/lib/python3.13/site-packages/httpcore/_sync/connection.py", line 101, in handle_request
+    raise exc
+  File "/Users/harshakaranth/Harsha/Projects/ClinicalTrialProject/venv/lib/python3.13/site-packages/httpcore/_sync/connection.py", line 78, in handle_request
+    stream = self._connect(request)
+  File "/Users/harshakaranth/Harsha/Projects/ClinicalTrialProject/venv/lib/python3.13/site-packages/httpcore/_sync/connection.py", line 124, in _connect
+    stream = self._network_backend.connect_tcp(**kwargs)
+  File "/Users/harshakaranth/Harsha/Projects/ClinicalTrialProject/venv/lib/python3.13/site-packages/httpcore/_backends/sync.py", line 207, in connect_tcp
+    with map_exceptions(exc_map):
+         ~~~~~~~~~~~~~~^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.0_1/Frameworks/Python.framework/Versions/3.13/lib/python3.13/contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/harshakaranth/Harsha/Projects/ClinicalTrialProject/venv/lib/python3.13/site-packages/httpcore/_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ConnectError: [Errno 8] nodename nor servname provided, or not known
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/harshakaranth/Harsha/Projects/ClinicalTrialProject/scripts/generate_embeddings_reliable.py", line 183, in <module>
+    generate_embeddings_reliable(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        batch_size=args.batch_size,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        resume=args.resume
+        ^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/harshakaranth/Harsha/Projects/ClinicalTrialProject/scripts/generate_embeddings_reliable.py", line 126, in generate_embeddings_reliable
+    ).is_("embedding", "null").limit(batch_size).execute()
+                                                 ~~~~~~~^^
+  File "/Users/harshakaranth/Harsha/Projects/ClinicalTrialProject/venv/lib/python3.13/site-packages/postgrest/_sync/request_builder.py", line 47, in execute
+    r = self.request.send()
+  File "/Users/harshakaranth/Harsha/Projects/ClinicalTrialProject/venv/lib/python3.13/site-packages/postgrest/base_request_builder.py", line 82, in send
+    return self.session.request(
+           ~~~~~~~~~~~~~~~~~~~~^
+        self.http_method,
+        ^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        auth=self.auth,
+        ^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/harshakaranth/Harsha/Projects/ClinicalTrialProject/venv/lib/python3.13/site-packages/httpx/_client.py", line 825, in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/harshakaranth/Harsha/Projects/ClinicalTrialProject/venv/lib/python3.13/site-packages/httpx/_client.py", line 914, in send
+    response = self._send_handling_auth(
+        request,
+    ...<2 lines>...
+        history=[],
+    )
+  File "/Users/harshakaranth/Harsha/Projects/ClinicalTrialProject/venv/lib/python3.13/site-packages/httpx/_client.py", line 942, in _send_handling_auth
+    response = self._send_handling_redirects(
+        request,
+        follow_redirects=follow_redirects,
+        history=history,
+    )
+  File "/Users/harshakaranth/Harsha/Projects/ClinicalTrialProject/venv/lib/python3.13/site-packages/httpx/_client.py", line 979, in _send_handling_redirects
+    response = self._send_single_request(request)
+  File "/Users/harshakaranth/Harsha/Projects/ClinicalTrialProject/venv/lib/python3.13/site-packages/httpx/_client.py", line 1014, in _send_single_request
+    response = transport.handle_request(request)
+  File "/Users/harshakaranth/Harsha/Projects/ClinicalTrialProject/venv/lib/python3.13/site-packages/httpx/_transports/default.py", line 249, in handle_request
+    with map_httpcore_exceptions():
+         ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.0_1/Frameworks/Python.framework/Versions/3.13/lib/python3.13/contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/harshakaranth/Harsha/Projects/ClinicalTrialProject/venv/lib/python3.13/site-packages/httpx/_transports/default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ConnectError: [Errno 8] nodename nor servname provided, or not known
+Traceback (most recent call last):
+  File "/Users/harshakaranth/Harsha/Projects/ClinicalTrialProject/scripts/generate_embeddings_reliable.py", line 19, in <module>
+    from src.db.supabase_client import get_supabase_admin_client
+ModuleNotFoundError: No module named 'src'
+📂 Resuming from checkpoint: 15,000 processed
+🚀 Reliable Embedding Generator
+  Trials without embeddings: 493,218
+  Batch size: 100 (large batches to OpenAI)
+  DB threads: 10 (with retry logic)
+  Estimated time: ~5.5 hours
+
+Batch 1: 100/100 | Total: 15,095/15,100 | Rate: 2212.3/sec | ETA: 0.1h
+Batch 2: 100/100 | Total: 15,195/15,200 | Rate: 1304.6/sec | ETA: 0.1h
+Batch 3: 100/100 | Total: 15,295/15,300 | Rate: 969.4/sec | ETA: 0.1h
+Batch 4: 100/100 | Total: 15,395/15,400 | Rate: 799.1/sec | ETA: 0.2h
+Batch 5: 100/100 | Total: 15,495/15,500 | Rate: 663.5/sec | ETA: 0.2h
+Batch 6: 100/100 | Total: 15,595/15,600 | Rate: 569.8/sec | ETA: 0.2h
+Batch 7: 100/100 | Total: 15,695/15,700 | Rate: 486.5/sec | ETA: 0.3h
+Batch 8: 100/100 | Total: 15,795/15,800 | Rate: 439.7/sec | ETA: 0.3h
+Batch 9: 100/100 | Total: 15,895/15,900 | Rate: 403.4/sec | ETA: 0.3h
+Batch 10: 100/100 | Total: 15,995/16,000 | Rate: 373.8/sec | ETA: 0.4h
+  💾 Checkpoint saved
+Batch 11: 100/100 | Total: 16,095/16,100 | Rate: 344.6/sec | ETA: 0.4h
+Batch 12: 100/100 | Total: 16,195/16,200 | Rate: 315.8/sec | ETA: 0.4h
+Batch 13: 100/100 | Total: 16,295/16,300 | Rate: 293.3/sec | ETA: 0.5h
+Batch 14: 100/100 | Total: 16,395/16,400 | Rate: 279.7/sec | ETA: 0.5h
+Batch 15: 100/100 | Total: 16,495/16,500 | Rate: 259.3/sec | ETA: 0.5h
+Batch 16: 100/100 | Total: 16,595/16,600 | Rate: 245.5/sec | ETA: 0.5h
+Batch 17: 100/100 | Total: 16,695/16,700 | Rate: 233.1/sec | ETA: 0.6h
+Batch 18: 100/100 | Total: 16,795/16,800 | Rate: 224.6/sec | ETA: 0.6h
+Batch 19: 100/100 | Total: 16,895/16,900 | Rate: 214.0/sec | ETA: 0.6h
+Batch 20: 100/100 | Total: 16,995/17,000 | Rate: 206.7/sec | ETA: 0.6h
+  💾 Checkpoint saved
+Batch 21: 100/100 | Total: 17,095/17,100 | Rate: 199.8/sec | ETA: 0.7h
+Batch 22: 100/100 | Total: 17,195/17,200 | Rate: 192.0/sec | ETA: 0.7h
+Batch 23: 100/100 | Total: 17,295/17,300 | Rate: 184.9/sec | ETA: 0.7h
+Batch 24: 100/100 | Total: 17,395/17,400 | Rate: 176.7/sec | ETA: 0.7h
+Batch 25: 100/100 | Total: 17,495/17,500 | Rate: 170.8/sec | ETA: 0.8h
+Batch 26: 100/100 | Total: 17,595/17,600 | Rate: 166.1/sec | ETA: 0.8h
+Batch 27: 100/100 | Total: 17,695/17,700 | Rate: 161.0/sec | ETA: 0.8h
+Batch 28: 100/100 | Total: 17,795/17,800 | Rate: 157.3/sec | ETA: 0.8h
+Batch 29: 100/100 | Total: 17,895/17,900 | Rate: 152.8/sec | ETA: 0.9h
+Batch 30: 100/100 | Total: 17,995/18,000 | Rate: 147.5/sec | ETA: 0.9h
+  💾 Checkpoint saved
+Batch 31: 100/100 | Total: 18,095/18,100 | Rate: 144.3/sec | ETA: 0.9h
+Batch 32: 100/100 | Total: 18,195/18,200 | Rate: 141.4/sec | ETA: 0.9h
+Batch 33: 100/100 | Total: 18,295/18,300 | Rate: 137.8/sec | ETA: 1.0h
+Batch 34: 100/100 | Total: 18,395/18,400 | Rate: 134.9/sec | ETA: 1.0h
+Batch 35: 100/100 | Total: 18,495/18,500 | Rate: 131.3/sec | ETA: 1.0h
+Batch 36: 100/100 | Total: 18,595/18,600 | Rate: 128.9/sec | ETA: 1.0h
+Batch 37: 100/100 | Total: 18,695/18,700 | Rate: 126.4/sec | ETA: 1.0h
+Batch 38: 100/100 | Total: 18,795/18,800 | Rate: 124.1/sec | ETA: 1.1h
+Batch 39: 100/100 | Total: 18,895/18,900 | Rate: 121.7/sec | ETA: 1.1h
+Batch 40: 100/100 | Total: 18,995/19,000 | Rate: 118.6/sec | ETA: 1.1h
+  💾 Checkpoint saved
+Batch 41: 100/100 | Total: 19,095/19,100 | Rate: 114.8/sec | ETA: 1.1h
+Batch 42: 100/100 | Total: 19,195/19,200 | Rate: 112.4/sec | ETA: 1.2h
+Batch 43: 100/100 | Total: 19,295/19,300 | Rate: 108.2/sec | ETA: 1.2h
+Batch 44: 100/100 | Total: 19,395/19,400 | Rate: 105.3/sec | ETA: 1.2h
+Batch 45: 100/100 | Total: 19,495/19,500 | Rate: 103.3/sec | ETA: 1.3h
+Batch 46: 100/100 | Total: 19,595/19,600 | Rate: 100.0/sec | ETA: 1.3h
+Batch 47: 100/100 | Total: 19,695/19,700 | Rate: 97.0/sec | ETA: 1.4h
+Batch 48: 100/100 | Total: 19,795/19,800 | Rate: 95.8/sec | ETA: 1.4h
+Batch 49: 100/100 | Total: 19,895/19,900 | Rate: 94.4/sec | ETA: 1.4h
+Batch 50: 100/100 | Total: 19,995/20,000 | Rate: 93.3/sec | ETA: 1.4h
+  💾 Checkpoint saved
+Batch 51: 100/100 | Total: 20,095/20,100 | Rate: 92.3/sec | ETA: 1.4h
+Batch 52: 100/100 | Total: 20,195/20,200 | Rate: 91.4/sec | ETA: 1.4h
+Batch 53: 100/100 | Total: 20,295/20,300 | Rate: 90.3/sec | ETA: 1.5h
+Batch 54: 100/100 | Total: 20,395/20,400 | Rate: 89.0/sec | ETA: 1.5h
+Batch 55: 100/100 | Total: 20,495/20,500 | Rate: 88.1/sec | ETA: 1.5h
+Batch 56: 100/100 | Total: 20,595/20,600 | Rate: 87.3/sec | ETA: 1.5h
+Batch 57: 100/100 | Total: 20,695/20,700 | Rate: 86.4/sec | ETA: 1.5h
+Batch 58: 100/100 | Total: 20,795/20,800 | Rate: 85.2/sec | ETA: 1.5h
+Batch 59: 100/100 | Total: 20,895/20,900 | Rate: 84.2/sec | ETA: 1.6h
+Batch 60: 100/100 | Total: 20,995/21,000 | Rate: 83.4/sec | ETA: 1.6h
+  💾 Checkpoint saved
+Batch 61: 100/100 | Total: 21,095/21,100 | Rate: 82.6/sec | ETA: 1.6h
+Batch 62: 100/100 | Total: 21,195/21,200 | Rate: 81.9/sec | ETA: 1.6h
+Batch 63: 100/100 | Total: 21,295/21,300 | Rate: 81.1/sec | ETA: 1.6h
+Batch 64: 100/100 | Total: 21,395/21,400 | Rate: 80.1/sec | ETA: 1.6h
+Batch 65: 100/100 | Total: 21,495/21,500 | Rate: 79.3/sec | ETA: 1.7h
+Batch 66: 100/100 | Total: 21,595/21,600 | Rate: 78.6/sec | ETA: 1.7h
+Batch 67: 100/100 | Total: 21,695/21,700 | Rate: 77.8/sec | ETA: 1.7h
+Batch 68: 100/100 | Total: 21,795/21,800 | Rate: 76.2/sec | ETA: 1.7h
+Batch 69: 100/100 | Total: 21,895/21,900 | Rate: 75.4/sec | ETA: 1.7h
+Batch 70: 100/100 | Total: 21,995/22,000 | Rate: 74.7/sec | ETA: 1.8h
+  💾 Checkpoint saved
+Batch 71: 100/100 | Total: 22,095/22,100 | Rate: 74.2/sec | ETA: 1.8h
+Batch 72: 100/100 | Total: 22,195/22,200 | Rate: 73.6/sec | ETA: 1.8h
+Batch 73: 100/100 | Total: 22,295/22,300 | Rate: 73.0/sec | ETA: 1.8h
+Batch 74: 100/100 | Total: 22,395/22,400 | Rate: 72.6/sec | ETA: 1.8h
+Batch 75: 100/100 | Total: 22,495/22,500 | Rate: 71.9/sec | ETA: 1.8h
+Batch 76: 100/100 | Total: 22,595/22,600 | Rate: 71.5/sec | ETA: 1.8h
+Batch 77: 100/100 | Total: 22,695/22,700 | Rate: 70.6/sec | ETA: 1.9h
+Batch 78: 100/100 | Total: 22,795/22,800 | Rate: 70.2/sec | ETA: 1.9h
+Batch 79: 100/100 | Total: 22,895/22,900 | Rate: 69.7/sec | ETA: 1.9h
+Batch 80: 100/100 | Total: 22,995/23,000 | Rate: 69.1/sec | ETA: 1.9h
+  💾 Checkpoint saved
+Batch 81: 100/100 | Total: 23,095/23,100 | Rate: 68.5/sec | ETA: 1.9h
+Batch 82: 100/100 | Total: 23,195/23,200 | Rate: 67.9/sec | ETA: 1.9h
+Batch 83: 100/100 | Total: 23,295/23,300 | Rate: 67.6/sec | ETA: 1.9h
+Batch 84: 100/100 | Total: 23,395/23,400 | Rate: 67.2/sec | ETA: 1.9h
+Batch 85: 100/100 | Total: 23,495/23,500 | Rate: 66.7/sec | ETA: 2.0h
+Batch 86: 100/100 | Total: 23,595/23,600 | Rate: 66.2/sec | ETA: 2.0h
+Batch 87: 100/100 | Total: 23,695/23,700 | Rate: 65.8/sec | ETA: 2.0h
+Batch 88: 100/100 | Total: 23,795/23,800 | Rate: 65.4/sec | ETA: 2.0h
+Batch 89: 100/100 | Total: 23,895/23,900 | Rate: 65.1/sec | ETA: 2.0h
+Batch 90: 100/100 | Total: 23,995/24,000 | Rate: 64.8/sec | ETA: 2.0h
+  💾 Checkpoint saved
+Batch 91: 100/100 | Total: 24,095/24,100 | Rate: 64.5/sec | ETA: 2.0h
+Batch 92: 100/100 | Total: 24,195/24,200 | Rate: 64.0/sec | ETA: 2.0h
+Batch 93: 100/100 | Total: 24,295/24,300 | Rate: 63.5/sec | ETA: 2.1h
+Batch 94: 100/100 | Total: 24,395/24,400 | Rate: 63.0/sec | ETA: 2.1h
+Batch 95: 100/100 | Total: 24,495/24,500 | Rate: 62.7/sec | ETA: 2.1h
+Batch 96: 100/100 | Total: 24,595/24,600 | Rate: 62.3/sec | ETA: 2.1h
+Batch 97: 100/100 | Total: 24,695/24,700 | Rate: 61.9/sec | ETA: 2.1h
+Batch 98: 100/100 | Total: 24,795/24,800 | Rate: 61.6/sec | ETA: 2.1h
+Batch 99: 100/100 | Total: 24,895/24,900 | Rate: 61.2/sec | ETA: 2.1h
+Batch 100: 100/100 | Total: 24,995/25,000 | Rate: 60.9/sec | ETA: 2.1h
+  💾 Checkpoint saved
+Batch 101: 100/100 | Total: 25,095/25,100 | Rate: 60.6/sec | ETA: 2.1h
+Batch 102: 100/100 | Total: 25,195/25,200 | Rate: 60.3/sec | ETA: 2.2h
+Batch 103: 100/100 | Total: 25,295/25,300 | Rate: 60.0/sec | ETA: 2.2h
+Batch 104: 100/100 | Total: 25,395/25,400 | Rate: 59.8/sec | ETA: 2.2h
+Batch 105: 100/100 | Total: 25,495/25,500 | Rate: 59.5/sec | ETA: 2.2h
+Batch 106: 100/100 | Total: 25,595/25,600 | Rate: 59.3/sec | ETA: 2.2h
+Batch 107: 100/100 | Total: 25,695/25,700 | Rate: 58.9/sec | ETA: 2.2h
+Batch 108: 100/100 | Total: 25,795/25,800 | Rate: 58.7/sec | ETA: 2.2h
+Batch 109: 100/100 | Total: 25,895/25,900 | Rate: 58.4/sec | ETA: 2.2h
+Batch 110: 100/100 | Total: 25,995/26,000 | Rate: 58.1/sec | ETA: 2.2h
+  💾 Checkpoint saved
+Batch 111: 100/100 | Total: 26,095/26,100 | Rate: 57.8/sec | ETA: 2.2h
+Batch 112: 100/100 | Total: 26,195/26,200 | Rate: 57.6/sec | ETA: 2.3h
+Batch 113: 100/100 | Total: 26,295/26,300 | Rate: 57.4/sec | ETA: 2.3h
+Batch 114: 100/100 | Total: 26,395/26,400 | Rate: 57.2/sec | ETA: 2.3h
+Batch 115: 100/100 | Total: 26,495/26,500 | Rate: 56.9/sec | ETA: 2.3h
+Batch 116: 100/100 | Total: 26,595/26,600 | Rate: 56.7/sec | ETA: 2.3h
+Batch 117: 100/100 | Total: 26,695/26,700 | Rate: 56.5/sec | ETA: 2.3h
+Batch 118: 100/100 | Total: 26,795/26,800 | Rate: 56.3/sec | ETA: 2.3h
+Batch 119: 100/100 | Total: 26,895/26,900 | Rate: 56.1/sec | ETA: 2.3h
+Batch 120: 100/100 | Total: 26,995/27,000 | Rate: 55.8/sec | ETA: 2.3h
+  💾 Checkpoint saved
+Batch 121: 100/100 | Total: 27,095/27,100 | Rate: 55.6/sec | ETA: 2.3h
+Batch 122: 100/100 | Total: 27,195/27,200 | Rate: 55.4/sec | ETA: 2.3h
+Batch 123: 100/100 | Total: 27,295/27,300 | Rate: 55.1/sec | ETA: 2.3h
+Batch 124: 100/100 | Total: 27,395/27,400 | Rate: 54.9/sec | ETA: 2.4h
+Batch 125: 100/100 | Total: 27,495/27,500 | Rate: 54.7/sec | ETA: 2.4h
+Batch 126: 100/100 | Total: 27,595/27,600 | Rate: 54.6/sec | ETA: 2.4h
+Batch 127: 100/100 | Total: 27,695/27,700 | Rate: 54.5/sec | ETA: 2.4h
+Batch 128: 100/100 | Total: 27,795/27,800 | Rate: 54.3/sec | ETA: 2.4h
+Batch 129: 100/100 | Total: 27,895/27,900 | Rate: 54.0/sec | ETA: 2.4h
+Batch 130: 100/100 | Total: 27,995/28,000 | Rate: 53.9/sec | ETA: 2.4h
+  💾 Checkpoint saved
+Batch 131: 100/100 | Total: 28,095/28,100 | Rate: 53.6/sec | ETA: 2.4h
+Batch 132: 100/100 | Total: 28,195/28,200 | Rate: 53.5/sec | ETA: 2.4h
+Batch 133: 100/100 | Total: 28,295/28,300 | Rate: 53.3/sec | ETA: 2.4h
+Batch 134: 100/100 | Total: 28,395/28,400 | Rate: 53.1/sec | ETA: 2.4h
+Batch 135: 100/100 | Total: 28,495/28,500 | Rate: 53.0/sec | ETA: 2.4h
+Batch 136: 100/100 | Total: 28,595/28,600 | Rate: 52.8/sec | ETA: 2.4h
+Batch 137: 100/100 | Total: 28,695/28,700 | Rate: 52.7/sec | ETA: 2.4h
+Batch 138: 100/100 | Total: 28,795/28,800 | Rate: 52.5/sec | ETA: 2.5h
+Batch 139: 100/100 | Total: 28,895/28,900 | Rate: 52.3/sec | ETA: 2.5h
+Batch 140: 100/100 | Total: 28,995/29,000 | Rate: 52.1/sec | ETA: 2.5h
+  💾 Checkpoint saved
+Batch 141: 100/100 | Total: 29,095/29,100 | Rate: 52.0/sec | ETA: 2.5h
+Batch 142: 100/100 | Total: 29,195/29,200 | Rate: 51.8/sec | ETA: 2.5h
+Batch 143: 100/100 | Total: 29,295/29,300 | Rate: 51.6/sec | ETA: 2.5h
+Batch 144: 100/100 | Total: 29,395/29,400 | Rate: 51.3/sec | ETA: 2.5h
+Batch 145: 100/100 | Total: 29,495/29,500 | Rate: 51.1/sec | ETA: 2.5h
+Batch 146: 100/100 | Total: 29,595/29,600 | Rate: 50.9/sec | ETA: 2.5h
+Batch 147: 100/100 | Total: 29,695/29,700 | Rate: 50.8/sec | ETA: 2.5h
+Batch 148: 100/100 | Total: 29,795/29,800 | Rate: 50.6/sec | ETA: 2.5h
+Batch 149: 100/100 | Total: 29,895/29,900 | Rate: 50.3/sec | ETA: 2.6h
+Batch 150: 100/100 | Total: 29,995/30,000 | Rate: 50.1/sec | ETA: 2.6h
+  💾 Checkpoint saved
+Batch 151: 100/100 | Total: 30,095/30,100 | Rate: 49.9/sec | ETA: 2.6h
+Batch 152: 100/100 | Total: 30,195/30,200 | Rate: 49.7/sec | ETA: 2.6h
+Batch 153: 100/100 | Total: 30,295/30,300 | Rate: 49.5/sec | ETA: 2.6h
+Batch 154: 100/100 | Total: 30,395/30,400 | Rate: 49.3/sec | ETA: 2.6h
+Batch 155: 100/100 | Total: 30,495/30,500 | Rate: 48.9/sec | ETA: 2.6h
+Batch 156: 100/100 | Total: 30,595/30,600 | Rate: 48.6/sec | ETA: 2.6h
+Batch 157: 100/100 | Total: 30,695/30,700 | Rate: 48.5/sec | ETA: 2.7h
+Batch 158: 100/100 | Total: 30,795/30,800 | Rate: 48.4/sec | ETA: 2.7h
+Batch 159: 100/100 | Total: 30,895/30,900 | Rate: 48.3/sec | ETA: 2.7h
+Batch 160: 100/100 | Total: 30,995/31,000 | Rate: 48.1/sec | ETA: 2.7h
+  💾 Checkpoint saved
+Batch 161: 100/100 | Total: 31,095/31,100 | Rate: 47.9/sec | ETA: 2.7h
+Batch 162: 100/100 | Total: 31,195/31,200 | Rate: 47.6/sec | ETA: 2.7h
+Batch 163: 100/100 | Total: 31,295/31,300 | Rate: 47.5/sec | ETA: 2.7h
+Batch 164: 100/100 | Total: 31,395/31,400 | Rate: 47.4/sec | ETA: 2.7h
+Batch 165: 100/100 | Total: 31,495/31,500 | Rate: 47.3/sec | ETA: 2.7h
+Batch 166: 100/100 | Total: 31,595/31,600 | Rate: 47.2/sec | ETA: 2.7h
+Batch 167: 100/100 | Total: 31,695/31,700 | Rate: 47.1/sec | ETA: 2.7h
+Batch 168: 100/100 | Total: 31,795/31,800 | Rate: 47.0/sec | ETA: 2.7h
+Batch 169: 100/100 | Total: 31,895/31,900 | Rate: 46.9/sec | ETA: 2.7h
+Batch 170: 100/100 | Total: 31,995/32,000 | Rate: 46.8/sec | ETA: 2.7h
+  💾 Checkpoint saved
+Batch 171: 100/100 | Total: 32,095/32,100 | Rate: 46.7/sec | ETA: 2.7h
+Batch 172: 100/100 | Total: 32,195/32,200 | Rate: 46.6/sec | ETA: 2.7h
+Batch 173: 100/100 | Total: 32,295/32,300 | Rate: 46.5/sec | ETA: 2.8h
+Batch 174: 100/100 | Total: 32,395/32,400 | Rate: 46.4/sec | ETA: 2.8h
+Batch 175: 100/100 | Total: 32,495/32,500 | Rate: 46.2/sec | ETA: 2.8h
+Batch 176: 100/100 | Total: 32,595/32,600 | Rate: 46.1/sec | ETA: 2.8h
+Batch 177: 100/100 | Total: 32,695/32,700 | Rate: 46.0/sec | ETA: 2.8h
+Batch 178: 100/100 | Total: 32,795/32,800 | Rate: 45.9/sec | ETA: 2.8h
+Batch 179: 100/100 | Total: 32,895/32,900 | Rate: 45.8/sec | ETA: 2.8h
+Batch 180: 100/100 | Total: 32,995/33,000 | Rate: 45.7/sec | ETA: 2.8h
+  💾 Checkpoint saved
+Batch 181: 100/100 | Total: 33,095/33,100 | Rate: 45.6/sec | ETA: 2.8h
+Batch 182: 100/100 | Total: 33,195/33,200 | Rate: 45.5/sec | ETA: 2.8h
+Batch 183: 100/100 | Total: 33,295/33,300 | Rate: 45.4/sec | ETA: 2.8h
+Batch 184: 100/100 | Total: 33,395/33,400 | Rate: 45.3/sec | ETA: 2.8h
+Batch 185: 100/100 | Total: 33,495/33,500 | Rate: 45.2/sec | ETA: 2.8h
+Batch 186: 100/100 | Total: 33,595/33,600 | Rate: 45.1/sec | ETA: 2.8h
+Batch 187: 100/100 | Total: 33,695/33,700 | Rate: 45.1/sec | ETA: 2.8h
+Batch 188: 100/100 | Total: 33,795/33,800 | Rate: 45.0/sec | ETA: 2.8h
+Batch 189: 100/100 | Total: 33,895/33,900 | Rate: 44.9/sec | ETA: 2.8h
+Batch 190: 100/100 | Total: 33,995/34,000 | Rate: 44.8/sec | ETA: 2.8h
+  💾 Checkpoint saved
+Batch 191: 100/100 | Total: 34,095/34,100 | Rate: 44.8/sec | ETA: 2.8h
+Batch 192: 100/100 | Total: 34,195/34,200 | Rate: 44.7/sec | ETA: 2.9h
+Batch 193: 100/100 | Total: 34,295/34,300 | Rate: 44.6/sec | ETA: 2.9h
+Batch 194: 100/100 | Total: 34,395/34,400 | Rate: 44.5/sec | ETA: 2.9h
+Batch 195: 100/100 | Total: 34,495/34,500 | Rate: 44.4/sec | ETA: 2.9h
+Batch 196: 100/100 | Total: 34,595/34,600 | Rate: 44.3/sec | ETA: 2.9h
+Batch 197: 100/100 | Total: 34,695/34,700 | Rate: 44.3/sec | ETA: 2.9h
+Batch 198: 100/100 | Total: 34,795/34,800 | Rate: 44.2/sec | ETA: 2.9h
+Batch 199: 100/100 | Total: 34,895/34,900 | Rate: 44.1/sec | ETA: 2.9h
+Batch 200: 100/100 | Total: 34,995/35,000 | Rate: 43.9/sec | ETA: 2.9h
+  💾 Checkpoint saved
+Batch 201: 100/100 | Total: 35,095/35,100 | Rate: 43.8/sec | ETA: 2.9h
+Batch 202: 100/100 | Total: 35,195/35,200 | Rate: 43.8/sec | ETA: 2.9h
+Batch 203: 100/100 | Total: 35,295/35,300 | Rate: 43.7/sec | ETA: 2.9h
+Batch 204: 100/100 | Total: 35,395/35,400 | Rate: 43.6/sec | ETA: 2.9h
+Batch 205: 100/100 | Total: 35,495/35,500 | Rate: 43.5/sec | ETA: 2.9h
+Batch 206: 100/100 | Total: 35,595/35,600 | Rate: 43.5/sec | ETA: 2.9h
+Batch 207: 100/100 | Total: 35,695/35,700 | Rate: 43.4/sec | ETA: 2.9h
+Batch 208: 100/100 | Total: 35,795/35,800 | Rate: 43.2/sec | ETA: 2.9h
+Batch 209: 100/100 | Total: 35,895/35,900 | Rate: 43.1/sec | ETA: 2.9h
+Batch 210: 100/100 | Total: 35,995/36,000 | Rate: 43.0/sec | ETA: 3.0h
+  💾 Checkpoint saved
+Batch 211: 100/100 | Total: 36,095/36,100 | Rate: 43.0/sec | ETA: 3.0h
+Batch 212: 100/100 | Total: 36,195/36,200 | Rate: 42.9/sec | ETA: 3.0h
+Batch 213: 100/100 | Total: 36,295/36,300 | Rate: 42.9/sec | ETA: 3.0h
+Batch 214: 100/100 | Total: 36,395/36,400 | Rate: 42.8/sec | ETA: 3.0h
+Batch 215: 100/100 | Total: 36,495/36,500 | Rate: 42.7/sec | ETA: 3.0h
+Batch 216: 100/100 | Total: 36,595/36,600 | Rate: 42.6/sec | ETA: 3.0h
+Batch 217: 100/100 | Total: 36,695/36,700 | Rate: 42.5/sec | ETA: 3.0h
+Batch 218: 100/100 | Total: 36,795/36,800 | Rate: 42.5/sec | ETA: 3.0h
+Batch 219: 100/100 | Total: 36,895/36,900 | Rate: 42.4/sec | ETA: 3.0h
+Batch 220: 100/100 | Total: 36,995/37,000 | Rate: 42.3/sec | ETA: 3.0h
+  💾 Checkpoint saved
+Batch 221: 100/100 | Total: 37,095/37,100 | Rate: 42.2/sec | ETA: 3.0h
+Batch 222: 100/100 | Total: 37,195/37,200 | Rate: 42.2/sec | ETA: 3.0h
+Batch 223: 100/100 | Total: 37,295/37,300 | Rate: 42.2/sec | ETA: 3.0h
+Batch 224: 100/100 | Total: 37,395/37,400 | Rate: 42.1/sec | ETA: 3.0h
+Batch 225: 100/100 | Total: 37,495/37,500 | Rate: 42.1/sec | ETA: 3.0h
+Batch 226: 100/100 | Total: 37,595/37,600 | Rate: 42.0/sec | ETA: 3.0h
+Batch 227: 100/100 | Total: 37,695/37,700 | Rate: 41.9/sec | ETA: 3.0h
+Batch 228: 100/100 | Total: 37,795/37,800 | Rate: 41.8/sec | ETA: 3.0h
+Batch 229: 100/100 | Total: 37,895/37,900 | Rate: 41.7/sec | ETA: 3.0h
+Batch 230: 100/100 | Total: 37,995/38,000 | Rate: 41.6/sec | ETA: 3.0h
+  💾 Checkpoint saved
+Batch 231: 100/100 | Total: 38,095/38,100 | Rate: 41.5/sec | ETA: 3.0h
+Batch 232: 100/100 | Total: 38,195/38,200 | Rate: 41.5/sec | ETA: 3.0h
+Batch 233: 100/100 | Total: 38,295/38,300 | Rate: 41.4/sec | ETA: 3.0h
+Batch 234: 100/100 | Total: 38,395/38,400 | Rate: 41.4/sec | ETA: 3.1h
+Batch 235: 100/100 | Total: 38,495/38,500 | Rate: 41.3/sec | ETA: 3.1h
+Batch 236: 100/100 | Total: 38,595/38,600 | Rate: 41.2/sec | ETA: 3.1h
+Batch 237: 100/100 | Total: 38,695/38,700 | Rate: 41.1/sec | ETA: 3.1h
+Batch 238: 100/100 | Total: 38,795/38,800 | Rate: 41.1/sec | ETA: 3.1h
+Batch 239: 100/100 | Total: 38,895/38,900 | Rate: 41.0/sec | ETA: 3.1h
+Batch 240: 100/100 | Total: 38,995/39,000 | Rate: 41.0/sec | ETA: 3.1h
+  💾 Checkpoint saved
+Batch 241: 100/100 | Total: 39,095/39,100 | Rate: 40.9/sec | ETA: 3.1h
+Batch 242: 100/100 | Total: 39,195/39,200 | Rate: 40.8/sec | ETA: 3.1h
+Batch 243: 100/100 | Total: 39,295/39,300 | Rate: 40.7/sec | ETA: 3.1h
+Batch 244: 100/100 | Total: 39,395/39,400 | Rate: 40.7/sec | ETA: 3.1h
+Batch 245: 100/100 | Total: 39,495/39,500 | Rate: 40.6/sec | ETA: 3.1h
+Batch 246: 100/100 | Total: 39,595/39,600 | Rate: 40.6/sec | ETA: 3.1h
+Batch 247: 100/100 | Total: 39,695/39,700 | Rate: 40.5/sec | ETA: 3.1h
+Batch 248: 100/100 | Total: 39,795/39,800 | Rate: 40.4/sec | ETA: 3.1h
+Batch 249: 99/100 | Total: 39,894/39,900 | Rate: 40.2/sec | ETA: 3.1h
+Batch 250: 100/100 | Total: 39,994/40,000 | Rate: 40.1/sec | ETA: 3.1h
+  💾 Checkpoint saved
+Batch 251: 100/100 | Total: 40,094/40,100 | Rate: 40.0/sec | ETA: 3.1h
+Batch 252: 100/100 | Total: 40,194/40,200 | Rate: 39.9/sec | ETA: 3.2h
+Batch 253: 100/100 | Total: 40,294/40,300 | Rate: 39.9/sec | ETA: 3.2h
+Batch 254: 98/100 | Total: 40,392/40,400 | Rate: 39.7/sec | ETA: 3.2h
+Batch 255: 100/100 | Total: 40,492/40,500 | Rate: 39.6/sec | ETA: 3.2h
+Batch 256: 100/100 | Total: 40,592/40,600 | Rate: 39.5/sec | ETA: 3.2h
+Batch 257: 100/100 | Total: 40,692/40,700 | Rate: 39.4/sec | ETA: 3.2h
+Batch 258: 100/100 | Total: 40,792/40,800 | Rate: 39.3/sec | ETA: 3.2h
+Batch 259: 100/100 | Total: 40,892/40,900 | Rate: 39.3/sec | ETA: 3.2h
+Batch 260: 100/100 | Total: 40,992/41,000 | Rate: 39.2/sec | ETA: 3.2h
+  💾 Checkpoint saved
+Batch 261: 100/100 | Total: 41,092/41,100 | Rate: 39.1/sec | ETA: 3.2h
+Batch 262: 100/100 | Total: 41,192/41,200 | Rate: 39.0/sec | ETA: 3.2h
+Batch 263: 100/100 | Total: 41,292/41,300 | Rate: 39.0/sec | ETA: 3.2h
+Batch 264: 100/100 | Total: 41,392/41,400 | Rate: 38.8/sec | ETA: 3.2h
+Batch 265: 100/100 | Total: 41,492/41,500 | Rate: 38.7/sec | ETA: 3.2h
+Batch 266: 100/100 | Total: 41,592/41,600 | Rate: 38.6/sec | ETA: 3.2h
+Batch 267: 100/100 | Total: 41,692/41,700 | Rate: 38.6/sec | ETA: 3.3h
+Batch 268: 100/100 | Total: 41,792/41,800 | Rate: 38.5/sec | ETA: 3.3h
+Batch 269: 100/100 | Total: 41,892/41,900 | Rate: 38.4/sec | ETA: 3.3h
+Batch 270: 100/100 | Total: 41,992/42,000 | Rate: 38.2/sec | ETA: 3.3h
+  💾 Checkpoint saved
+Batch 271: 100/100 | Total: 42,092/42,100 | Rate: 38.1/sec | ETA: 3.3h
+Batch 272: 100/100 | Total: 42,192/42,200 | Rate: 38.0/sec | ETA: 3.3h
+Batch 273: 100/100 | Total: 42,292/42,300 | Rate: 37.9/sec | ETA: 3.3h
+Batch 274: 100/100 | Total: 42,392/42,400 | Rate: 37.8/sec | ETA: 3.3h
+Batch 275: 100/100 | Total: 42,492/42,500 | Rate: 37.8/sec | ETA: 3.3h
+Batch 276: 100/100 | Total: 42,592/42,600 | Rate: 37.7/sec | ETA: 3.3h
+Batch 277: 100/100 | Total: 42,692/42,700 | Rate: 37.4/sec | ETA: 3.3h
+Batch 278: 100/100 | Total: 42,792/42,800 | Rate: 37.3/sec | ETA: 3.4h
+Batch 279: 100/100 | Total: 42,892/42,900 | Rate: 37.3/sec | ETA: 3.4h
+Batch 280: 100/100 | Total: 42,992/43,000 | Rate: 37.2/sec | ETA: 3.4h
+  💾 Checkpoint saved
+Batch 281: 100/100 | Total: 43,092/43,100 | Rate: 37.1/sec | ETA: 3.4h
+Batch 282: 100/100 | Total: 43,192/43,200 | Rate: 37.0/sec | ETA: 3.4h
+Batch 283: 100/100 | Total: 43,292/43,300 | Rate: 36.8/sec | ETA: 3.4h
+Batch 284: 100/100 | Total: 43,392/43,400 | Rate: 36.8/sec | ETA: 3.4h
+Batch 285: 100/100 | Total: 43,492/43,500 | Rate: 36.6/sec | ETA: 3.4h
+Batch 286: 100/100 | Total: 43,592/43,600 | Rate: 36.6/sec | ETA: 3.4h
+Batch 287: 100/100 | Total: 43,692/43,700 | Rate: 36.5/sec | ETA: 3.4h
+Batch 288: 100/100 | Total: 43,792/43,800 | Rate: 36.4/sec | ETA: 3.4h
+Batch 289: 100/100 | Total: 43,892/43,900 | Rate: 36.3/sec | ETA: 3.4h
+Batch 290: 100/100 | Total: 43,992/44,000 | Rate: 36.3/sec | ETA: 3.4h
+  💾 Checkpoint saved
+Batch 291: 100/100 | Total: 44,092/44,100 | Rate: 36.3/sec | ETA: 3.4h
+Batch 292: 100/100 | Total: 44,192/44,200 | Rate: 36.2/sec | ETA: 3.4h
+Batch 293: 100/100 | Total: 44,292/44,300 | Rate: 36.2/sec | ETA: 3.4h
+Batch 294: 100/100 | Total: 44,392/44,400 | Rate: 36.2/sec | ETA: 3.4h
+Batch 295: 100/100 | Total: 44,492/44,500 | Rate: 36.1/sec | ETA: 3.4h
+Batch 296: 100/100 | Total: 44,592/44,600 | Rate: 36.1/sec | ETA: 3.5h
+Batch 297: 100/100 | Total: 44,692/44,700 | Rate: 36.1/sec | ETA: 3.5h
+Batch 298: 100/100 | Total: 44,792/44,800 | Rate: 36.0/sec | ETA: 3.5h
+Batch 299: 100/100 | Total: 44,892/44,900 | Rate: 36.0/sec | ETA: 3.5h
+Batch 300: 100/100 | Total: 44,992/45,000 | Rate: 35.9/sec | ETA: 3.5h
+  💾 Checkpoint saved
+Batch 301: 100/100 | Total: 45,092/45,100 | Rate: 35.9/sec | ETA: 3.5h
+Batch 302: 100/100 | Total: 45,192/45,200 | Rate: 35.8/sec | ETA: 3.5h
+Batch 303: 100/100 | Total: 45,292/45,300 | Rate: 35.8/sec | ETA: 3.5h
+Batch 304: 100/100 | Total: 45,392/45,400 | Rate: 35.8/sec | ETA: 3.5h
+Batch 305: 100/100 | Total: 45,492/45,500 | Rate: 35.7/sec | ETA: 3.5h
+Batch 306: 100/100 | Total: 45,592/45,600 | Rate: 35.7/sec | ETA: 3.5h
+Batch 307: 100/100 | Total: 45,692/45,700 | Rate: 35.6/sec | ETA: 3.5h
+Batch 308: 100/100 | Total: 45,792/45,800 | Rate: 35.6/sec | ETA: 3.5h
+Batch 309: 100/100 | Total: 45,892/45,900 | Rate: 35.5/sec | ETA: 3.5h
+Batch 310: 100/100 | Total: 45,992/46,000 | Rate: 35.4/sec | ETA: 3.5h
+  💾 Checkpoint saved
+Batch 311: 100/100 | Total: 46,092/46,100 | Rate: 35.3/sec | ETA: 3.5h
+Batch 312: 100/100 | Total: 46,192/46,200 | Rate: 35.3/sec | ETA: 3.5h
+Batch 313: 100/100 | Total: 46,292/46,300 | Rate: 35.0/sec | ETA: 3.5h
+Batch 314: 100/100 | Total: 46,392/46,400 | Rate: 23.1/sec | ETA: 5.4h
+Batch 315: 100/100 | Total: 46,492/46,500 | Rate: 23.1/sec | ETA: 5.4h
+Batch 316: 100/100 | Total: 46,592/46,600 | Rate: 23.0/sec | ETA: 5.4h
+Batch 317: 100/100 | Total: 46,692/46,700 | Rate: 23.0/sec | ETA: 5.4h
+Batch 318: 100/100 | Total: 46,792/46,800 | Rate: 22.8/sec | ETA: 5.4h
+Batch 319: 100/100 | Total: 46,892/46,900 | Rate: 22.6/sec | ETA: 5.5h
+Batch 320: 100/100 | Total: 46,992/47,000 | Rate: 22.6/sec | ETA: 5.5h
+  💾 Checkpoint saved
+Batch 321: 100/100 | Total: 47,092/47,100 | Rate: 22.5/sec | ETA: 5.5h
+Batch 322: 100/100 | Total: 47,192/47,200 | Rate: 22.5/sec | ETA: 5.5h
+Batch 323: 100/100 | Total: 47,292/47,300 | Rate: 22.5/sec | ETA: 5.5h
+Batch 324: 100/100 | Total: 47,392/47,400 | Rate: 22.5/sec | ETA: 5.5h
+Batch 325: 100/100 | Total: 47,492/47,500 | Rate: 22.5/sec | ETA: 5.5h
+Batch 326: 100/100 | Total: 47,592/47,600 | Rate: 22.5/sec | ETA: 5.5h
+Batch 327: 100/100 | Total: 47,692/47,700 | Rate: 22.5/sec | ETA: 5.5h
+Batch 328: 100/100 | Total: 47,792/47,800 | Rate: 22.5/sec | ETA: 5.5h
+Batch 329: 100/100 | Total: 47,892/47,900 | Rate: 22.5/sec | ETA: 5.5h
+Batch 330: 100/100 | Total: 47,992/48,000 | Rate: 22.5/sec | ETA: 5.5h
+  💾 Checkpoint saved
+Batch 331: 100/100 | Total: 48,092/48,100 | Rate: 22.5/sec | ETA: 5.5h
+Batch 332: 100/100 | Total: 48,192/48,200 | Rate: 22.5/sec | ETA: 5.5h
+Batch 333: 100/100 | Total: 48,292/48,300 | Rate: 22.5/sec | ETA: 5.5h
+Batch 334: 100/100 | Total: 48,392/48,400 | Rate: 22.4/sec | ETA: 5.5h
+Batch 335: 100/100 | Total: 48,492/48,500 | Rate: 22.4/sec | ETA: 5.5h
+Batch 336: 100/100 | Total: 48,592/48,600 | Rate: 22.4/sec | ETA: 5.5h
+Batch 337: 100/100 | Total: 48,692/48,700 | Rate: 22.3/sec | ETA: 5.5h
+Batch 338: 100/100 | Total: 48,792/48,800 | Rate: 22.3/sec | ETA: 5.5h
+Batch 339: 100/100 | Total: 48,892/48,900 | Rate: 22.3/sec | ETA: 5.5h
+Batch 340: 100/100 | Total: 48,992/49,000 | Rate: 22.3/sec | ETA: 5.5h
+  💾 Checkpoint saved
+Batch 341: 100/100 | Total: 49,092/49,100 | Rate: 22.3/sec | ETA: 5.5h
+Batch 342: 100/100 | Total: 49,192/49,200 | Rate: 22.3/sec | ETA: 5.5h
+Batch 343: 100/100 | Total: 49,292/49,300 | Rate: 22.3/sec | ETA: 5.5h
+Batch 344: 100/100 | Total: 49,392/49,400 | Rate: 22.3/sec | ETA: 5.5h
+Batch 345: 100/100 | Total: 49,492/49,500 | Rate: 22.3/sec | ETA: 5.5h
+Batch 346: 100/100 | Total: 49,592/49,600 | Rate: 22.3/sec | ETA: 5.5h
+Batch 347: 100/100 | Total: 49,692/49,700 | Rate: 22.3/sec | ETA: 5.5h
+Batch 348: 100/100 | Total: 49,792/49,800 | Rate: 22.4/sec | ETA: 5.5h
+Batch 349: 100/100 | Total: 49,892/49,900 | Rate: 22.4/sec | ETA: 5.5h
+Batch 350: 100/100 | Total: 49,992/50,000 | Rate: 22.4/sec | ETA: 5.5h
+  💾 Checkpoint saved
+Batch 351: 100/100 | Total: 50,092/50,100 | Rate: 22.4/sec | ETA: 5.5h
+Batch 352: 100/100 | Total: 50,192/50,200 | Rate: 22.4/sec | ETA: 5.5h
+Batch 353: 100/100 | Total: 50,292/50,300 | Rate: 22.4/sec | ETA: 5.5h
+Batch 354: 100/100 | Total: 50,392/50,400 | Rate: 22.4/sec | ETA: 5.5h
+Batch 355: 100/100 | Total: 50,492/50,500 | Rate: 22.4/sec | ETA: 5.5h
+Batch 356: 100/100 | Total: 50,592/50,600 | Rate: 22.4/sec | ETA: 5.5h
+Batch 357: 100/100 | Total: 50,692/50,700 | Rate: 22.4/sec | ETA: 5.5h
+Batch 358: 100/100 | Total: 50,792/50,800 | Rate: 22.4/sec | ETA: 5.5h
+Batch 359: 100/100 | Total: 50,892/50,900 | Rate: 22.4/sec | ETA: 5.5h
+Batch 360: 100/100 | Total: 50,992/51,000 | Rate: 22.4/sec | ETA: 5.5h
+  💾 Checkpoint saved
+Batch 361: 100/100 | Total: 51,092/51,100 | Rate: 22.4/sec | ETA: 5.5h
+Batch 362: 100/100 | Total: 51,192/51,200 | Rate: 22.4/sec | ETA: 5.5h
+Batch 363: 100/100 | Total: 51,292/51,300 | Rate: 22.4/sec | ETA: 5.5h
+Batch 364: 100/100 | Total: 51,392/51,400 | Rate: 22.4/sec | ETA: 5.5h
+Batch 365: 100/100 | Total: 51,492/51,500 | Rate: 22.4/sec | ETA: 5.5h
+Batch 366: 100/100 | Total: 51,592/51,600 | Rate: 22.4/sec | ETA: 5.5h
+Batch 367: 100/100 | Total: 51,692/51,700 | Rate: 22.5/sec | ETA: 5.5h
+Batch 368: 100/100 | Total: 51,792/51,800 | Rate: 22.5/sec | ETA: 5.5h
+Batch 369: 100/100 | Total: 51,892/51,900 | Rate: 22.5/sec | ETA: 5.5h
+Batch 370: 100/100 | Total: 51,992/52,000 | Rate: 22.5/sec | ETA: 5.5h
+  💾 Checkpoint saved
+Batch 371: 100/100 | Total: 52,092/52,100 | Rate: 22.5/sec | ETA: 5.4h
+Batch 372: 100/100 | Total: 52,192/52,200 | Rate: 22.5/sec | ETA: 5.4h
+Batch 373: 100/100 | Total: 52,292/52,300 | Rate: 22.5/sec | ETA: 5.4h
+Batch 374: 100/100 | Total: 52,392/52,400 | Rate: 22.5/sec | ETA: 5.4h
+Batch 375: 100/100 | Total: 52,492/52,500 | Rate: 22.5/sec | ETA: 5.4h
+Batch 376: 100/100 | Total: 52,592/52,600 | Rate: 22.5/sec | ETA: 5.4h
+Batch 377: 100/100 | Total: 52,692/52,700 | Rate: 22.5/sec | ETA: 5.4h
+Batch 378: 100/100 | Total: 52,792/52,800 | Rate: 22.6/sec | ETA: 5.4h
+Batch 379: 100/100 | Total: 52,892/52,900 | Rate: 22.6/sec | ETA: 5.4h
+Batch 380: 100/100 | Total: 52,992/53,000 | Rate: 22.6/sec | ETA: 5.4h
+  💾 Checkpoint saved
+Batch 381: 100/100 | Total: 53,092/53,100 | Rate: 22.6/sec | ETA: 5.4h
+Batch 382: 100/100 | Total: 53,192/53,200 | Rate: 22.6/sec | ETA: 5.4h
+Batch 383: 100/100 | Total: 53,292/53,300 | Rate: 22.6/sec | ETA: 5.4h
+Batch 384: 100/100 | Total: 53,392/53,400 | Rate: 22.6/sec | ETA: 5.4h
+Batch 385: 100/100 | Total: 53,492/53,500 | Rate: 22.6/sec | ETA: 5.4h
+Batch 386: 100/100 | Total: 53,592/53,600 | Rate: 22.6/sec | ETA: 5.4h
+Batch 387: 100/100 | Total: 53,692/53,700 | Rate: 22.6/sec | ETA: 5.4h
+Batch 388: 100/100 | Total: 53,792/53,800 | Rate: 22.6/sec | ETA: 5.4h
+Batch 389: 100/100 | Total: 53,892/53,900 | Rate: 22.6/sec | ETA: 5.4h
+Batch 390: 100/100 | Total: 53,992/54,000 | Rate: 22.7/sec | ETA: 5.4h
+  💾 Checkpoint saved
+Batch 391: 100/100 | Total: 54,092/54,100 | Rate: 22.7/sec | ETA: 5.4h
+Batch 392: 100/100 | Total: 54,192/54,200 | Rate: 22.7/sec | ETA: 5.4h
+Batch 393: 100/100 | Total: 54,292/54,300 | Rate: 22.7/sec | ETA: 5.4h
+Batch 394: 100/100 | Total: 54,392/54,400 | Rate: 22.7/sec | ETA: 5.4h
+Batch 395: 100/100 | Total: 54,492/54,500 | Rate: 22.7/sec | ETA: 5.4h
+Batch 396: 100/100 | Total: 54,592/54,600 | Rate: 22.7/sec | ETA: 5.4h
+Batch 397: 100/100 | Total: 54,692/54,700 | Rate: 22.7/sec | ETA: 5.4h
+Batch 398: 100/100 | Total: 54,792/54,800 | Rate: 22.7/sec | ETA: 5.4h
+Batch 399: 100/100 | Total: 54,892/54,900 | Rate: 22.7/sec | ETA: 5.4h
+Batch 400: 100/100 | Total: 54,992/55,000 | Rate: 22.7/sec | ETA: 5.4h
+  💾 Checkpoint saved
+Batch 401: 100/100 | Total: 55,092/55,100 | Rate: 22.7/sec | ETA: 5.4h
+Batch 402: 100/100 | Total: 55,192/55,200 | Rate: 22.8/sec | ETA: 5.3h
+Batch 403: 100/100 | Total: 55,292/55,300 | Rate: 22.8/sec | ETA: 5.3h
+Batch 404: 100/100 | Total: 55,392/55,400 | Rate: 22.8/sec | ETA: 5.3h
+Batch 405: 100/100 | Total: 55,492/55,500 | Rate: 22.8/sec | ETA: 5.3h
+Batch 406: 100/100 | Total: 55,592/55,600 | Rate: 22.8/sec | ETA: 5.3h
+Batch 407: 100/100 | Total: 55,692/55,700 | Rate: 22.8/sec | ETA: 5.3h
+Batch 408: 100/100 | Total: 55,792/55,800 | Rate: 22.8/sec | ETA: 5.3h
+Batch 409: 100/100 | Total: 55,892/55,900 | Rate: 22.8/sec | ETA: 5.3h
+Batch 410: 100/100 | Total: 55,992/56,000 | Rate: 22.8/sec | ETA: 5.3h
+  💾 Checkpoint saved
+Batch 411: 100/100 | Total: 56,092/56,100 | Rate: 22.8/sec | ETA: 5.3h
+Batch 412: 100/100 | Total: 56,192/56,200 | Rate: 22.8/sec | ETA: 5.3h
+Batch 413: 100/100 | Total: 56,292/56,300 | Rate: 22.8/sec | ETA: 5.3h
+Batch 414: 100/100 | Total: 56,392/56,400 | Rate: 22.8/sec | ETA: 5.3h
+Batch 415: 100/100 | Total: 56,492/56,500 | Rate: 22.8/sec | ETA: 5.3h
+Batch 416: 100/100 | Total: 56,592/56,600 | Rate: 22.8/sec | ETA: 5.3h
+Batch 417: 100/100 | Total: 56,692/56,700 | Rate: 22.8/sec | ETA: 5.3h
+Batch 418: 100/100 | Total: 56,792/56,800 | Rate: 22.8/sec | ETA: 5.3h
+Batch 419: 100/100 | Total: 56,892/56,900 | Rate: 22.8/sec | ETA: 5.3h
+Batch 420: 100/100 | Total: 56,992/57,000 | Rate: 22.8/sec | ETA: 5.3h
+  💾 Checkpoint saved
+Batch 421: 100/100 | Total: 57,092/57,100 | Rate: 22.9/sec | ETA: 5.3h
+Batch 422: 100/100 | Total: 57,192/57,200 | Rate: 22.9/sec | ETA: 5.3h
+Batch 423: 100/100 | Total: 57,292/57,300 | Rate: 22.9/sec | ETA: 5.3h
+Batch 424: 100/100 | Total: 57,392/57,400 | Rate: 22.9/sec | ETA: 5.3h
+Batch 425: 100/100 | Total: 57,492/57,500 | Rate: 22.9/sec | ETA: 5.3h
+Batch 426: 100/100 | Total: 57,592/57,600 | Rate: 22.9/sec | ETA: 5.3h
+Batch 427: 100/100 | Total: 57,692/57,700 | Rate: 22.9/sec | ETA: 5.3h
+Batch 428: 100/100 | Total: 57,792/57,800 | Rate: 22.9/sec | ETA: 5.3h
+Batch 429: 100/100 | Total: 57,892/57,900 | Rate: 22.9/sec | ETA: 5.3h
+Batch 430: 100/100 | Total: 57,992/58,000 | Rate: 22.9/sec | ETA: 5.3h
+  💾 Checkpoint saved
+Batch 431: 100/100 | Total: 58,092/58,100 | Rate: 22.9/sec | ETA: 5.3h
+Batch 432: 100/100 | Total: 58,192/58,200 | Rate: 22.9/sec | ETA: 5.3h
+Batch 433: 100/100 | Total: 58,292/58,300 | Rate: 22.9/sec | ETA: 5.3h
+Batch 434: 100/100 | Total: 58,392/58,400 | Rate: 22.9/sec | ETA: 5.3h
+Batch 435: 100/100 | Total: 58,492/58,500 | Rate: 22.9/sec | ETA: 5.3h
+Batch 436: 100/100 | Total: 58,592/58,600 | Rate: 23.0/sec | ETA: 5.3h
+Batch 437: 100/100 | Total: 58,692/58,700 | Rate: 23.0/sec | ETA: 5.3h
+Batch 438: 100/100 | Total: 58,792/58,800 | Rate: 23.0/sec | ETA: 5.3h
+Batch 439: 100/100 | Total: 58,892/58,900 | Rate: 23.0/sec | ETA: 5.3h
+Batch 440: 100/100 | Total: 58,992/59,000 | Rate: 23.0/sec | ETA: 5.2h
+  💾 Checkpoint saved
+Batch 441: 100/100 | Total: 59,092/59,100 | Rate: 23.0/sec | ETA: 5.2h
+Batch 442: 100/100 | Total: 59,192/59,200 | Rate: 23.0/sec | ETA: 5.2h
+Batch 443: 100/100 | Total: 59,292/59,300 | Rate: 23.0/sec | ETA: 5.2h
+Batch 444: 100/100 | Total: 59,392/59,400 | Rate: 23.0/sec | ETA: 5.2h
+Batch 445: 100/100 | Total: 59,492/59,500 | Rate: 23.0/sec | ETA: 5.2h
+Batch 446: 100/100 | Total: 59,592/59,600 | Rate: 23.0/sec | ETA: 5.2h
+Batch 447: 100/100 | Total: 59,692/59,700 | Rate: 23.0/sec | ETA: 5.2h
+Batch 448: 100/100 | Total: 59,792/59,800 | Rate: 23.0/sec | ETA: 5.2h
+Batch 449: 100/100 | Total: 59,892/59,900 | Rate: 23.0/sec | ETA: 5.2h
+Batch 450: 100/100 | Total: 59,992/60,000 | Rate: 23.0/sec | ETA: 5.2h
+  💾 Checkpoint saved
+Batch 451: 100/100 | Total: 60,092/60,100 | Rate: 22.9/sec | ETA: 5.2h
+Batch 452: 100/100 | Total: 60,192/60,200 | Rate: 22.9/sec | ETA: 5.3h
+Batch 453: 100/100 | Total: 60,292/60,300 | Rate: 22.9/sec | ETA: 5.3h
+Batch 454: 100/100 | Total: 60,392/60,400 | Rate: 22.8/sec | ETA: 5.3h
+Batch 455: 100/100 | Total: 60,492/60,500 | Rate: 22.8/sec | ETA: 5.3h
+Batch 456: 100/100 | Total: 60,592/60,600 | Rate: 22.8/sec | ETA: 5.3h
+Batch 457: 100/100 | Total: 60,692/60,700 | Rate: 22.8/sec | ETA: 5.3h
+Batch 458: 100/100 | Total: 60,792/60,800 | Rate: 22.8/sec | ETA: 5.3h
+Batch 459: 100/100 | Total: 60,892/60,900 | Rate: 22.8/sec | ETA: 5.3h
+Batch 460: 100/100 | Total: 60,992/61,000 | Rate: 22.8/sec | ETA: 5.3h
+  💾 Checkpoint saved
+Batch 461: 100/100 | Total: 61,092/61,100 | Rate: 22.8/sec | ETA: 5.3h
+Batch 462: 100/100 | Total: 61,192/61,200 | Rate: 22.8/sec | ETA: 5.3h
+Batch 463: 100/100 | Total: 61,292/61,300 | Rate: 22.9/sec | ETA: 5.3h
+Batch 464: 100/100 | Total: 61,392/61,400 | Rate: 22.9/sec | ETA: 5.2h
+Batch 465: 100/100 | Total: 61,492/61,500 | Rate: 22.9/sec | ETA: 5.2h
+Batch 466: 100/100 | Total: 61,592/61,600 | Rate: 22.9/sec | ETA: 5.2h
+Batch 467: 100/100 | Total: 61,692/61,700 | Rate: 22.9/sec | ETA: 5.2h
+Batch 468: 100/100 | Total: 61,792/61,800 | Rate: 22.9/sec | ETA: 5.2h
+Batch 469: 100/100 | Total: 61,892/61,900 | Rate: 22.9/sec | ETA: 5.2h
+Batch 470: 100/100 | Total: 61,992/62,000 | Rate: 22.9/sec | ETA: 5.2h
+  💾 Checkpoint saved
+Batch 471: 100/100 | Total: 62,092/62,100 | Rate: 22.9/sec | ETA: 5.2h
+Batch 472: 100/100 | Total: 62,192/62,200 | Rate: 22.9/sec | ETA: 5.2h
+Batch 473: 100/100 | Total: 62,292/62,300 | Rate: 22.9/sec | ETA: 5.2h
+Batch 474: 100/100 | Total: 62,392/62,400 | Rate: 22.9/sec | ETA: 5.2h
+Batch 475: 100/100 | Total: 62,492/62,500 | Rate: 22.9/sec | ETA: 5.2h
+Batch 476: 100/100 | Total: 62,592/62,600 | Rate: 22.9/sec | ETA: 5.2h
+Batch 477: 100/100 | Total: 62,692/62,700 | Rate: 22.9/sec | ETA: 5.2h
+Batch 478: 100/100 | Total: 62,792/62,800 | Rate: 22.9/sec | ETA: 5.2h
+Batch 479: 100/100 | Total: 62,892/62,900 | Rate: 22.9/sec | ETA: 5.2h
+Batch 480: 100/100 | Total: 62,992/63,000 | Rate: 22.9/sec | ETA: 5.2h
+  💾 Checkpoint saved
+Batch 481: 100/100 | Total: 63,092/63,100 | Rate: 22.9/sec | ETA: 5.2h
+Batch 482: 100/100 | Total: 63,192/63,200 | Rate: 22.9/sec | ETA: 5.2h
+Batch 483: 100/100 | Total: 63,292/63,300 | Rate: 22.9/sec | ETA: 5.2h
+Batch 484: 100/100 | Total: 63,392/63,400 | Rate: 22.9/sec | ETA: 5.2h
+Batch 485: 100/100 | Total: 63,492/63,500 | Rate: 22.9/sec | ETA: 5.2h
+Batch 486: 100/100 | Total: 63,592/63,600 | Rate: 22.9/sec | ETA: 5.2h
+Batch 487: 100/100 | Total: 63,692/63,700 | Rate: 22.9/sec | ETA: 5.2h
+Batch 488: 100/100 | Total: 63,792/63,800 | Rate: 22.9/sec | ETA: 5.2h
+Batch 489: 100/100 | Total: 63,892/63,900 | Rate: 22.9/sec | ETA: 5.2h
+Batch 490: 100/100 | Total: 63,992/64,000 | Rate: 22.9/sec | ETA: 5.2h
+  💾 Checkpoint saved
+Batch 491: 100/100 | Total: 64,092/64,100 | Rate: 22.9/sec | ETA: 5.2h
+Batch 492: 100/100 | Total: 64,192/64,200 | Rate: 22.9/sec | ETA: 5.2h
+Batch 493: 100/100 | Total: 64,292/64,300 | Rate: 22.9/sec | ETA: 5.2h
+Batch 494: 100/100 | Total: 64,392/64,400 | Rate: 22.9/sec | ETA: 5.2h
+Batch 495: 100/100 | Total: 64,492/64,500 | Rate: 22.9/sec | ETA: 5.2h
+Batch 496: 100/100 | Total: 64,592/64,600 | Rate: 22.9/sec | ETA: 5.2h
+Batch 497: 100/100 | Total: 64,692/64,700 | Rate: 22.9/sec | ETA: 5.2h
+Batch 498: 100/100 | Total: 64,792/64,800 | Rate: 22.9/sec | ETA: 5.2h
+Batch 499: 100/100 | Total: 64,892/64,900 | Rate: 22.9/sec | ETA: 5.2h
+Batch 500: 100/100 | Total: 64,992/65,000 | Rate: 22.9/sec | ETA: 5.2h
+  💾 Checkpoint saved
+Batch 501: 100/100 | Total: 65,092/65,100 | Rate: 23.0/sec | ETA: 5.2h
+Batch 502: 100/100 | Total: 65,192/65,200 | Rate: 23.0/sec | ETA: 5.2h
+Batch 503: 100/100 | Total: 65,292/65,300 | Rate: 23.0/sec | ETA: 5.2h
+Batch 504: 100/100 | Total: 65,392/65,400 | Rate: 23.0/sec | ETA: 5.2h
+Batch 505: 100/100 | Total: 65,492/65,500 | Rate: 23.0/sec | ETA: 5.2h
+Batch 506: 100/100 | Total: 65,592/65,600 | Rate: 23.0/sec | ETA: 5.2h
+Batch 507: 100/100 | Total: 65,692/65,700 | Rate: 23.0/sec | ETA: 5.2h
+Batch 508: 100/100 | Total: 65,792/65,800 | Rate: 23.0/sec | ETA: 5.2h
+Batch 509: 100/100 | Total: 65,892/65,900 | Rate: 23.0/sec | ETA: 5.2h
+Batch 510: 100/100 | Total: 65,992/66,000 | Rate: 23.0/sec | ETA: 5.2h
+  💾 Checkpoint saved
+Batch 511: 100/100 | Total: 66,092/66,100 | Rate: 23.0/sec | ETA: 5.2h
+Batch 512: 100/100 | Total: 66,192/66,200 | Rate: 23.0/sec | ETA: 5.2h
+Batch 513: 100/100 | Total: 66,292/66,300 | Rate: 23.0/sec | ETA: 5.2h
+Batch 514: 100/100 | Total: 66,392/66,400 | Rate: 23.0/sec | ETA: 5.2h
+Batch 515: 100/100 | Total: 66,492/66,500 | Rate: 23.0/sec | ETA: 5.2h
+Batch 516: 100/100 | Total: 66,592/66,600 | Rate: 23.0/sec | ETA: 5.2h
+Batch 517: 100/100 | Total: 66,692/66,700 | Rate: 23.0/sec | ETA: 5.2h
+Batch 518: 100/100 | Total: 66,792/66,800 | Rate: 23.0/sec | ETA: 5.1h
+Batch 519: 100/100 | Total: 66,892/66,900 | Rate: 23.0/sec | ETA: 5.1h
+Batch 520: 100/100 | Total: 66,992/67,000 | Rate: 23.0/sec | ETA: 5.1h
+  💾 Checkpoint saved
+Batch 521: 100/100 | Total: 67,092/67,100 | Rate: 23.0/sec | ETA: 5.1h
+Batch 522: 100/100 | Total: 67,192/67,200 | Rate: 23.0/sec | ETA: 5.1h
+Batch 523: 100/100 | Total: 67,292/67,300 | Rate: 23.0/sec | ETA: 5.1h
+Batch 524: 100/100 | Total: 67,392/67,400 | Rate: 23.0/sec | ETA: 5.1h
+Batch 525: 100/100 | Total: 67,492/67,500 | Rate: 23.0/sec | ETA: 5.1h
+Batch 526: 100/100 | Total: 67,592/67,600 | Rate: 23.0/sec | ETA: 5.1h
+Batch 527: 100/100 | Total: 67,692/67,700 | Rate: 23.0/sec | ETA: 5.1h
+Batch 528: 100/100 | Total: 67,792/67,800 | Rate: 23.0/sec | ETA: 5.1h
+Batch 529: 100/100 | Total: 67,892/67,900 | Rate: 23.1/sec | ETA: 5.1h
+Batch 530: 100/100 | Total: 67,992/68,000 | Rate: 23.1/sec | ETA: 5.1h
+  💾 Checkpoint saved
+Batch 531: 100/100 | Total: 68,092/68,100 | Rate: 23.1/sec | ETA: 5.1h
+Batch 532: 100/100 | Total: 68,192/68,200 | Rate: 23.0/sec | ETA: 5.1h
+Batch 533: 100/100 | Total: 68,292/68,300 | Rate: 23.0/sec | ETA: 5.1h
+Batch 534: 100/100 | Total: 68,392/68,400 | Rate: 23.0/sec | ETA: 5.1h
+Batch 535: 100/100 | Total: 68,492/68,500 | Rate: 23.0/sec | ETA: 5.1h
+Batch 536: 100/100 | Total: 68,592/68,600 | Rate: 23.0/sec | ETA: 5.1h
+Batch 537: 100/100 | Total: 68,692/68,700 | Rate: 23.0/sec | ETA: 5.1h
+Batch 538: 100/100 | Total: 68,792/68,800 | Rate: 23.0/sec | ETA: 5.1h
+Batch 539: 100/100 | Total: 68,892/68,900 | Rate: 23.0/sec | ETA: 5.1h
+Batch 540: 100/100 | Total: 68,992/69,000 | Rate: 23.0/sec | ETA: 5.1h
+  💾 Checkpoint saved
+Batch 541: 100/100 | Total: 69,092/69,100 | Rate: 23.0/sec | ETA: 5.1h
+Batch 542: 100/100 | Total: 69,192/69,200 | Rate: 23.0/sec | ETA: 5.1h
+Batch 543: 100/100 | Total: 69,292/69,300 | Rate: 23.0/sec | ETA: 5.1h
+Batch 544: 100/100 | Total: 69,392/69,400 | Rate: 23.0/sec | ETA: 5.1h
+Batch 545: 100/100 | Total: 69,492/69,500 | Rate: 23.0/sec | ETA: 5.1h
+Batch 546: 100/100 | Total: 69,592/69,600 | Rate: 23.0/sec | ETA: 5.1h

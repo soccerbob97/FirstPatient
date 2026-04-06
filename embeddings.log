@@ -1,0 +1,20 @@
+Starting embedding generation
+  Target: 50000 trials
+  Batch size: 100
+
+Processed: 100 | Success: 100 | Rate: 5.2/sec
+Processed: 200 | Success: 200 | Rate: 5.5/sec
+Processed: 300 | Success: 300 | Rate: 5.5/sec
+Processed: 400 | Success: 400 | Rate: 5.6/sec
+Processed: 500 | Success: 500 | Rate: 5.6/sec
+Processed: 600 | Success: 600 | Rate: 5.3/sec
+Processed: 700 | Success: 700 | Rate: 5.3/sec
+Processed: 800 | Success: 800 | Rate: 5.4/sec
+Processed: 900 | Success: 900 | Rate: 5.4/sec
+Processed: 1,000 | Success: 1,000 | Rate: 5.5/sec
+Processed: 1,100 | Success: 1,100 | Rate: 5.6/sec
+Processed: 1,200 | Success: 1,200 | Rate: 5.6/sec
+Processed: 1,300 | Success: 1,300 | Rate: 5.6/sec
+Processed: 1,400 | Success: 1,400 | Rate: 5.7/sec
+Processed: 1,500 | Success: 1,500 | Rate: 5.7/sec
+Processed: 1,600 | Success: 1,600 | Rate: 5.8/sec

@@ -8,8 +8,8 @@ export interface Recommendation {
   site: {
     id: number;
     name: string;
-    city: string;
-    country: string;
+    city: string | null;
+    country: string | null;
   };
   link_type: string;
   scores: {

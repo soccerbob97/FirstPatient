@@ -7,9 +7,12 @@ interface RecommendationCardProps {
 }
 
 const linkTypeLabels: Record<string, string> = {
-  oversight: 'Study Oversight',
-  site_contact: 'Site Contact',
-  affiliation_match: 'Affiliation Match',
+  PRINCIPAL_INVESTIGATOR: 'Principal Investigator',
+  STUDY_DIRECTOR: 'Study Director',
+  STUDY_CHAIR: 'Study Chair',
+  SUB_INVESTIGATOR: 'Sub-Investigator',
+  CONTACT: 'Site Contact',
+  trial_match: 'Trial Match',
 };
 
 export function RecommendationCard({ recommendation, rank }: RecommendationCardProps) {
@@ -40,7 +43,7 @@ export function RecommendationCard({ recommendation, rank }: RecommendationCardP
               </div>
               <div className="flex items-center gap-2 text-slate-500 text-sm">
                 <MapPin size={14} className="text-slate-400" />
-                <span>{site.city}, {site.country}</span>
+                <span>{[site.city, site.country].filter(Boolean).join(', ') || 'Location not specified'}</span>
               </div>
             </div>
 
