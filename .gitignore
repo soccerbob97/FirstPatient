@@ -21,3 +21,5 @@ data/raw/*.json
 
 # OS
 .DS_Store
+
+GrowthVine/

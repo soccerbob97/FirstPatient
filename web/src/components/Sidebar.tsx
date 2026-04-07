@@ -1,4 +1,5 @@
-import { PlusCircle, Clock, Search, Settings } from 'lucide-react';
+import { PlusCircle, Clock, Search, Settings, LogOut } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
 
 interface SearchHistoryItem {
   id: string;
@@ -13,6 +14,8 @@ interface SidebarProps {
 }
 
 export function Sidebar({ searchHistory, onNewSearch, onSelectSearch }: SidebarProps) {
+  const { user, signOut } = useAuth();
+
   return (
     <aside className="w-64 bg-slate-50 border-r border-slate-200 flex flex-col h-screen">
       {/* Logo */}
@@ -57,6 +60,29 @@ export function Sidebar({ searchHistory, onNewSearch, onSelectSearch }: SidebarP
 
       {/* Bottom Navigation */}
       <div className="p-4 border-t border-slate-200 space-y-1">
+        {/* User Profile */}
+        {user && (
+          <div className="flex items-center gap-3 px-3 py-2 mb-2">
+            {user.user_metadata?.avatar_url ? (
+              <img 
+                src={user.user_metadata.avatar_url} 
+                alt="Profile" 
+                className="w-8 h-8 rounded-full"
+              />
+            ) : (
+              <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-medium text-sm">
+                {(user.email?.[0] || 'U').toUpperCase()}
+              </div>
+            )}
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium text-slate-700 truncate">
+                {user.user_metadata?.full_name || user.email?.split('@')[0]}
+              </p>
+              <p className="text-xs text-slate-500 truncate">{user.email}</p>
+            </div>
+          </div>
+        )}
+        
         <button className="w-full flex items-center gap-3 px-3 py-2 text-sm text-slate-600 hover:bg-slate-100 rounded-lg transition-colors">
           <Search size={18} />
           <span>Browse Trials</span>
@@ -64,6 +90,13 @@ export function Sidebar({ searchHistory, onNewSearch, onSelectSearch }: SidebarP
         <button className="w-full flex items-center gap-3 px-3 py-2 text-sm text-slate-600 hover:bg-slate-100 rounded-lg transition-colors">
           <Settings size={18} />
           <span>Settings</span>
+        </button>
+        <button 
+          onClick={() => signOut()}
+          className="w-full flex items-center gap-3 px-3 py-2 text-sm text-slate-600 hover:bg-slate-100 rounded-lg transition-colors"
+        >
+          <LogOut size={18} />
+          <span>Sign Out</span>
         </button>
       </div>
     </aside>

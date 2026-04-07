@@ -17,11 +17,11 @@ class PIRecommender:
     def __init__(self):
         self.client = get_supabase_admin_client()
         
-        # Scoring weights
+        # Scoring weights - similarity-dominant for better score distribution
         self.weights = {
-            "similarity": 0.40,      # Vector similarity
-            "experience": 0.25,      # Trial count
-            "completion": 0.20,      # Completion rate
+            "similarity": 0.60,      # Vector similarity (primary factor)
+            "experience": 0.15,      # Trial count (secondary)
+            "completion": 0.10,      # Completion rate (minor)
             "link_confidence": 0.15, # Link type confidence
         }
         
@@ -406,12 +406,14 @@ class PIRecommender:
         # Similarity component (already 0-1)
         similarity_score = row["avg_trial_similarity"]
         
-        # Experience component (normalize by max expected trials)
-        max_expected_trials = 20
-        experience_score = min(row["total_trials"] / max_expected_trials, 1.0)
+        # Experience component - use log scale to not over-penalize low trial counts
+        # 1 trial = 0.5, 5 trials = 0.8, 10+ trials = 1.0
+        import math
+        trials = row["total_trials"]
+        experience_score = min(0.5 + 0.5 * math.log10(max(trials, 1) + 1) / math.log10(11), 1.0)
         
-        # Completion rate component (already 0-1)
-        completion_score = row.get("completion_rate", 0) or 0
+        # Completion rate component - boost baseline to 0.5 minimum
+        completion_score = max(row.get("completion_rate", 0) or 0, 0.5)
         
         # Link confidence component (use role_confidence)
         link_score = self.role_confidence.get(row["link_type"], 0.4)

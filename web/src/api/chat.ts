@@ -1,4 +1,18 @@
+import { supabase } from '../lib/supabase';
+
 const API_BASE = 'http://localhost:8000/api';
+
+// Helper to get auth headers
+async function getAuthHeaders(): Promise<HeadersInit> {
+  const { data: { session } } = await supabase.auth.getSession();
+  const headers: HeadersInit = {
+    'Content-Type': 'application/json',
+  };
+  if (session?.access_token) {
+    headers['Authorization'] = `Bearer ${session.access_token}`;
+  }
+  return headers;
+}
 
 export interface ChatMessage {
   role: 'user' | 'assistant';
@@ -37,11 +51,10 @@ export async function sendChatMessage(
   messages: { role: string; content: string }[],
   filters?: { phase?: string; country?: string }
 ): Promise<ChatResponse> {
+  const headers = await getAuthHeaders();
   const response = await fetch(`${API_BASE}/chat`, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers,
     body: JSON.stringify({ messages, filters }),
   });
 
@@ -62,7 +75,8 @@ export interface ConversationSummary {
 }
 
 export async function listConversations(): Promise<{ conversations: ConversationSummary[], error?: string }> {
-  const response = await fetch(`${API_BASE}/conversations`);
+  const headers = await getAuthHeaders();
+  const response = await fetch(`${API_BASE}/conversations`, { headers });
   if (!response.ok) {
     throw new Error('Failed to list conversations');
   }
@@ -73,7 +87,8 @@ export async function getConversation(conversationId: string): Promise<{
   conversation: ConversationSummary;
   messages: ChatMessage[];
 }> {
-  const response = await fetch(`${API_BASE}/conversations/${conversationId}`);
+  const headers = await getAuthHeaders();
+  const response = await fetch(`${API_BASE}/conversations/${conversationId}`, { headers });
   if (!response.ok) {
     throw new Error('Failed to get conversation');
   }
@@ -84,9 +99,10 @@ export async function saveConversation(
   title: string,
   messages: ChatMessage[]
 ): Promise<{ conversation_id: string }> {
+  const headers = await getAuthHeaders();
   const response = await fetch(`${API_BASE}/conversations`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers,
     body: JSON.stringify({
       title,
       messages: messages.map(m => ({
@@ -103,8 +119,10 @@ export async function saveConversation(
 }
 
 export async function deleteConversation(conversationId: string): Promise<void> {
+  const headers = await getAuthHeaders();
   const response = await fetch(`${API_BASE}/conversations/${conversationId}`, {
     method: 'DELETE',
+    headers,
   });
   if (!response.ok) {
     throw new Error('Failed to delete conversation');
@@ -114,11 +132,10 @@ export async function deleteConversation(conversationId: string): Promise<void> 
 export async function* streamChatMessage(
   messages: { role: string; content: string }[]
 ): AsyncGenerator<{ type: string; data: any }> {
+  const headers = await getAuthHeaders();
   const response = await fetch(`${API_BASE}/chat/stream`, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers,
     body: JSON.stringify({ messages }),
   });
 

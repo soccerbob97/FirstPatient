@@ -3,6 +3,8 @@ import { Sidebar } from './components/Sidebar';
 import { SearchBar } from './components/SearchBar';
 import { ChatMessage } from './components/ChatMessage';
 import { FilterPanel } from './components/FilterPanel';
+import { LoginPage } from './components/LoginPage';
+import { useAuth } from './contexts/AuthContext';
 import { 
   sendChatMessage, 
   listConversations,
@@ -18,7 +20,31 @@ interface Conversation {
   timestamp: Date;
 }
 
+// Main App component handles auth state
 function App() {
+  const { user, loading: authLoading } = useAuth();
+
+  // Show loading while checking auth
+  if (authLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-50">
+        <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  // Show login page if not authenticated
+  if (!user) {
+    return <LoginPage />;
+  }
+
+  // User is authenticated, show the chat interface
+  return <ChatApp />;
+}
+
+// ChatApp component contains all the chat logic and hooks
+function ChatApp() {
+  const { user } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [messages, setMessages] = useState<ChatMessageType[]>([]);
@@ -27,14 +53,17 @@ function App() {
   const [dbAvailable, setDbAvailable] = useState(false);
   const [phase, setPhase] = useState('');
   const [country, setCountry] = useState('');
+  const [lastQuery, setLastQuery] = useState('');
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Load conversations from server on mount
+  // Load conversations from server on mount (only when user is authenticated)
   useEffect(() => {
     async function loadConversations() {
       try {
+        console.log('Loading conversations for user:', user?.email);
         const result = await listConversations();
+        console.log('Conversations loaded:', result);
         if (!result.error && result.conversations.length > 0) {
           setDbAvailable(true);
           setConversations(result.conversations.map(c => ({
@@ -43,14 +72,19 @@ function App() {
             messages: [],
             timestamp: new Date(c.updated_at)
           })));
+        } else {
+          setDbAvailable(true); // DB exists but no conversations yet
         }
-      } catch {
+      } catch (err) {
+        console.error('Error loading conversations:', err);
         // DB tables don't exist yet, use in-memory only
         setDbAvailable(false);
       }
     }
-    loadConversations();
-  }, []);
+    if (user) {
+      loadConversations();
+    }
+  }, [user]);
 
   // Scroll to bottom when messages change
   useEffect(() => {
@@ -116,10 +150,13 @@ function App() {
   const handleSendMessage = useCallback(async (content: string) => {
     if (!content.trim() || isLoading) return;
 
-    // Extract and set filters from query
+    // Extract filters from query - reset filters if not mentioned in new query
     const extractedFilters = extractFiltersFromQuery(content);
-    if (extractedFilters.country) setCountry(extractedFilters.country);
-    if (extractedFilters.phase) setPhase(extractedFilters.phase);
+    const newPhase = extractedFilters.phase || '';
+    const newCountry = extractedFilters.country || '';
+    setPhase(newPhase);
+    setCountry(newCountry);
+    setLastQuery(content);
 
     // Add user message
     const userMessage: ChatMessageType = {
@@ -139,10 +176,10 @@ function App() {
         content: m.content,
       }));
 
-      // Use extracted filters or existing state
+      // Use only the filters extracted from this query (not persisted state)
       const filters = { 
-        phase: extractedFilters.phase || phase || undefined, 
-        country: extractedFilters.country || country || undefined 
+        phase: newPhase || undefined, 
+        country: newCountry || undefined 
       };
       const response = await sendChatMessage(apiMessages, filters);
 
@@ -198,13 +235,69 @@ function App() {
     } finally {
       setIsLoading(false);
     }
-  }, [messages, isLoading, currentConversationId, dbAvailable]);
+  }, [messages, isLoading, currentConversationId, dbAvailable, phase, country]);
 
   const handleNewChat = () => {
     setMessages([]);
     setCurrentConversationId(null);
     setError(null);
+    setPhase('');
+    setCountry('');
+    setLastQuery('');
   };
+
+  // Re-run search when filters change (if there's a previous query)
+  const handleFilterChange = useCallback((newPhase: string, newCountry: string) => {
+    setPhase(newPhase);
+    setCountry(newCountry);
+    
+    // If we have a previous query and messages, re-run the search with new filters
+    if (lastQuery && messages.length > 0 && !isLoading) {
+      // Re-submit with updated filters
+      handleSendMessageWithFilters(lastQuery, newPhase, newCountry);
+    }
+  }, [lastQuery, messages.length, isLoading]);
+
+  const handleSendMessageWithFilters = useCallback(async (content: string, filterPhase: string, filterCountry: string) => {
+    if (!content.trim() || isLoading) return;
+
+    // Add user message showing filter change
+    const userMessage: ChatMessageType = {
+      role: 'user',
+      content: `[Filter updated] ${content}`,
+      timestamp: new Date(),
+    };
+    
+    setMessages((prev) => [...prev, userMessage]);
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const apiMessages = [...messages, userMessage].map((m) => ({
+        role: m.role,
+        content: m.content,
+      }));
+
+      const filters = { 
+        phase: filterPhase || undefined, 
+        country: filterCountry || undefined 
+      };
+      const response = await sendChatMessage(apiMessages, filters);
+
+      const assistantMessage: ChatMessageType = {
+        role: 'assistant',
+        content: response.message,
+        recommendations: response.recommendations || undefined,
+        timestamp: new Date(),
+      };
+
+      setMessages((prev) => [...prev, assistantMessage]);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'An error occurred');
+    } finally {
+      setIsLoading(false);
+    }
+  }, [messages, isLoading]);
 
   const handleSelectConversation = async (id: string) => {
     // First check local cache
@@ -337,8 +430,8 @@ function App() {
                 <FilterPanel
                   phase={phase}
                   country={country}
-                  onPhaseChange={setPhase}
-                  onCountryChange={setCountry}
+                  onPhaseChange={(p) => handleFilterChange(p, country)}
+                  onCountryChange={(c) => handleFilterChange(phase, c)}
                 />
                 <SearchBar
                   onSearch={handleSendMessage}

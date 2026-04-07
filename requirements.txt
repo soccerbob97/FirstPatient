@@ -22,6 +22,9 @@ openai>=1.0.0
 fastapi>=0.109.0
 uvicorn[standard]>=0.27.0
 
+# JWT authentication
+PyJWT>=2.8.0
+
 # Data processing (for later phases)
 # pandas>=2.0.0
 # numpy>=1.24.0
