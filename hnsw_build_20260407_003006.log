@@ -1,0 +1,23 @@
+==============================================
+HNSW Index Build Started: Tue Apr  7 00:30:06 PDT 2026
+Log file: hnsw_build_20260407_003006.log
+==============================================
+
+[STEP 1/6] Creating unlogged table trial_embeddings_full...
+Started: Tue Apr  7 00:30:06 PDT 2026
+SET
+NOTICE:  table "trial_embeddings_full" does not exist, skipping
+DROP TABLE
+CREATE TABLE
+    status     
+---------------
+ Table created
+(1 row)
+
+Completed: Tue Apr  7 00:30:07 PDT 2026
+
+[STEP 2/6] Copying embeddings from trials table...
+This will copy ~548K rows (excluding company-only trials)
+Estimated time: 30-60 minutes
+Started: Tue Apr  7 00:30:07 PDT 2026
+SET

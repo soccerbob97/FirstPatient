@@ -56,6 +56,7 @@ function ChatApp() {
   const [lastQuery, setLastQuery] = useState('');
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const shouldScrollRef = useRef(false);
 
   // Load conversations from server on mount (only when user is authenticated)
   useEffect(() => {
@@ -86,10 +87,13 @@ function ChatApp() {
     }
   }, [user]);
 
-  // Scroll to bottom when messages change
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
+  // Disabled auto-scroll - user controls their own scrolling
+  // useEffect(() => {
+  //   if (shouldScrollRef.current) {
+  //     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  //     shouldScrollRef.current = false;
+  //   }
+  // }, [messages]);
 
   // Extract filters from query text
   const extractFiltersFromQuery = (query: string) => {
@@ -165,6 +169,7 @@ function ChatApp() {
       timestamp: new Date(),
     };
     
+    shouldScrollRef.current = true; // Enable scroll for user-initiated messages
     setMessages((prev) => [...prev, userMessage]);
     setIsLoading(true);
     setError(null);
@@ -191,6 +196,7 @@ function ChatApp() {
         timestamp: new Date(),
       };
 
+      shouldScrollRef.current = true; // Scroll to show assistant response
       setMessages((prev) => [...prev, assistantMessage]);
 
       // Update conversation history
@@ -268,6 +274,7 @@ function ChatApp() {
       timestamp: new Date(),
     };
     
+    shouldScrollRef.current = true;
     setMessages((prev) => [...prev, userMessage]);
     setIsLoading(true);
     setError(null);
@@ -291,6 +298,7 @@ function ChatApp() {
         timestamp: new Date(),
       };
 
+      shouldScrollRef.current = true;
       setMessages((prev) => [...prev, assistantMessage]);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
@@ -371,9 +379,9 @@ function ChatApp() {
             </div>
             <div className="mt-6 flex flex-wrap gap-2 justify-center max-w-xl">
               {[
-                'Phase 2 diabetes trial in the US',
-                'Oncology investigators in Germany',
-                'Compare top cardiology sites',
+                'Diabetes type 2 clinical study',
+                'Phase 2 breast cancer trial',
+                'Obesity trial in the US',
               ].map((suggestion) => (
                 <button
                   key={suggestion}

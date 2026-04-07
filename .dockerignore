@@ -1,0 +1,53 @@
+# Git
+.git
+.gitignore
+
+# Python
+__pycache__
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+.venv/
+env/
+.env
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs
+*.log
+nohup.out
+
+# Frontend (not needed in backend container)
+web/
+node_modules/
+
+# Scripts (not needed in production)
+scripts/
+
+# Documentation
+docs/
+*.md
+
+# Supabase migrations (already applied)
+supabase/
+
+# Test files
+tests/
+*_test.py
+test_*.py
+
+# Local development
+.env.local
+.env.development
+bulk_load.log
+embedding*.log

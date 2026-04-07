@@ -323,7 +323,21 @@ class PIRecommender:
         
         # Sort by final score and limit results
         recommendations.sort(key=lambda x: x["scores"]["final"], reverse=True)
-        return recommendations[:max_results]
+        limited = recommendations[:max_results]
+        
+        # Normalize scores for display (map actual range to 60-95% for better UX)
+        if limited:
+            raw_scores = [r["scores"]["final"] for r in limited]
+            min_score = min(raw_scores)
+            max_score = max(raw_scores)
+            score_range = max_score - min_score if max_score > min_score else 0.1
+            
+            for r in limited:
+                # Map to 60-95% range based on position in actual score distribution
+                normalized = 0.60 + 0.35 * (r["scores"]["final"] - min_score) / score_range
+                r["scores"]["final"] = round(normalized, 3)
+        
+        return limited
     
     def _is_sponsor(self, name: str) -> bool:
         """Check if a name looks like a sponsor/organization rather than a real PI."""

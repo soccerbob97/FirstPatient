@@ -1,4 +1,5 @@
 import { User, Bot } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
 import { RecommendationCard } from './RecommendationCard';
 import type { ChatMessage as ChatMessageType } from '../api/chat';
 
@@ -33,7 +34,13 @@ export function ChatMessage({ message }: ChatMessageProps) {
               : 'bg-slate-100 text-slate-800 rounded-bl-md'
           }`}
         >
-          <p className="whitespace-pre-wrap">{message.content}</p>
+          {isUser ? (
+            <p className="whitespace-pre-wrap">{message.content}</p>
+          ) : (
+            <div className="prose prose-sm prose-slate max-w-none prose-p:my-2 prose-ul:my-2 prose-li:my-0.5 prose-strong:text-slate-800">
+              <ReactMarkdown>{message.content}</ReactMarkdown>
+            </div>
+          )}
         </div>
 
         {/* Recommendations */}

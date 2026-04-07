@@ -1,4 +1,4 @@
-import { PlusCircle, Clock, Search, Settings, LogOut } from 'lucide-react';
+import { PlusCircle, Clock, LogOut } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 
 interface SearchHistoryItem {
@@ -83,14 +83,6 @@ export function Sidebar({ searchHistory, onNewSearch, onSelectSearch }: SidebarP
           </div>
         )}
         
-        <button className="w-full flex items-center gap-3 px-3 py-2 text-sm text-slate-600 hover:bg-slate-100 rounded-lg transition-colors">
-          <Search size={18} />
-          <span>Browse Trials</span>
-        </button>
-        <button className="w-full flex items-center gap-3 px-3 py-2 text-sm text-slate-600 hover:bg-slate-100 rounded-lg transition-colors">
-          <Settings size={18} />
-          <span>Settings</span>
-        </button>
         <button 
           onClick={() => signOut()}
           className="w-full flex items-center gap-3 px-3 py-2 text-sm text-slate-600 hover:bg-slate-100 rounded-lg transition-colors"

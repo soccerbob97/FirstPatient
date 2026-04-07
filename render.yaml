@@ -1,0 +1,23 @@
+# Render Blueprint - Infrastructure as Code
+# https://render.com/docs/blueprint-spec
+
+services:
+  - type: web
+    name: firstpatient-api
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    region: oregon  # or ohio, frankfurt, singapore
+    plan: starter   # $7/mo - no cold starts
+    healthCheckPath: /health
+    envVars:
+      - key: SUPABASE_URL
+        sync: false  # Set manually in Render dashboard
+      - key: SUPABASE_SERVICE_KEY
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: FRONTEND_URL
+        sync: false
+      - key: PYTHONUNBUFFERED
+        value: "1"
+    autoDeploy: true  # Deploy on git push

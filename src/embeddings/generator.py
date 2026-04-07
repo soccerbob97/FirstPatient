@@ -1,7 +1,7 @@
 """Generate embeddings using OpenAI text-embedding-3-small."""
 
 import os
-from typing import List
+from typing import List, Optional
 from openai import OpenAI
 from dotenv import load_dotenv
 
@@ -13,19 +13,37 @@ client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 EMBEDDING_MODEL = "text-embedding-3-small"
 EMBEDDING_DIMENSIONS = 1536
 
+# Simple in-memory cache for embeddings (exact match)
+# Using a dict with LRU-like behavior via lru_cache
+_embedding_cache: dict[str, List[float]] = {}
+_CACHE_MAX_SIZE = 1000  # Limit cache to 1000 entries
 
-def get_embedding(text: str) -> List[float]:
+
+def _normalize_text(text: str) -> str:
+    """Normalize text for cache key (lowercase, strip whitespace)."""
+    return text.lower().strip()
+
+
+def get_embedding(text: str, use_cache: bool = True) -> Optional[List[float]]:
     """
-    Generate embedding for a single text.
+    Generate embedding for a single text with optional caching.
     
     Args:
         text: Text to embed
+        use_cache: Whether to use the embedding cache (default True)
         
     Returns:
         List of floats (1536 dimensions)
     """
     if not text or not text.strip():
         return None
+    
+    # Normalize for cache lookup
+    cache_key = _normalize_text(text)
+    
+    # Check cache first
+    if use_cache and cache_key in _embedding_cache:
+        return _embedding_cache[cache_key]
     
     # Truncate to ~8000 tokens (~32000 chars) to stay within limits
     text = text[:32000]
@@ -36,7 +54,30 @@ def get_embedding(text: str) -> List[float]:
         dimensions=EMBEDDING_DIMENSIONS,
     )
     
-    return response.data[0].embedding
+    embedding = response.data[0].embedding
+    
+    # Store in cache (with simple size limit)
+    if use_cache:
+        if len(_embedding_cache) >= _CACHE_MAX_SIZE:
+            # Remove oldest entry (first key) - simple eviction
+            oldest_key = next(iter(_embedding_cache))
+            del _embedding_cache[oldest_key]
+        _embedding_cache[cache_key] = embedding
+    
+    return embedding
+
+
+def get_cache_stats() -> dict:
+    """Return cache statistics for monitoring."""
+    return {
+        "size": len(_embedding_cache),
+        "max_size": _CACHE_MAX_SIZE,
+    }
+
+
+def clear_cache() -> None:
+    """Clear the embedding cache."""
+    _embedding_cache.clear()
 
 
 def get_embeddings_batch(texts: List[str], batch_size: int = 100) -> List[List[float]]:

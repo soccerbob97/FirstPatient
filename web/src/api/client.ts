@@ -1,4 +1,7 @@
-const API_BASE = '/api';
+// Use environment variable for production, fallback to relative path for dev (Vite proxy)
+const API_BASE = import.meta.env.VITE_API_URL 
+  ? `${import.meta.env.VITE_API_URL}/api` 
+  : '/api';
 
 export interface Recommendation {
   investigator: {

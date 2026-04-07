@@ -1,0 +1,35 @@
+==============================================
+HNSW Index Build Started: Tue Apr  7 00:47:08 PDT 2026
+Log file: hnsw_build_20260407_004708.log
+Safety threshold: 27 GB max
+==============================================
+[SAFETY CHECK] Checking disk size before: Step 1 - Create table
+[SAFETY CHECK] Current DB size: 7.80 GB (threshold: 27 GB)
+
+[STEP 1/6] Creating unlogged table trial_embeddings_full...
+Started: Tue Apr  7 00:47:09 PDT 2026
+SET
+NOTICE:  table "trial_embeddings_full" does not exist, skipping
+DROP TABLE
+CREATE TABLE
+    status     
+---------------
+ Table created
+(1 row)
+
+Completed: Tue Apr  7 00:47:10 PDT 2026
+[SAFETY CHECK] Checking disk size before: Step 2 - Copy embeddings
+[SAFETY CHECK] Current DB size: 7.80 GB (threshold: 27 GB)
+
+[STEP 2/6] Copying embeddings from trials table...
+This will copy ~548K rows (excluding company-only trials)
+Estimated time: 30-60 minutes
+Started: Tue Apr  7 00:47:11 PDT 2026
+SET
+server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+connection to server was lost

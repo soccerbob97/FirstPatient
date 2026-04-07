@@ -14,12 +14,52 @@ AI-powered system that recommends optimal PI + clinical trial site combinations 
 
 | Component | Status |
 |-----------|--------|
-| Data ingestion (1000 trials) | ✅ Complete |
+| Data ingestion (577K trials) | ✅ Complete |
 | PI-Site linking (3 strategies) | ✅ Complete |
-| Vector embeddings (trials + PIs) | ✅ Complete |
+| Vector embeddings (577K trials) | ✅ Complete |
+| HNSW index (43K demo subset) | ✅ Complete |
 | Hybrid recommendation engine | ✅ Complete |
-| FastAPI backend | 🚧 In Progress |
-| React frontend | 🚧 In Progress |
+| FastAPI backend | ✅ Complete |
+| React frontend (Chat UI) | ✅ Complete |
+| User authentication | ✅ Complete |
+
+## Vector Search & HNSW Index
+
+### Current Setup (Demo Mode)
+
+Due to Supabase Pro plan memory limitations, we use a **demo subset** for fast vector search:
+
+| Item | Value |
+|------|-------|
+| **Demo table** | `trial_embeddings_demo` |
+| **Indexed trials** | 43,080 (breast cancer, obesity, diabetes) |
+| **HNSW index size** | 337 MB |
+| **Search function** | `search_trials_by_embedding()` |
+
+The demo covers common therapeutic areas and provides sub-second search performance.
+
+### Why Not Full Index?
+
+Building an HNSW index on all 577K trials requires:
+- ~500MB - 1GB `maintenance_work_mem` for efficient build
+- Supabase Pro shared memory limit is ~128MB
+- Index build with 128MB spills to disk constantly and fails
+
+**Full embeddings exist** in the `trials.embedding` column (577K vectors), but the HNSW index only covers the demo subset.
+
+### To Build Full Index (Future)
+
+Options to index all 577K trials:
+1. **Upgrade Supabase compute** - Larger instance = more shared memory
+2. **Use dedicated Postgres** - Full control over `maintenance_work_mem`
+3. **Use Supabase branching** - Build index on branch, then merge
+
+### Memory Calculation
+
+For 550K vectors × 1536 dimensions:
+- Raw vector data: ~3.4 GB
+- HNSW graph overhead (m=16): ~140 MB  
+- Efficient build memory: 500MB - 1GB
 
 ## Architecture
 

@@ -1,10 +1,14 @@
 import { supabase } from '../lib/supabase';
 
-const API_BASE = 'http://localhost:8000/api';
+// Use environment variable for production, fallback to localhost for dev
+const API_BASE = import.meta.env.VITE_API_URL 
+  ? `${import.meta.env.VITE_API_URL}/api` 
+  : 'http://localhost:8000/api';
 
 // Helper to get auth headers
 async function getAuthHeaders(): Promise<HeadersInit> {
   const { data: { session } } = await supabase.auth.getSession();
+  console.log('getAuthHeaders - session:', session ? 'exists' : 'null', 'token:', session?.access_token ? 'present' : 'missing');
   const headers: HeadersInit = {
     'Content-Type': 'application/json',
   };

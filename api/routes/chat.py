@@ -170,12 +170,134 @@ TOOLS = [
                 "required": ["query"]
             }
         }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "get_trial_by_nct_id",
+            "description": "Get detailed information about a specific clinical trial by its NCT ID (e.g., NCT12345678). Use this when the user asks about a specific trial by its ID.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "nct_id": {
+                        "type": "string",
+                        "description": "The NCT ID of the trial (e.g., 'NCT12345678')"
+                    }
+                },
+                "required": ["nct_id"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "get_trials_by_condition",
+            "description": "Search for clinical trials by medical condition. Use this when the user wants to find trials for a specific disease or condition.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "condition": {
+                        "type": "string",
+                        "description": "The medical condition to search for (e.g., 'breast cancer', 'diabetes', 'obesity')"
+                    },
+                    "phase": {
+                        "type": "string",
+                        "description": "Optional phase filter (e.g., 'PHASE2')"
+                    },
+                    "status": {
+                        "type": "string",
+                        "description": "Optional status filter (e.g., 'RECRUITING')"
+                    },
+                    "limit": {
+                        "type": "integer",
+                        "description": "Maximum results to return",
+                        "default": 10
+                    }
+                },
+                "required": ["condition"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "get_pi_publications",
+            "description": "Get publication and academic metrics for a Principal Investigator from Semantic Scholar data. Includes h-index, paper count, citations, and research areas.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "investigator_id": {
+                        "type": "integer",
+                        "description": "The ID of the investigator"
+                    },
+                    "investigator_name": {
+                        "type": "string",
+                        "description": "The name of the investigator to search for"
+                    }
+                },
+                "required": []
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "get_trial_sites",
+            "description": "Get all clinical trial sites for a specific trial. Use this to see where a trial is being conducted.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "trial_id": {
+                        "type": "integer",
+                        "description": "The internal ID of the trial"
+                    },
+                    "nct_id": {
+                        "type": "string",
+                        "description": "The NCT ID of the trial (e.g., 'NCT12345678')"
+                    }
+                },
+                "required": []
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "get_trial_investigators",
+            "description": "Get all investigators/PIs working on a specific trial.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "trial_id": {
+                        "type": "integer",
+                        "description": "The internal ID of the trial"
+                    },
+                    "nct_id": {
+                        "type": "string",
+                        "description": "The NCT ID of the trial (e.g., 'NCT12345678')"
+                    }
+                },
+                "required": []
+            }
+        }
     }
 ]
 
 SYSTEM_PROMPT = """You are a clinical trial assistant that helps biotech sponsors find optimal Principal Investigators (PIs) and clinical trial sites.
 
 You have access to a database of 577,000+ clinical trials from ClinicalTrials.gov.
+
+AVAILABLE TOOLS:
+- get_recommendations: Find PI+Site pairs for a trial query (results shown as cards)
+- get_investigator_details: Get detailed info about a specific PI
+- get_site_details: Get detailed info about a specific site
+- compare_options: Compare multiple PIs or sites side by side
+- search_trials: Search trials by keyword with vector search
+- get_trial_by_nct_id: Look up a specific trial by NCT ID (fast, no embedding needed)
+- get_trials_by_condition: Find trials for a specific medical condition
+- get_pi_publications: Get academic metrics (h-index, papers, citations) from Semantic Scholar
+- get_trial_sites: Get all sites conducting a specific trial
+- get_trial_investigators: Get all PIs working on a specific trial
 
 IMPORTANT: When you call get_recommendations, the results are AUTOMATICALLY displayed as visual cards in the UI. 
 DO NOT repeat the recommendation details (names, sites, scores, metrics) in your text response.
@@ -186,7 +308,16 @@ Instead, your text response should:
 3. Offer to provide more details about specific PIs or sites if they want to learn more
 4. Suggest follow-up actions (e.g., "Would you like me to compare the top 2?" or "I can get more details on any of these")
 
-When users ask follow-up questions about specific investigators or sites mentioned in the cards, use get_investigator_details or get_site_details to provide additional context not shown in the cards.
+TOOL SELECTION GUIDE:
+- User asks about a specific PI by name (e.g., "tell me about Dr. Smith", "what trials has X worked on") → use get_investigator_details
+- User asks about a specific site by name → use get_site_details
+- User asks about a specific NCT ID → use get_trial_by_nct_id (fast lookup)
+- User asks for PI's publication/academic record → use get_pi_publications
+- User asks for all sites conducting a trial → use get_trial_sites
+- User asks for all investigators on a trial → use get_trial_investigators
+- User wants to find NEW PIs/sites for a trial concept → use get_recommendations
+
+IMPORTANT: When the user asks follow-up questions about a specific PI or site mentioned earlier, use get_investigator_details or get_site_details - NOT get_recommendations.
 
 Keep responses concise - the cards already show the key data.
 """
@@ -227,24 +358,20 @@ def execute_tool(tool_name: str, arguments: dict, filters: Optional[Filters] = N
         if not result.data:
             return {"error": "Investigator not found"}
         
-        inv = result.data[0] if inv_id else result.data
-        
-        # Get enriched data in parallel
-        if inv_id or (isinstance(inv, dict) and inv.get("id")):
-            the_id = inv_id or inv["id"]
+        # Helper function to enrich a single investigator
+        def enrich_investigator(inv_data):
+            the_id = inv_data["id"]
             
             def get_trial_count():
                 return supabase.table("trial_investigators").select("trial_id", count="exact").eq("investigator_id", the_id).limit(1).execute()
             
             def get_recent_trials():
-                # Get recent trial details for this investigator
                 trial_inv = supabase.table("trial_investigators").select(
                     "trial_id, role, trials(nct_id, brief_title, phase, overall_status, conditions)"
                 ).eq("investigator_id", the_id).limit(10).execute()
                 return trial_inv
             
             def get_sites():
-                # Get sites this investigator has worked at
                 sites = supabase.table("investigator_sites").select(
                     "site_id, link_type, sites(facility_name, city, country)"
                 ).eq("investigator_id", the_id).limit(5).execute()
@@ -259,12 +386,30 @@ def execute_tool(tool_name: str, arguments: dict, filters: Optional[Filters] = N
                 recent_trials = trials_future.result()
                 sites = sites_future.result()
             
-            if isinstance(inv, dict):
-                inv["trial_count"] = trial_count.count or 0
-                inv["recent_trials"] = [t.get("trials") for t in recent_trials.data if t.get("trials")] if recent_trials.data else []
-                inv["sites"] = [s.get("sites") for s in sites.data if s.get("sites")] if sites.data else []
+            inv_data["trial_count"] = trial_count.count or 0
+            inv_data["recent_trials"] = [t.get("trials") for t in recent_trials.data if t.get("trials")] if recent_trials.data else []
+            inv_data["sites"] = [s.get("sites") for s in sites.data if s.get("sites")] if sites.data else []
+            return inv_data
         
-        return {"investigator": inv}
+        if inv_id:
+            # Single investigator by ID - enrich it
+            inv = enrich_investigator(result.data[0])
+            return {"investigator": inv}
+        else:
+            # Multiple matches by name - enrich the first/best match only for performance
+            # but return all matches so user can see options
+            if len(result.data) == 1:
+                inv = enrich_investigator(result.data[0])
+                return {"investigator": inv}
+            else:
+                # Enrich the first match, return others as basic info
+                enriched = enrich_investigator(result.data[0])
+                others = result.data[1:]
+                return {
+                    "investigator": enriched,
+                    "other_matches": others,
+                    "message": f"Found {len(result.data)} investigators matching '{inv_name}'. Showing details for the first match."
+                }
     
     elif tool_name == "get_site_details":
         site_id = arguments.get("site_id")
@@ -280,11 +425,9 @@ def execute_tool(tool_name: str, arguments: dict, filters: Optional[Filters] = N
         if not result.data:
             return {"error": "Site not found"}
         
-        site = result.data[0] if site_id else result.data
-        
-        # Get enriched data in parallel
-        if site_id or (isinstance(site, dict) and site.get("id")):
-            the_id = site_id or site["id"]
+        # Helper function to enrich a single site
+        def enrich_site(site_data):
+            the_id = site_data["id"]
             
             def get_trial_count():
                 return supabase.table("trial_sites").select("trial_id", count="exact").eq("site_id", the_id).limit(1).execute()
@@ -296,7 +439,6 @@ def execute_tool(tool_name: str, arguments: dict, filters: Optional[Filters] = N
                 return trial_sites
             
             def get_investigators():
-                # Get investigators who have worked at this site
                 invs = supabase.table("investigator_sites").select(
                     "investigator_id, link_type, investigators(full_name)"
                 ).eq("site_id", the_id).limit(10).execute()
@@ -311,12 +453,26 @@ def execute_tool(tool_name: str, arguments: dict, filters: Optional[Filters] = N
                 recent_trials = trials_future.result()
                 investigators = invs_future.result()
             
-            if isinstance(site, dict):
-                site["trial_count"] = trial_count.count or 0
-                site["recent_trials"] = [t.get("trials") for t in recent_trials.data if t.get("trials")] if recent_trials.data else []
-                site["investigators"] = [i.get("investigators") for i in investigators.data if i.get("investigators")] if investigators.data else []
+            site_data["trial_count"] = trial_count.count or 0
+            site_data["recent_trials"] = [t.get("trials") for t in recent_trials.data if t.get("trials")] if recent_trials.data else []
+            site_data["investigators"] = [i.get("investigators") for i in investigators.data if i.get("investigators")] if investigators.data else []
+            return site_data
         
-        return {"site": site}
+        if site_id:
+            site = enrich_site(result.data[0])
+            return {"site": site}
+        else:
+            if len(result.data) == 1:
+                site = enrich_site(result.data[0])
+                return {"site": site}
+            else:
+                enriched = enrich_site(result.data[0])
+                others = result.data[1:]
+                return {
+                    "site": enriched,
+                    "other_matches": others,
+                    "message": f"Found {len(result.data)} sites matching '{site_name}'. Showing details for the first match."
+                }
     
     elif tool_name == "compare_options":
         compare_type = arguments["type"]
@@ -373,7 +529,7 @@ def execute_tool(tool_name: str, arguments: dict, filters: Optional[Filters] = N
         nct_pattern = r'^NCT\d{8}$'
         if re.match(nct_pattern, query.upper()):
             result = supabase.table("trials").select(
-                "id, nct_id, brief_title, phase, overall_status, conditions, enrollment, start_date, sponsor"
+                "id, nct_id, brief_title, phase, overall_status, conditions, enrollment, start_date, lead_sponsor_name"
             ).eq("nct_id", query.upper()).execute()
             return {"trials": result.data, "count": len(result.data), "search_type": "nct_id"}
         
@@ -416,6 +572,172 @@ def execute_tool(tool_name: str, arguments: dict, filters: Optional[Filters] = N
         
         result = query_builder.limit(limit).execute()
         return {"trials": result.data, "count": len(result.data), "search_type": "text"}
+    
+    elif tool_name == "get_trial_by_nct_id":
+        nct_id = arguments["nct_id"].upper()
+        
+        # Get full trial details
+        result = supabase.table("trials").select(
+            "id, nct_id, brief_title, official_title, phase, overall_status, conditions, "
+            "enrollment, start_date, completion_date, lead_sponsor_name, brief_summary, study_type"
+        ).eq("nct_id", nct_id).execute()
+        
+        if not result.data:
+            return {"error": f"Trial {nct_id} not found"}
+        
+        trial = result.data[0]
+        
+        # Get site and investigator counts in parallel
+        def get_site_count():
+            return supabase.table("trial_sites").select("site_id", count="exact").eq("trial_id", trial["id"]).limit(1).execute()
+        
+        def get_inv_count():
+            return supabase.table("trial_investigators").select("investigator_id", count="exact").eq("trial_id", trial["id"]).limit(1).execute()
+        
+        with ThreadPoolExecutor(max_workers=2) as executor:
+            site_future = executor.submit(get_site_count)
+            inv_future = executor.submit(get_inv_count)
+            
+            site_count = site_future.result()
+            inv_count = inv_future.result()
+        
+        trial["site_count"] = site_count.count or 0
+        trial["investigator_count"] = inv_count.count or 0
+        
+        return {"trial": trial}
+    
+    elif tool_name == "get_trials_by_condition":
+        condition = arguments["condition"]
+        limit = arguments.get("limit", 10)
+        phase = arguments.get("phase")
+        status = arguments.get("status")
+        
+        # Search in conditions array using contains
+        query_builder = supabase.table("trials").select(
+            "id, nct_id, brief_title, phase, overall_status, conditions, enrollment, start_date"
+        ).contains("conditions", [condition])
+        
+        if phase:
+            query_builder = query_builder.eq("phase", phase)
+        if status:
+            query_builder = query_builder.eq("overall_status", status)
+        
+        result = query_builder.limit(limit).execute()
+        
+        # If exact match fails, try ILIKE on conditions array (cast to text)
+        if not result.data:
+            result = supabase.table("trials").select(
+                "id, nct_id, brief_title, phase, overall_status, conditions, enrollment, start_date"
+            ).ilike("brief_title", f"%{condition}%").limit(limit).execute()
+        
+        return {"trials": result.data, "count": len(result.data), "condition": condition}
+    
+    elif tool_name == "get_pi_publications":
+        inv_id = arguments.get("investigator_id")
+        inv_name = arguments.get("investigator_name")
+        
+        # Try to get Semantic Scholar columns if they exist
+        try:
+            if inv_id:
+                result = supabase.table("investigators").select(
+                    "id, full_name, affiliation, semantic_scholar_id, h_index, paper_count, "
+                    "citation_count, research_areas, notable_papers, s2_match_confidence"
+                ).eq("id", inv_id).execute()
+            elif inv_name:
+                result = supabase.table("investigators").select(
+                    "id, full_name, affiliation, semantic_scholar_id, h_index, paper_count, "
+                    "citation_count, research_areas, notable_papers, s2_match_confidence"
+                ).ilike("full_name", f"%{inv_name}%").limit(5).execute()
+            else:
+                return {"error": "Please provide either investigator_id or investigator_name"}
+        except Exception:
+            # Semantic Scholar columns don't exist yet, fall back to basic info
+            if inv_id:
+                result = supabase.table("investigators").select(
+                    "id, full_name, affiliation"
+                ).eq("id", inv_id).execute()
+            elif inv_name:
+                result = supabase.table("investigators").select(
+                    "id, full_name, affiliation"
+                ).ilike("full_name", f"%{inv_name}%").limit(5).execute()
+            else:
+                return {"error": "Please provide either investigator_id or investigator_name"}
+            
+            if not result.data:
+                return {"error": "Investigator not found"}
+            
+            return {
+                "investigator": result.data[0] if inv_id else result.data,
+                "has_publications": False,
+                "message": "Semantic Scholar enrichment not yet available. Run the enrichment script to add publication data."
+            }
+        
+        if not result.data:
+            return {"error": "Investigator not found"}
+        
+        inv = result.data[0] if inv_id else result.data
+        
+        # Check if we have Semantic Scholar data
+        if isinstance(inv, dict) and not inv.get("h_index"):
+            return {
+                "investigator": inv,
+                "has_publications": False,
+                "message": "No Semantic Scholar data available for this investigator"
+            }
+        
+        return {"investigator": inv, "has_publications": True}
+    
+    elif tool_name == "get_trial_sites":
+        trial_id = arguments.get("trial_id")
+        nct_id = arguments.get("nct_id")
+        
+        # Get trial_id from nct_id if needed
+        if nct_id and not trial_id:
+            trial_result = supabase.table("trials").select("id").eq("nct_id", nct_id.upper()).execute()
+            if not trial_result.data:
+                return {"error": f"Trial {nct_id} not found"}
+            trial_id = trial_result.data[0]["id"]
+        
+        if not trial_id:
+            return {"error": "Please provide either trial_id or nct_id"}
+        
+        # Get all sites for this trial
+        result = supabase.table("trial_sites").select(
+            "site_id, recruitment_status, sites(id, facility_name, city, state, country, zip)"
+        ).eq("trial_id", trial_id).execute()
+        
+        sites = [
+            {**r.get("sites", {}), "recruitment_status": r.get("recruitment_status")}
+            for r in result.data if r.get("sites")
+        ]
+        
+        return {"sites": sites, "count": len(sites), "trial_id": trial_id}
+    
+    elif tool_name == "get_trial_investigators":
+        trial_id = arguments.get("trial_id")
+        nct_id = arguments.get("nct_id")
+        
+        # Get trial_id from nct_id if needed
+        if nct_id and not trial_id:
+            trial_result = supabase.table("trials").select("id").eq("nct_id", nct_id.upper()).execute()
+            if not trial_result.data:
+                return {"error": f"Trial {nct_id} not found"}
+            trial_id = trial_result.data[0]["id"]
+        
+        if not trial_id:
+            return {"error": "Please provide either trial_id or nct_id"}
+        
+        # Get all investigators for this trial
+        result = supabase.table("trial_investigators").select(
+            "investigator_id, role, investigators(id, full_name, affiliation)"
+        ).eq("trial_id", trial_id).execute()
+        
+        investigators = [
+            {**r.get("investigators", {}), "role": r.get("role")}
+            for r in result.data if r.get("investigators")
+        ]
+        
+        return {"investigators": investigators, "count": len(investigators), "trial_id": trial_id}
     
     return {"error": f"Unknown tool: {tool_name}"}
 
