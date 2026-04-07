@@ -10,32 +10,24 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # Copy requirements and install dependencies
 COPY requirements.txt .
-RUN pip install --no-cache-dir --user -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Production stage
 FROM python:3.11-slim
 
 WORKDIR /app
 
-# Copy installed packages from builder
-COPY --from=builder /root/.local /root/.local
-ENV PATH=/root/.local/bin:$PATH
+# Copy installed packages from builder (system-wide)
+COPY --from=builder /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
+COPY --from=builder /usr/local/bin /usr/local/bin
 
 # Copy application code
 COPY api/ ./api/
 COPY src/ ./src/
 
-# Create non-root user for security
-RUN useradd --create-home appuser
-USER appuser
-
-# Expose port (Cloud Run uses PORT env var)
-EXPOSE 8080
-
-# Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-    CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:8080/health')" || exit 1
+# Expose port (Render sets PORT env var)
+EXPOSE 10000
 
 # Run the application
-# Cloud Run sets PORT env var, default to 8080
-CMD ["sh", "-c", "uvicorn api.main:app --host 0.0.0.0 --port ${PORT:-8080}"]
+# Render sets PORT env var, default to 10000
+CMD uvicorn api.main:app --host 0.0.0.0 --port ${PORT:-10000}
