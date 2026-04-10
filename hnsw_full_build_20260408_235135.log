@@ -1,0 +1,12 @@
+==============================================
+FULL HNSW Index Build Started: Wed Apr  8 23:51:35 PDT 2026
+Log file: hnsw_full_build_20260408_235135.log
+Target compute: ci_medium
+==============================================
+
+==============================================
+[STEP 1/7] Upgrading compute to ci_medium
+==============================================
+[COMPUTE] Upgrading to ci_medium...
+[COMPUTE] Response: {"message":"Cannot POST /v1/projects/zwcreraudeemddmloeul/billing/addons"}
+[COMPUTE] Waiting 120 seconds for compute upgrade to complete...

@@ -1,0 +1,72 @@
+==============================================
+FULL HNSW Index Build Started: Wed Apr  8 23:55:04 PDT 2026
+Log file: hnsw_full_build_20260408_235504.log
+Target compute: ci_medium
+==============================================
+
+==============================================
+[STEP 1/7] Upgrading compute to ci_medium
+==============================================
+[COMPUTE] Upgrading to ci_medium...
+[COMPUTE] Response: {"message":"We are still processing addon changes, please try again in 1 minute(s)."}
+[COMPUTE] Waiting 120 seconds for compute upgrade to complete...
+[COMPUTE] Verifying database connection...
+[COMPUTE] Database connection verified!
+[STEP 1/7] Checking new memory settings...
+               name               | setting | unit 
+----------------------------------+---------+------
+ maintenance_work_mem             | 262144  | kB
+ max_parallel_maintenance_workers | 1       | 
+ shared_buffers                   | 131072  | 8kB
+(3 rows)
+
+[SAFETY] Checking disk size before: Step 2 - Create table
+[SAFETY] Current DB size: 7.80 GB (threshold: 30 GB)
+
+==============================================
+[STEP 2/7] Creating unlogged table...
+Started: Wed Apr  8 23:57:08 PDT 2026
+==============================================
+SET
+NOTICE:  table "trial_embeddings_full" does not exist, skipping
+DROP TABLE
+CREATE TABLE
+    status     
+---------------
+ Table created
+(1 row)
+
+Completed: Wed Apr  8 23:57:09 PDT 2026
+[SAFETY] Checking disk size before: Step 3 - Copy embeddings
+[SAFETY] Current DB size: 7.80 GB (threshold: 30 GB)
+
+==============================================
+[STEP 3/7] Copying all embeddings (~577K rows)...
+Estimated time: 30-60 minutes
+Started: Wed Apr  8 23:57:09 PDT 2026
+==============================================
+SET
+INSERT 0 577513
+        status         
+-----------------------
+ Rows inserted: 577513
+(1 row)
+
+Completed: Thu Apr  9 00:00:56 PDT 2026
+[SAFETY] Checking disk size before: Step 4 - Build HNSW index
+[SAFETY] Current DB size: 12.30 GB (threshold: 30 GB)
+
+==============================================
+[STEP 4/7] Building HNSW index...
+This is the longest step - estimated 2-6 hours
+Started: Thu Apr  9 00:00:57 PDT 2026
+==============================================
+SET
+SET
+SET
+NOTICE:  hnsw graph no longer fits into maintenance_work_mem after 156686 tuples
+DETAIL:  Building will take significantly more time.
+HINT:  Increase maintenance_work_mem to speed up builds.
+FATAL:  terminating connection due to administrator command
+SSL connection has been closed unexpectedly
+connection to server was lost
