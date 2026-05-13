@@ -113,7 +113,9 @@ class PIRecommender:
             # Try keyword search on trials (brief_title only - conditions is an array)
             try:
                 search_term = keywords[0]  # Use first meaningful keyword
-                trial_result = self.client.table("trials").select("id").ilike(
+                trial_result = self.client.table("trials").select("id").eq(
+                    "avoid_search", False
+                ).ilike(
                     "brief_title", f"%{search_term}%"
                 ).limit(50).execute()
                 trial_ids = [t["id"] for t in trial_result.data]

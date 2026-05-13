@@ -1,0 +1,33 @@
+[2026-04-11 02:05:46] ==============================================
+[2026-04-11 02:05:46] HNSW Index Rebuild Script Started
+[2026-04-11 02:05:46] ==============================================
+[2026-04-11 02:05:47] Current row count: 394214
+[2026-04-11 02:05:48] HNSW index exists: 0
+[2026-04-11 02:05:48] 
+[2026-04-11 02:05:48] [STEP 1/3] Building HNSW index...
+[2026-04-11 02:05:48] Building HNSW index on trial_embeddings_full...
+[2026-04-11 02:05:48] This may take 30-120 minutes depending on compute size and memory.
+[2026-04-11 02:05:49] Current shared_buffers: 4GB
+[2026-04-11 02:05:49] Setting maintenance_work_mem to 2GB
+[2026-04-11 02:11:29] HNSW index created successfully!
+[2026-04-11 02:11:29] Index build completed!
+[2026-04-11 02:11:29] 
+[2026-04-11 02:11:29] [STEP 2/3] Verifying index...
+[2026-04-11 02:11:29] Verifying index...
+[2026-04-11 02:11:30] 
+[2026-04-11 02:11:30] [STEP 3/3] Downgrading compute back to Micro...
+[2026-04-11 02:11:30] Upgrading compute to ci_micro...
+[2026-04-11 02:11:32] API Response: {"id":25946708,"name":"ClinicalTrials","ref":"zwcreraudeemddmloeul"}
+[2026-04-11 02:11:32] Waiting 60 seconds for compute change to propagate...
+[2026-04-11 02:12:33] Current shared_buffers: 4GB
+[2026-04-11 02:12:33] 
+[2026-04-11 02:12:33] ==============================================
+[2026-04-11 02:12:33] HNSW Index Rebuild COMPLETED
+[2026-04-11 02:12:33] ==============================================
+[2026-04-11 02:12:33] 
+[2026-04-11 02:12:33] Summary:
+[2026-04-11 02:12:33]   - Rows indexed: 394214
+[2026-04-11 02:12:33]   - Index: trial_embeddings_full_hnsw_idx
+[2026-04-11 02:12:33]   - Compute: Back to Micro
+[2026-04-11 02:12:33] 
+[2026-04-11 02:12:33] Log file: /Users/harshakaranth/Harsha/Projects/ClinicalTrialProject/logs/hnsw_rebuild_20260411_020546.log

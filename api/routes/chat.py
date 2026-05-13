@@ -563,7 +563,7 @@ def execute_tool(tool_name: str, arguments: dict, filters: Optional[Filters] = N
         # Fallback to ILIKE text search
         query_builder = supabase.table("trials").select(
             "id, nct_id, brief_title, phase, overall_status, conditions"
-        ).ilike("brief_title", f"%{query}%")
+        ).eq("avoid_search", False).ilike("brief_title", f"%{query}%")
         
         if phase:
             query_builder = query_builder.eq("phase", phase)
@@ -612,10 +612,10 @@ def execute_tool(tool_name: str, arguments: dict, filters: Optional[Filters] = N
         phase = arguments.get("phase")
         status = arguments.get("status")
         
-        # Search in conditions array using contains
+        # Search in conditions array using contains (exclude avoid_search trials)
         query_builder = supabase.table("trials").select(
             "id, nct_id, brief_title, phase, overall_status, conditions, enrollment, start_date"
-        ).contains("conditions", [condition])
+        ).eq("avoid_search", False).contains("conditions", [condition])
         
         if phase:
             query_builder = query_builder.eq("phase", phase)
@@ -628,7 +628,7 @@ def execute_tool(tool_name: str, arguments: dict, filters: Optional[Filters] = N
         if not result.data:
             result = supabase.table("trials").select(
                 "id, nct_id, brief_title, phase, overall_status, conditions, enrollment, start_date"
-            ).ilike("brief_title", f"%{condition}%").limit(limit).execute()
+            ).eq("avoid_search", False).ilike("brief_title", f"%{condition}%").limit(limit).execute()
         
         return {"trials": result.data, "count": len(result.data), "condition": condition}
     

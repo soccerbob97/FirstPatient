@@ -27,11 +27,11 @@ async def list_trials(
     try:
         client = get_supabase_admin_client()
         
-        # Build query
+        # Build query (exclude trials without PIs)
         db_query = client.table("trials").select(
             "id, nct_id, brief_title, phase, overall_status, conditions, lead_sponsor_name",
             count="exact"
-        )
+        ).eq("avoid_search", False)
         
         # Apply filters
         if query:

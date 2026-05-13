@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Action Items Plan</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 11pt;
+        max-width: none;
+        padding: 20px;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      pre {
+        font-size: 9pt;
+        white-space: pre-wrap;
+        page-break-inside: avoid;
+      }
+      table {
+        font-size: 10pt;
+        page-break-inside: avoid;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Action Items Plan</h1>
+</header>
+<h1
+id="action-items-plan-expanding-pi-coverage-improving-recommendations">Action
+Items Plan: Expanding PI Coverage &amp; Improving Recommendations</h1>
+<p><strong>Date</strong>: April 29, 2026 (Updated)<br />
+<strong>Goal</strong>: Maximize PI coverage across all domains (obesity,
+diabetes, oncology) and improve recommendation quality through
+data-driven scoring</p>
+<hr />
+<h2 id="executive-summary">Executive Summary</h2>
+<p>Our clinical trial matching platform connects sponsors with the best
+Principal Investigators (PIs) and sites for their trials. This plan
+addresses three critical improvements:</p>
+<ol type="1">
+<li><strong>Recover 183K deleted trials</strong> by finding PIs through
+publication data (PubMed, ClinicalTrials.gov references)</li>
+<li><strong>Enrich embeddings</strong> with drug mechanism of action and
+pharmacologic class from openFDA</li>
+<li><strong>Replace arbitrary scoring weights</strong> with data-driven
+feature selection using PCA and correlation analysis</li>
+</ol>
+<p>The result will be significantly expanded PI coverage and more
+accurate, explainable recommendations.</p>
+<hr />
+<h2 id="current-state-summary">Current State Summary</h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Trials</strong></td>
+<td>394,214 (after cleanup)</td>
+</tr>
+<tr>
+<td><strong>Trials deleted (no PI)</strong></td>
+<td>183,299</td>
+</tr>
+<tr>
+<td><strong>Investigators enriched</strong></td>
+<td>3,129 / 12,727 (~25%)</td>
+</tr>
+<tr>
+<td><strong>Embedding model</strong></td>
+<td>OpenAI text-embedding-3-small (1536d)</td>
+</tr>
+<tr>
+<td><strong>Planned model</strong></td>
+<td>Voyage-3.5-lite (1024d)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="action-item-1-recover-pi-data-for-deleted-trials">Action Item 1:
+Recover PI Data for Deleted Trials</h2>
+<h3 id="problem">Problem</h3>
+<p>You deleted 183,299 trials that lacked PI information in
+ClinicalTrials.gov. However, many of these trials have published results
+in journals where the <strong>first author is typically the lead
+PI</strong>.</p>
+<h3 id="solution-multi-source-pi-discovery-pipeline">Solution:
+Multi-Source PI Discovery Pipeline</h3>
+<h4
+id="approach-1-pubmed-nct-number-linking-recommended---highest-quality">Approach
+1: PubMed NCT Number Linking (Recommended - Highest Quality)</h4>
+<p><strong>How it works:</strong> 1. Search PubMed for the NCT number 2.
+Publications mentioning the NCT number often have the PI as first/last
+author 3. Use PubMed E-utilities API (free, 10 requests/second with API
+key)</p>
+<p><strong>Implementation:</strong></p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> find_pi_from_pubmed(nct_id: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">dict</span> <span class="op">|</span> <span class="va">None</span>:</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Search PubMed for publications mentioning the NCT number.</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">    First author is typically the lead PI.</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Step 1: Search PubMed for NCT number</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    search_url <span class="op">=</span> <span class="st">&quot;https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi&quot;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    params <span class="op">=</span> {</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;db&quot;</span>: <span class="st">&quot;pubmed&quot;</span>,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;term&quot;</span>: <span class="ss">f&quot;</span><span class="sc">{</span>nct_id<span class="sc">}</span><span class="ss">[Secondary Source ID] OR </span><span class="sc">{</span>nct_id<span class="sc">}</span><span class="ss">[Title/Abstract]&quot;</span>,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;retmode&quot;</span>: <span class="st">&quot;json&quot;</span>,</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;retmax&quot;</span>: <span class="dv">10</span>,</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;api_key&quot;</span>: PUBMED_API_KEY  <span class="co"># Get from NCBI</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    resp <span class="op">=</span> requests.get(search_url, params<span class="op">=</span>params)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    pmids <span class="op">=</span> resp.json().get(<span class="st">&quot;esearchresult&quot;</span>, {}).get(<span class="st">&quot;idlist&quot;</span>, [])</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> pmids:</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Step 2: Fetch article details</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    fetch_url <span class="op">=</span> <span class="st">&quot;https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi&quot;</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    params <span class="op">=</span> {</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;db&quot;</span>: <span class="st">&quot;pubmed&quot;</span>,</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;id&quot;</span>: <span class="st">&quot;,&quot;</span>.join(pmids),</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;retmode&quot;</span>: <span class="st">&quot;xml&quot;</span>,</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;api_key&quot;</span>: PUBMED_API_KEY</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Parse XML to extract first author (typically PI)</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Return: {&quot;name&quot;: &quot;John Smith&quot;, &quot;affiliation&quot;: &quot;Harvard Medical School&quot;, &quot;pmid&quot;: &quot;12345678&quot;}</span></span></code></pre></div>
+<p><strong>Expected yield</strong>: ~50% of trials have linked
+publications</p>
+<h4 id="approach-2-clinicaltrials.gov-results-reference-field">Approach
+2: ClinicalTrials.gov Results Reference Field</h4>
+<p><strong>How it works:</strong> ClinicalTrials.gov has a
+<code>results_reference</code> field that contains publications
+submitted by investigators.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_results_references(nct_id: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">list</span>[<span class="bu">dict</span>]:</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Fetch results_reference from ClinicalTrials.gov API v2.</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">    These are investigator-submitted publications.</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    url <span class="op">=</span> <span class="ss">f&quot;https://clinicaltrials.gov/api/v2/studies/</span><span class="sc">{</span>nct_id<span class="sc">}</span><span class="ss">&quot;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    params <span class="op">=</span> {<span class="st">&quot;fields&quot;</span>: <span class="st">&quot;ReferencesModule&quot;</span>}</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    resp <span class="op">=</span> requests.get(url, params<span class="op">=</span>params)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    refs <span class="op">=</span> resp.json().get(<span class="st">&quot;referencesModule&quot;</span>, {}).get(<span class="st">&quot;references&quot;</span>, [])</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Filter for results references (not background references)</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [r <span class="cf">for</span> r <span class="kw">in</span> refs <span class="cf">if</span> r.get(<span class="st">&quot;type&quot;</span>) <span class="op">==</span> <span class="st">&quot;RESULT&quot;</span>]</span></code></pre></div>
+<h4 id="approach-3-google-scholar-journal-scraping-fallback">Approach 3:
+Google Scholar + Journal Scraping (Fallback)</h4>
+<p><strong>For trials without PubMed links</strong>, use Google
+Scholar:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> serpapi <span class="im">import</span> GoogleSearch  <span class="co"># Requires SerpAPI key ($50/mo for 5000 searches)</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> find_pi_from_google_scholar(nct_id: <span class="bu">str</span>, trial_title: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">dict</span> <span class="op">|</span> <span class="va">None</span>:</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Search Google Scholar for trial publications.</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    params <span class="op">=</span> {</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;engine&quot;</span>: <span class="st">&quot;google_scholar&quot;</span>,</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;q&quot;</span>: <span class="ss">f&#39;&quot;</span><span class="sc">{</span>nct_id<span class="sc">}</span><span class="ss">&quot; OR &quot;</span><span class="sc">{</span>trial_title<span class="sc">}</span><span class="ss">&quot;&#39;</span>,</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;api_key&quot;</span>: SERPAPI_KEY</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    search <span class="op">=</span> GoogleSearch(params)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    results <span class="op">=</span> search.get_dict().get(<span class="st">&quot;organic_results&quot;</span>, [])</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> results:</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>        <span class="co"># First result&#39;s first author is likely the PI</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> {</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;name&quot;</span>: results[<span class="dv">0</span>].get(<span class="st">&quot;publication_info&quot;</span>, {}).get(<span class="st">&quot;authors&quot;</span>, [{}])[<span class="dv">0</span>].get(<span class="st">&quot;name&quot;</span>),</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;source&quot;</span>: <span class="st">&quot;google_scholar&quot;</span>,</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;title&quot;</span>: results[<span class="dv">0</span>].get(<span class="st">&quot;title&quot;</span>)</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>        }</span></code></pre></div>
+<h4 id="approach-4-journal-specific-scrapers">Approach 4:
+Journal-Specific Scrapers</h4>
+<p>For high-impact journals (NEJM, Lancet, JAMA), build targeted
+scrapers:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example: New England Journal of Medicine</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> scrape_nejm_article(doi: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">dict</span>:</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">    Scrape NEJM article page for author information.</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Note: Respect robots.txt and rate limits.</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    url <span class="op">=</span> <span class="ss">f&quot;https://www.nejm.org/doi/</span><span class="sc">{</span>doi<span class="sc">}</span><span class="ss">&quot;</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Parse HTML for author list, affiliations</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># First author with &quot;MD&quot; or &quot;PhD&quot; is typically PI</span></span></code></pre></div>
+<h3 id="recommended-pipeline">Recommended Pipeline</h3>
+<pre><code>┌─────────────────────────────────────────────────────────────────┐
+│ For each trial without PI:                                       │
+├─────────────────────────────────────────────────────────────────┤
+│ 1. Check ClinicalTrials.gov results_reference field              │
+│    └─ If found → Extract first author as PI                      │
+│                                                                  │
+│ 2. Search PubMed for NCT number                                  │
+│    └─ If found → Extract first author from publication           │
+│                                                                  │
+│ 3. Search Google Scholar (if PubMed fails)                       │
+│    └─ If found → Extract first author                            │
+│                                                                  │
+│ 4. Manual review for high-value trials (Phase 3, large sponsors) │
+└─────────────────────────────────────────────────────────────────┘</code></pre>
+<h3 id="data-sources-summary">Data Sources Summary</h3>
+<table>
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 10%" />
+<col style="width: 25%" />
+<col style="width: 12%" />
+<col style="width: 34%" />
+</colgroup>
+<thead>
+<tr>
+<th>Source</th>
+<th>API</th>
+<th>Rate Limit</th>
+<th>Cost</th>
+<th>Expected Yield</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>PubMed E-utilities</strong></td>
+<td>Free</td>
+<td>10/sec with key</td>
+<td>Free</td>
+<td>~50%</td>
+</tr>
+<tr>
+<td><strong>ClinicalTrials.gov API v2</strong></td>
+<td>Free</td>
+<td>Generous</td>
+<td>Free</td>
+<td>~30%</td>
+</tr>
+<tr>
+<td><strong>Google Scholar (SerpAPI)</strong></td>
+<td>SerpAPI</td>
+<td>5000/mo</td>
+<td>$50/mo</td>
+<td>~20% additional</td>
+</tr>
+<tr>
+<td><strong>Journal scrapers</strong></td>
+<td>Custom</td>
+<td>Varies</td>
+<td>Free</td>
+<td>~10% additional</td>
+</tr>
+</tbody>
+</table>
+<h3 id="script-structure">Script Structure</h3>
+<pre><code>scripts/recover_pis/
+├── 01_fetch_deleted_trials.py      # Get NCT IDs of deleted trials
+├── 02_search_pubmed.py             # PubMed NCT number search
+├── 03_search_clinicaltrials.py     # ClinicalTrials.gov results_reference
+├── 04_search_google_scholar.py     # Google Scholar fallback
+├── 05_import_recovered_pis.py      # Import back into database
+└── README.md</code></pre>
+<hr />
+<h2
+id="action-item-2-improve-embeddings-with-drugintervention-data">Action
+Item 2: Improve Embeddings with Drug/Intervention Data</h2>
+<h3 id="problem-1">Problem</h3>
+<p>Current embeddings only include trial title, summary, and conditions.
+Missing: - <strong>Mechanism of action</strong> (how the drug works) -
+<strong>Drug class</strong> (e.g., GLP-1 agonist, PD-1 inhibitor) -
+<strong>Brand names</strong> (Ozempic, Keytruda)</p>
+<h3 id="solution-openfda-drug-label-api-integration">Solution: openFDA
+Drug Label API Integration</h3>
+<p>The FDA provides a free API with rich drug information:</p>
+<p><strong>API Endpoint</strong>:
+<code>https://api.fda.gov/drug/label.json</code></p>
+<p><strong>Key Fields Available</strong>: | Field | Description |
+Example | |——-|————-|———| | <code>mechanism_of_action</code> | How the
+drug works | “Semaglutide is a GLP-1 receptor agonist…” | |
+<code>clinical_pharmacology</code> | Detailed pharmacology | Full
+pharmacology text | | <code>indications_and_usage</code> | Approved uses
+| “Treatment of type 2 diabetes…” | | <code>description</code> | Drug
+description | Chemical structure, formulation | |
+<code>openfda.brand_name</code> | Brand names | [“Ozempic”, “Wegovy”] |
+| <code>openfda.generic_name</code> | Generic name | “semaglutide” | |
+<code>openfda.pharm_class_epc</code> | Pharmacologic class |
+“Glucagon-Like Peptide-1 (GLP-1) Receptor Agonist” |</p>
+<h3 id="implementation">Implementation</h3>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> enrich_intervention_from_fda(drug_name: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">dict</span> <span class="op">|</span> <span class="va">None</span>:</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Fetch drug information from openFDA.</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    url <span class="op">=</span> <span class="st">&quot;https://api.fda.gov/drug/label.json&quot;</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    params <span class="op">=</span> {</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;search&quot;</span>: <span class="ss">f&#39;openfda.brand_name:&quot;</span><span class="sc">{</span>drug_name<span class="sc">}</span><span class="ss">&quot; OR openfda.generic_name:&quot;</span><span class="sc">{</span>drug_name<span class="sc">}</span><span class="ss">&quot;&#39;</span>,</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;limit&quot;</span>: <span class="dv">1</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    resp <span class="op">=</span> requests.get(url, params<span class="op">=</span>params)</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> resp.status_code <span class="op">!=</span> <span class="dv">200</span>:</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    results <span class="op">=</span> resp.json().get(<span class="st">&quot;results&quot;</span>, [])</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> results:</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    label <span class="op">=</span> results[<span class="dv">0</span>]</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;mechanism_of_action&quot;</span>: label.get(<span class="st">&quot;mechanism_of_action&quot;</span>, [<span class="va">None</span>])[<span class="dv">0</span>],</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;clinical_pharmacology&quot;</span>: label.get(<span class="st">&quot;clinical_pharmacology&quot;</span>, [<span class="va">None</span>])[<span class="dv">0</span>],</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;indications&quot;</span>: label.get(<span class="st">&quot;indications_and_usage&quot;</span>, [<span class="va">None</span>])[<span class="dv">0</span>],</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;brand_names&quot;</span>: label.get(<span class="st">&quot;openfda&quot;</span>, {}).get(<span class="st">&quot;brand_name&quot;</span>, []),</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;generic_name&quot;</span>: label.get(<span class="st">&quot;openfda&quot;</span>, {}).get(<span class="st">&quot;generic_name&quot;</span>, [<span class="va">None</span>])[<span class="dv">0</span>],</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;pharm_class&quot;</span>: label.get(<span class="st">&quot;openfda&quot;</span>, {}).get(<span class="st">&quot;pharm_class_epc&quot;</span>, []),</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>    }</span></code></pre></div>
+<h3 id="database-schema-changes">Database Schema Changes</h3>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Add FDA enrichment columns to interventions table</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> interventions <span class="kw">ADD</span> <span class="kw">COLUMN</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> mechanism_of_action TEXT;</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> interventions <span class="kw">ADD</span> <span class="kw">COLUMN</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> drug_class TEXT;</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> interventions <span class="kw">ADD</span> <span class="kw">COLUMN</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> brand_names TEXT[];</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> interventions <span class="kw">ADD</span> <span class="kw">COLUMN</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> generic_name <span class="dt">VARCHAR</span>(<span class="dv">255</span>);</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> interventions <span class="kw">ADD</span> <span class="kw">COLUMN</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> fda_enriched_at TIMESTAMPTZ;</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">-- Index for drug class filtering</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">INDEX</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> idx_interventions_drug_class <span class="kw">ON</span> interventions(drug_class);</span></code></pre></div>
+<h3 id="enhanced-embedding-text">Enhanced Embedding Text</h3>
+<p>Update <code>build_trial_embedding_text()</code> to include drug
+information.</p>
+<p><strong>Key decisions:</strong> - ✅ <strong>Include PI
+names</strong> - Enables “Find trials by Dr. X” queries - ❌
+<strong>Exclude site names</strong> - Site names add noise without
+semantic value; use structured metadata filtering instead - ✅
+<strong>Include mechanism of action</strong> - Enables drug class
+matching (“GLP-1 agonist”) - ✅ <strong>Include drug class</strong> -
+Enables pharmacologic queries (“immunotherapy”)</p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> build_trial_embedding_text(trial: <span class="bu">dict</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    parts <span class="op">=</span> []</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Core trial info</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> trial.get(<span class="st">&quot;brief_title&quot;</span>):</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>        parts.append(<span class="ss">f&quot;Title: </span><span class="sc">{</span>trial[<span class="st">&#39;brief_title&#39;</span>]<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> trial.get(<span class="st">&quot;brief_summary&quot;</span>):</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>        summary <span class="op">=</span> trial[<span class="st">&quot;brief_summary&quot;</span>][:<span class="dv">800</span>]</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>        parts.append(<span class="ss">f&quot;Summary: </span><span class="sc">{</span>summary<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> trial.get(<span class="st">&quot;conditions&quot;</span>):</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>        conditions <span class="op">=</span> trial[<span class="st">&quot;conditions&quot;</span>] <span class="cf">if</span> <span class="bu">isinstance</span>(trial[<span class="st">&quot;conditions&quot;</span>], <span class="bu">list</span>) <span class="cf">else</span> [trial[<span class="st">&quot;conditions&quot;</span>]]</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>        parts.append(<span class="ss">f&quot;Conditions: </span><span class="sc">{</span><span class="st">&#39;, &#39;</span><span class="sc">.</span>join(conditions[:<span class="dv">10</span>])<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> trial.get(<span class="st">&quot;phase&quot;</span>):</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>        parts.append(<span class="ss">f&quot;Phase: </span><span class="sc">{</span>trial[<span class="st">&#39;phase&#39;</span>]<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Drug/intervention details (NEW)</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> trial.get(<span class="st">&quot;intervention_names&quot;</span>):</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>        parts.append(<span class="ss">f&quot;Interventions: </span><span class="sc">{</span><span class="st">&#39;, &#39;</span><span class="sc">.</span>join(trial[<span class="st">&#39;intervention_names&#39;</span>][:<span class="dv">5</span>])<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> trial.get(<span class="st">&quot;mechanism_of_action&quot;</span>):</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>        moa <span class="op">=</span> trial[<span class="st">&quot;mechanism_of_action&quot;</span>][:<span class="dv">300</span>]</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>        parts.append(<span class="ss">f&quot;Mechanism: </span><span class="sc">{</span>moa<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> trial.get(<span class="st">&quot;drug_class&quot;</span>):</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>        parts.append(<span class="ss">f&quot;Drug class: </span><span class="sc">{</span>trial[<span class="st">&#39;drug_class&#39;</span>]<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Lead PI (for &quot;Find trials by Dr. X&quot; queries)</span></span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> trial.get(<span class="st">&quot;lead_pi_name&quot;</span>):</span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>        parts.append(<span class="ss">f&quot;Lead Investigator: </span><span class="sc">{</span>trial[<span class="st">&#39;lead_pi_name&#39;</span>]<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>    <span class="co"># </span><span class="al">NOTE</span><span class="co">: Site names intentionally excluded - use structured filtering instead</span></span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">&quot; &quot;</span>.join(parts)</span></code></pre></div>
+<h3 id="other-data-sources-to-consider">Other Data Sources to
+Consider</h3>
+<table>
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 45%" />
+<col style="width: 14%" />
+<col style="width: 17%" />
+</colgroup>
+<thead>
+<tr>
+<th>Source</th>
+<th>Data Available</th>
+<th>API</th>
+<th>Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>openFDA</strong></td>
+<td>MOA, drug class, indications</td>
+<td>Yes</td>
+<td>Free</td>
+</tr>
+<tr>
+<td><strong>DrugBank</strong></td>
+<td>Detailed pharmacology, targets</td>
+<td>Yes</td>
+<td>$$$$ (enterprise)</td>
+</tr>
+<tr>
+<td><strong>ChEMBL</strong></td>
+<td>Bioactivity, targets</td>
+<td>Yes</td>
+<td>Free</td>
+</tr>
+<tr>
+<td><strong>PubChem</strong></td>
+<td>Chemical structure, bioassays</td>
+<td>Yes</td>
+<td>Free</td>
+</tr>
+<tr>
+<td><strong>RxNorm</strong></td>
+<td>Drug relationships, NDC codes</td>
+<td>Yes</td>
+<td>Free</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Recommendation</strong>: Start with openFDA (free,
+comprehensive). Add ChEMBL for target/pathway data if needed.</p>
+<hr />
+<h2
+id="action-item-3-data-driven-scoring-with-pca-feature-selection">Action
+Item 3: Data-Driven Scoring with PCA Feature Selection</h2>
+<h3 id="problem-2">Problem</h3>
+<p>Current scoring formula uses <strong>arbitrary weights</strong>: -
+60% semantic similarity - 15% experience (trial count) - 10% completion
+rate (<strong>simulated, not real</strong>) - 15% role confidence</p>
+<p>These weights were chosen without data validation. We need a
+principled approach.</p>
+<h3
+id="solution-pca-correlation-analysis-for-feature-selection">Solution:
+PCA + Correlation Analysis for Feature Selection</h3>
+<p>Instead of guessing weights, we’ll use <strong>historical trial
+data</strong> to discover which features actually predict success.</p>
+<h4 id="step-1-define-success-labels">Step 1: Define Success Labels</h4>
+<table>
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 50%" />
+<col style="width: 31%" />
+</colgroup>
+<thead>
+<tr>
+<th>Field</th>
+<th>Success Indicator</th>
+<th>How to Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>overall_status</code></td>
+<td>COMPLETED vs TERMINATED/WITHDRAWN</td>
+<td>Primary label</td>
+</tr>
+<tr>
+<td><code>has_results</code></td>
+<td>Trial published results</td>
+<td>Strong success signal</td>
+</tr>
+<tr>
+<td><code>enrollment</code> (ACTUAL vs ANTICIPATED)</td>
+<td>Met enrollment target</td>
+<td>Execution quality</td>
+</tr>
+<tr>
+<td><code>completion_date</code> vs
+<code>primary_completion_date</code></td>
+<td>On-time completion</td>
+<td>Execution quality</td>
+</tr>
+</tbody>
+</table>
+<h4 id="step-2-build-feature-matrix">Step 2: Build Feature Matrix</h4>
+<p>For each PI-trial pair, compute these features:</p>
+<p><strong>PI-Level Features</strong>: | Feature | Description | Source
+| |———|————-|——–| | <code>h_index</code> | Academic reputation |
+OpenAlex | | <code>total_trials</code> | Total trials before this one |
+Derived | | <code>completion_rate</code> | Historical success rate |
+Derived | | <code>years_active</code> | Career length | Derived | |
+<code>condition_experience</code> | Trials in this therapeutic area |
+Derived | | <code>phase_experience</code> | Trials in this phase |
+Derived |</p>
+<p><strong>Query-Match Features</strong>: | Feature | Description |
+Source | |———|————-|——–| | <code>semantic_similarity</code> | Embedding
+cosine similarity | Vector search | | <code>condition_overlap</code> | %
+of PI’s trials in query condition | Computed | |
+<code>phase_match</code> | PI has done this phase before (0/1) |
+Computed | | <code>recency</code> | Days since last trial | Derived
+|</p>
+<p><strong>Site-Level Features</strong>: | Feature | Description |
+Source | |———|————-|——–| | <code>site_trial_count</code> | Site’s total
+trials | Derived | | <code>site_completion_rate</code> | Site’s
+historical success | Derived | | <code>institution_type</code> |
+Academic vs private | Classification |</p>
+<h4 id="step-3-correlation-analysis-simple-approach">Step 3: Correlation
+Analysis (Simple Approach)</h4>
+<p>Compute correlation of each feature with trial success:</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Get completed trials with outcomes</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>query <span class="op">=</span> <span class="st">&quot;&quot;&quot;</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT </span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="st">    t.id as trial_id,</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="st">    i.id as investigator_id,</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="st">    -- Success label</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="st">    CASE WHEN t.overall_status = &#39;COMPLETED&#39; AND t.has_results = true </span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="st">         THEN 1 ELSE 0 END as success,</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="st">    -- Features</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="st">    i.h_index,</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="st">    i.total_trials,</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="st">    i.years_active,</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="st">    -- ... more features</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="st">FROM trials t</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="st">JOIN trial_investigators ti ON t.id = ti.trial_id</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="st">JOIN investigators i ON ti.investigator_id = i.id</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="st">WHERE t.overall_status IN (&#39;COMPLETED&#39;, &#39;TERMINATED&#39;, &#39;WITHDRAWN&#39;)</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;&quot;&quot;</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_sql(query, conn)</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute correlations with success</span></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>feature_cols <span class="op">=</span> [<span class="st">&#39;h_index&#39;</span>, <span class="st">&#39;total_trials&#39;</span>, <span class="st">&#39;years_active&#39;</span>, <span class="st">&#39;completion_rate&#39;</span>, </span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;condition_experience&#39;</span>, <span class="st">&#39;phase_experience&#39;</span>, <span class="st">&#39;recency&#39;</span>]</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>correlations <span class="op">=</span> df[feature_cols <span class="op">+</span> [<span class="st">&#39;success&#39;</span>]].corr()[<span class="st">&#39;success&#39;</span>].drop(<span class="st">&#39;success&#39;</span>)</span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(correlations.sort_values(ascending<span class="op">=</span><span class="va">False</span>))</span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Use correlations as weights (normalized)</span></span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>weights <span class="op">=</span> correlations.<span class="bu">abs</span>() <span class="op">/</span> correlations.<span class="bu">abs</span>().<span class="bu">sum</span>()</span></code></pre></div>
+<p><strong>Expected output:</strong></p>
+<pre><code>completion_rate       0.42
+condition_experience  0.38
+h_index               0.31
+total_trials          0.27
+phase_experience      0.22
+years_active          0.14
+recency               0.11</code></pre>
+<h4 id="step-4-pca-for-dimensionality-reduction-advanced">Step 4: PCA
+for Dimensionality Reduction (Advanced)</h4>
+<p>Discover latent factors that explain variance:</p>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.decomposition <span class="im">import</span> PCA</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Standardize features</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> df[feature_cols].fillna(<span class="dv">0</span>)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> StandardScaler()</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>X_scaled <span class="op">=</span> scaler.fit_transform(X)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Run PCA</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>pca <span class="op">=</span> PCA(n_components<span class="op">=</span><span class="fl">0.95</span>)  <span class="co"># Keep 95% variance</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>X_pca <span class="op">=</span> pca.fit_transform(X_scaled)</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Reduced </span><span class="sc">{</span><span class="bu">len</span>(feature_cols)<span class="sc">}</span><span class="ss"> features → </span><span class="sc">{</span>pca<span class="sc">.</span>n_components_<span class="sc">}</span><span class="ss"> components&quot;</span>)</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Explained variance: </span><span class="sc">{</span>pca<span class="sc">.</span>explained_variance_ratio_<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Interpret components via loadings</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>loadings <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>    pca.components_.T,</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>[<span class="ss">f&#39;PC</span><span class="sc">{</span>i<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">&#39;</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(pca.n_components_)],</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span>feature_cols</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(loadings)</span></code></pre></div>
+<p><strong>Expected interpretation:</strong></p>
+<pre><code>                        PC1      PC2      PC3
+h_index                0.45     0.12    -0.08   ← Experience/Reputation
+total_trials           0.42     0.15     0.10
+years_active           0.38     0.20     0.05
+completion_rate        0.35     0.40     0.15   ← Relevance/Track Record
+condition_experience   0.10     0.55     0.30
+phase_experience       0.05     0.48     0.25
+recency               -0.20     0.10     0.60   ← Recency</code></pre>
+<p><strong>Latent factors discovered:</strong> - <strong>PC1</strong> =
+“Experience/Reputation” (h_index, total_trials, years_active) -
+<strong>PC2</strong> = “Relevance” (condition_experience,
+phase_experience, completion_rate) - <strong>PC3</strong> = “Recency”
+(recent activity)</p>
+<h4 id="step-5-apply-data-driven-weights">Step 5: Apply Data-Driven
+Weights</h4>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculate_score_pca(</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    features: <span class="bu">dict</span>,</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    correlation_weights: <span class="bu">dict</span>,  <span class="co"># From Step 3</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    semantic_similarity: <span class="bu">float</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> <span class="bu">float</span>:</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co">    Score using data-driven weights from correlation analysis.</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Semantic similarity always important (not in historical data)</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    score <span class="op">=</span> <span class="fl">0.40</span> <span class="op">*</span> semantic_similarity</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Add weighted features (weights from correlation analysis)</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> feature, weight <span class="kw">in</span> correlation_weights.items():</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> feature <span class="kw">in</span> features:</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Normalize feature to 0-1 range</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>            normalized <span class="op">=</span> normalize_feature(features[feature], feature)</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>            score <span class="op">+=</span> weight <span class="op">*</span> normalized</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> score</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Example with correlation-derived weights:</span></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>correlation_weights <span class="op">=</span> {</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;completion_rate&#39;</span>: <span class="fl">0.18</span>,       <span class="co"># 0.42 / sum * 0.60</span></span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;condition_experience&#39;</span>: <span class="fl">0.16</span>,  <span class="co"># 0.38 / sum * 0.60</span></span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;h_index&#39;</span>: <span class="fl">0.13</span>,               <span class="co"># 0.31 / sum * 0.60</span></span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;total_trials&#39;</span>: <span class="fl">0.11</span>,          <span class="co"># 0.27 / sum * 0.60</span></span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;phase_experience&#39;</span>: <span class="fl">0.09</span>,      <span class="co"># 0.22 / sum * 0.60</span></span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;years_active&#39;</span>: <span class="fl">0.06</span>,          <span class="co"># 0.14 / sum * 0.60</span></span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;recency&#39;</span>: <span class="fl">0.05</span>,               <span class="co"># 0.11 / sum * 0.60</span></span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Note: 0.40 for similarity + 0.60 for features = 1.0</span></span></code></pre></div>
+<h3 id="phase-2-ml-based-ranking-when-you-have-user-feedback">Phase 2:
+ML-Based Ranking (When You Have User Feedback)</h3>
+<p>Once you collect ~1000+ user selections, train a LightGBM ranker:</p>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> lightgbm <span class="im">as</span> lgb</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare ranking data</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># group_sizes = number of candidates shown per query</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>train_data <span class="op">=</span> lgb.Dataset(</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    X_train,  <span class="co"># Features: [similarity, h_index, completion_rate, ...]</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    label<span class="op">=</span>y_train,  <span class="co"># 1 if user selected, 0 otherwise</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    group<span class="op">=</span>group_sizes</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> {</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;objective&quot;</span>: <span class="st">&quot;lambdarank&quot;</span>,</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;metric&quot;</span>: <span class="st">&quot;ndcg&quot;</span>,</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;ndcg_eval_at&quot;</span>: [<span class="dv">5</span>, <span class="dv">10</span>],</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;learning_rate&quot;</span>: <span class="fl">0.05</span>,</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;num_leaves&quot;</span>: <span class="dv">31</span>,</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;min_data_in_leaf&quot;</span>: <span class="dv">20</span>,</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> lgb.train(params, train_data, num_boost_round<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Feature importance tells us what users actually care about</span></span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>importance <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;feature&#39;</span>: feature_names,</span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;importance&#39;</span>: model.feature_importance()</span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>}).sort_values(<span class="st">&#39;importance&#39;</span>, ascending<span class="op">=</span><span class="va">False</span>)</span></code></pre></div>
+<h3 id="add-feedback-logging-infrastructure">Add Feedback Logging
+Infrastructure</h3>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> recommendation_feedback (</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">id</span> SERIAL <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">query</span> TEXT,</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    query_embedding VECTOR(<span class="dv">1024</span>),</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    query_conditions TEXT[],</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    query_phase <span class="dt">VARCHAR</span>(<span class="dv">20</span>),</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- What was shown</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    shown_results JSONB,  <span class="co">-- [{pi_id, site_id, score, position, features}]</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- What user did</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    selected_pi_id <span class="dt">INTEGER</span>,</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    selected_site_id <span class="dt">INTEGER</span>,</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>    selected_position <span class="dt">INTEGER</span>,</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>    feedback_type <span class="dt">VARCHAR</span>(<span class="dv">20</span>),  <span class="co">-- &#39;click&#39;, &#39;contact&#39;, &#39;shortlist&#39;, &#39;explicit_good&#39;</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- Metadata</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>    user_id <span class="dt">INTEGER</span>,</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>    session_id <span class="dt">VARCHAR</span>(<span class="dv">50</span>),</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>    created_at TIMESTAMPTZ <span class="kw">DEFAULT</span> NOW()</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>);</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a><span class="co">-- Index for training data extraction</span></span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">INDEX</span> idx_feedback_created <span class="kw">ON</span> recommendation_feedback(created_at);</span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">INDEX</span> idx_feedback_type <span class="kw">ON</span> recommendation_feedback(feedback_type);</span></code></pre></div>
+<h3 id="implementation-phases">Implementation Phases</h3>
+<table>
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 25%" />
+<col style="width: 32%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Approach</th>
+<th>Data Needed</th>
+<th>Timeline</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Phase 1</strong></td>
+<td>Correlation analysis</td>
+<td>Historical trial outcomes</td>
+<td>Week 1</td>
+</tr>
+<tr>
+<td><strong>Phase 2</strong></td>
+<td>PCA factor discovery</td>
+<td>Same as Phase 1</td>
+<td>Week 1-2</td>
+</tr>
+<tr>
+<td><strong>Phase 3</strong></td>
+<td>Deploy data-driven weights</td>
+<td>Phase 1-2 results</td>
+<td>Week 2</td>
+</tr>
+<tr>
+<td><strong>Phase 4</strong></td>
+<td>Collect user feedback</td>
+<td>Production traffic</td>
+<td>Ongoing</td>
+</tr>
+<tr>
+<td><strong>Phase 5</strong></td>
+<td>Train LightGBM ranker</td>
+<td>~1000+ selections</td>
+<td>Month 2+</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="implementation-priority">Implementation Priority</h2>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 33%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>Priority</th>
+<th>Action Item</th>
+<th>Effort</th>
+<th>Impact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Recover PIs via PubMed/ClinicalTrials.gov</td>
+<td>2-3 days</td>
+<td>High (183K trials)</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Enrich interventions with openFDA</td>
+<td>1-2 days</td>
+<td>Medium (better drug matching)</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Run correlation analysis + PCA</td>
+<td>1-2 days</td>
+<td>High (data-driven weights)</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Complete OpenAlex enrichment</td>
+<td>Ongoing</td>
+<td>Medium (h-index data)</td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>Re-generate embeddings (with MOA, drug class, PI names)</td>
+<td>1 day</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td>Add feedback logging</td>
+<td>0.5 days</td>
+<td>Future ML training</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="next-steps">Next Steps</h2>
+<ol type="1">
+<li><strong>Create PI recovery scripts</strong> in
+<code>scripts/recover_pis/</code></li>
+<li><strong>Create FDA enrichment script</strong> in
+<code>scripts/enrich_fda.py</code></li>
+<li><strong>Create correlation/PCA analysis script</strong> in
+<code>scripts/analyze_features.py</code></li>
+<li><strong>Update embedding text function</strong> (include MOA, drug
+class, PI names; exclude site names)</li>
+<li><strong>Re-generate embeddings</strong> with enriched data</li>
+<li><strong>Update scoring function</strong> with data-driven
+weights</li>
+<li><strong>Add feedback logging</strong> to API</li>
+</ol>
+<hr />
+<h2 id="open-questions">Open Questions</h2>
+<ol type="1">
+<li><strong>PubMed API key</strong>: Do you have one? (Free from
+NCBI)</li>
+<li><strong>SerpAPI key</strong>: Needed for Google Scholar fallback
+($50/mo)</li>
+<li><strong>Feedback collection</strong>: How will users provide
+feedback? (clicks, explicit rating)</li>
+</ol>
+<hr />
+<h2 id="appendix-embedding-content-summary">Appendix: Embedding Content
+Summary</h2>
+<p><strong>Included in embeddings:</strong> - ✅ Trial title - ✅ Trial
+summary (truncated to 800 chars) - ✅ Conditions - ✅ Phase - ✅
+Intervention names - ✅ Mechanism of action (from openFDA) - ✅ Drug
+class (from openFDA) - ✅ Lead PI name</p>
+<p><strong>Excluded from embeddings:</strong> - ❌ Site names (use
+structured metadata filtering instead)</p>
+</body>
+</html>

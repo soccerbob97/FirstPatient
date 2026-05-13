@@ -1,0 +1,24 @@
+[2026-04-11 01:55:46] ==============================================
+[2026-04-11 01:55:46] HNSW Index Rebuild Script Started
+[2026-04-11 01:55:46] ==============================================
+[2026-04-11 01:55:47] Current row count: 394214
+[2026-04-11 01:55:48] HNSW index exists: 0
+[2026-04-11 01:55:48] 
+[2026-04-11 01:55:48] [STEP 1/4] Upgrading compute to XL...
+[2026-04-11 01:55:48] Upgrading compute to ci_xlarge...
+[2026-04-11 01:55:49] API Response: {"id":25946708,"name":"ClinicalTrials","ref":"zwcreraudeemddmloeul"}
+[2026-04-11 01:55:49] Waiting 30 seconds before restart...
+[2026-04-11 01:56:19] Restarting database to apply compute changes...
+[2026-04-11 01:56:19] Restart response: {"message":"Cannot POST /v1/projects/zwcreraudeemddmloeul/restart"}
+[2026-04-11 01:56:19] Waiting 90 seconds for database to restart...
+[2026-04-11 01:57:50] Current shared_buffers: 256MB
+[2026-04-11 01:57:50] 
+[2026-04-11 01:57:50] [STEP 2/4] Building HNSW index...
+[2026-04-11 01:57:50] Building HNSW index on trial_embeddings_full...
+[2026-04-11 01:57:50] This may take 10-30 minutes depending on compute size.
+[2026-04-11 01:57:52] ERROR: Failed to create HNSW index
+[2026-04-11 01:57:52] Output: SET
+SET
+SET
+ERROR:  could not resize shared memory segment "/PostgreSQL.2844650388" to 2144416064 bytes: No space left on device
+[2026-04-11 01:57:52] Index build failed. Check logs for details.
