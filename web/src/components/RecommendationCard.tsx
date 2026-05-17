@@ -65,13 +65,7 @@ export function RecommendationCard({ recommendation, rank }: RecommendationCardP
       </div>
 
       {/* Score Breakdown */}
-      <div className="mt-4 pt-4 border-t border-slate-100 grid grid-cols-3 gap-4 text-center">
-        <div>
-          <div className="text-sm font-medium text-slate-700">
-            {Math.round(scores.similarity * 100)}%
-          </div>
-          <div className="text-xs text-slate-500">Similarity</div>
-        </div>
+      <div className="mt-4 pt-4 border-t border-slate-100 grid grid-cols-2 gap-4 text-center">
         <div>
           <div className="text-sm font-medium text-slate-700">
             {scores.total_trials} trials
