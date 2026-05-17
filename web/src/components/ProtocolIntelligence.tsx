@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 
 interface ScoreBreakdown {
   score: number;
@@ -41,10 +41,10 @@ interface ProtocolAnalysis {
 
 const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
-const ScoreGauge: React.FC<{ score: number; label: string; size?: 'sm' | 'lg' }> = ({ 
-  score, 
-  label, 
-  size = 'sm' 
+const ScoreGauge: React.FC<{ score: number; label: string; size?: 'sm' | 'lg' }> = ({
+  score,
+  label,
+  size = 'sm'
 }) => {
   const getColor = (s: number) => {
     if (s < 40) return '#22c55e'; // green
@@ -60,8 +60,8 @@ const ScoreGauge: React.FC<{ score: number; label: string; size?: 'sm' | 'lg' }>
 
   return (
     <div className="flex flex-col items-center">
-      <svg 
-        width={radius * 2 + strokeWidth * 2} 
+      <svg
+        width={radius * 2 + strokeWidth * 2}
         height={radius * 2 + strokeWidth * 2}
         className="transform -rotate-90"
       >
@@ -101,8 +101,8 @@ const ScoreGauge: React.FC<{ score: number; label: string; size?: 'sm' | 'lg' }>
   );
 };
 
-const ScoreCard: React.FC<{ 
-  title: string; 
+const ScoreCard: React.FC<{
+  title: string;
   breakdown: ScoreBreakdown;
   expanded: boolean;
   onToggle: () => void;
@@ -125,17 +125,17 @@ const ScoreCard: React.FC<{
           <span className={`px-3 py-1 rounded-full text-sm font-semibold ${getScoreColor(breakdown.score)}`}>
             {breakdown.score.toFixed(0)}
           </span>
-          <svg 
+          <svg
             className={`w-5 h-5 text-gray-400 transition-transform ${expanded ? 'rotate-180' : ''}`}
-            fill="none" 
-            viewBox="0 0 24 24" 
+            fill="none"
+            viewBox="0 0 24 24"
             stroke="currentColor"
           >
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
           </svg>
         </div>
       </button>
-      
+
       {expanded && (
         <div className="px-4 pb-4 border-t border-gray-100">
           <div className="mt-3">
@@ -151,7 +151,7 @@ const ScoreCard: React.FC<{
               ))}
             </div>
           </div>
-          
+
           {breakdown.recommendations.length > 0 && (
             <div className="mt-4">
               <h4 className="text-xs font-semibold text-gray-500 uppercase mb-2">Recommendations</h4>
@@ -171,9 +171,9 @@ const ScoreCard: React.FC<{
   );
 };
 
-const QuickScoreForm: React.FC<{ onAnalyze: (data: any) => void; loading: boolean }> = ({ 
-  onAnalyze, 
-  loading 
+const QuickScoreForm: React.FC<{ onAnalyze: (data: any) => void; loading: boolean }> = ({
+  onAnalyze,
+  loading
 }) => {
   const [formData, setFormData] = useState({
     phase: 'Phase 2',
@@ -213,7 +213,7 @@ const QuickScoreForm: React.FC<{ onAnalyze: (data: any) => void; loading: boolea
         {/* Basic Info */}
         <div className="space-y-4 p-4 bg-gray-50 rounded-lg">
           <h3 className="font-semibold text-gray-800">Study Information</h3>
-          
+
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Phase</label>
             <select
@@ -264,7 +264,7 @@ const QuickScoreForm: React.FC<{ onAnalyze: (data: any) => void; loading: boolea
         {/* Eligibility */}
         <div className="space-y-4 p-4 bg-gray-50 rounded-lg">
           <h3 className="font-semibold text-gray-800">Eligibility Criteria</h3>
-          
+
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Inclusion Criteria Count
@@ -319,7 +319,7 @@ const QuickScoreForm: React.FC<{ onAnalyze: (data: any) => void; loading: boolea
         {/* Study Design */}
         <div className="space-y-4 p-4 bg-gray-50 rounded-lg">
           <h3 className="font-semibold text-gray-800">Study Design</h3>
-          
+
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Number of Arms</label>
             <input
@@ -373,7 +373,7 @@ const QuickScoreForm: React.FC<{ onAnalyze: (data: any) => void; loading: boolea
         {/* Visits & Assessments */}
         <div className="space-y-4 p-4 bg-gray-50 rounded-lg">
           <h3 className="font-semibold text-gray-800">Visits & Assessments</h3>
-          
+
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Total Visits</label>
             <input
@@ -427,7 +427,7 @@ const QuickScoreForm: React.FC<{ onAnalyze: (data: any) => void; loading: boolea
         {/* Safety */}
         <div className="space-y-4 p-4 bg-gray-50 rounded-lg">
           <h3 className="font-semibold text-gray-800">Safety Monitoring</h3>
-          
+
           <div className="flex items-center gap-2">
             <input
               type="checkbox"
@@ -526,11 +526,11 @@ const ProtocolIntelligence: React.FC = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
       });
-      
+
       if (!response.ok) {
         throw new Error('Analysis failed');
       }
-      
+
       const data = await response.json();
       setAnalysis({
         success: true,
@@ -553,23 +553,23 @@ const ProtocolIntelligence: React.FC = () => {
 
   const handlePdfUpload = async () => {
     if (!pdfFile) return;
-    
+
     setLoading(true);
     setError(null);
     try {
       const formData = new FormData();
       formData.append('file', pdfFile);
       formData.append('include_recommendations', 'true');
-      
+
       const response = await fetch(`${API_BASE}/api/protocol/analyze-pdf`, {
         method: 'POST',
         body: formData
       });
-      
+
       if (!response.ok) {
         throw new Error('PDF analysis failed');
       }
-      
+
       const data = await response.json();
       setAnalysis(data);
     } catch (err) {
@@ -603,7 +603,7 @@ const ProtocolIntelligence: React.FC = () => {
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900">Protocol Intelligence</h1>
           <p className="mt-2 text-gray-600">
-            Analyze clinical trial protocols to assess operational complexity, predict enrollment challenges, 
+            Analyze clinical trial protocols to assess operational complexity, predict enrollment challenges,
             and get recommendations for site and PI selection.
           </p>
         </div>
@@ -614,31 +614,28 @@ const ProtocolIntelligence: React.FC = () => {
             <nav className="flex -mb-px">
               <button
                 onClick={() => setActiveTab('quick')}
-                className={`px-6 py-4 text-sm font-medium border-b-2 transition-colors ${
-                  activeTab === 'quick'
+                className={`px-6 py-4 text-sm font-medium border-b-2 transition-colors ${activeTab === 'quick'
                     ? 'border-blue-500 text-blue-600'
                     : 'border-transparent text-gray-500 hover:text-gray-700'
-                }`}
+                  }`}
               >
                 Quick Score
               </button>
               <button
                 onClick={() => setActiveTab('pdf')}
-                className={`px-6 py-4 text-sm font-medium border-b-2 transition-colors ${
-                  activeTab === 'pdf'
+                className={`px-6 py-4 text-sm font-medium border-b-2 transition-colors ${activeTab === 'pdf'
                     ? 'border-blue-500 text-blue-600'
                     : 'border-transparent text-gray-500 hover:text-gray-700'
-                }`}
+                  }`}
               >
                 Upload PDF
               </button>
               <button
                 onClick={() => { setActiveTab('sample'); loadSampleAnalysis(); }}
-                className={`px-6 py-4 text-sm font-medium border-b-2 transition-colors ${
-                  activeTab === 'sample'
+                className={`px-6 py-4 text-sm font-medium border-b-2 transition-colors ${activeTab === 'sample'
                     ? 'border-blue-500 text-blue-600'
                     : 'border-transparent text-gray-500 hover:text-gray-700'
-                }`}
+                  }`}
               >
                 Sample Analysis
               </button>
@@ -670,7 +667,7 @@ const ProtocolIntelligence: React.FC = () => {
                     <p className="mt-1 text-xs text-gray-500">PDF up to 50MB</p>
                   </label>
                 </div>
-                
+
                 {pdfFile && (
                   <div className="flex justify-center">
                     <button
@@ -731,11 +728,11 @@ const ProtocolIntelligence: React.FC = () => {
                     )}
                   </div>
                 </div>
-                
+
                 <div className="relative">
-                  <ScoreGauge 
-                    score={analysis.scores.overall_complexity} 
-                    label="Overall Complexity" 
+                  <ScoreGauge
+                    score={analysis.scores.overall_complexity}
+                    label="Overall Complexity"
                     size="lg"
                   />
                 </div>
@@ -759,9 +756,9 @@ const ProtocolIntelligence: React.FC = () => {
               <div className="bg-white rounded-lg shadow-sm p-6">
                 <div className="text-sm text-gray-500 mb-1">Recommended Sites</div>
                 <div className="text-2xl font-bold text-gray-900">
-                  {analysis.feasibility_summary?.recommended_site_count || 
-                   Math.ceil((analysis.metadata.target_enrollment || 100) / 
-                   (analysis.scores.estimated_enrollment_rate * 12))}
+                  {analysis.feasibility_summary?.recommended_site_count ||
+                    Math.ceil((analysis.metadata.target_enrollment || 100) /
+                      (analysis.scores.estimated_enrollment_rate * 12))}
                 </div>
               </div>
             </div>
