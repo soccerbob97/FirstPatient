@@ -112,6 +112,8 @@ class DataLoader:
                 "role": investigator.get("role"),
                 "affiliation": investigator.get("affiliation"),
                 "affiliation_normalized": investigator.get("affiliation_normalized"),
+                "email": investigator.get("email"),
+                "phone": investigator.get("phone"),
             }
             inv_data = {k: v for k, v in inv_data.items() if v is not None}
             
@@ -292,13 +294,15 @@ class DataLoader:
                     site_name = site.get("facility_name")
                     break
             
-            # Create investigator with site as affiliation
+            # Create investigator with site as affiliation and contact info
             contact_inv = {
                 "full_name": contact.get("full_name"),
                 "name_normalized": contact.get("name_normalized"),
                 "role": contact.get("role"),
                 "affiliation": site_name,
                 "affiliation_normalized": normalize_facility_name(site_name),
+                "email": contact.get("email"),
+                "phone": contact.get("phone"),
             }
             
             inv_id = await self.upsert_investigator(contact_inv)

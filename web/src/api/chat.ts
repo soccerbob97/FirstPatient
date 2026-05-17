@@ -1,8 +1,8 @@
 import { supabase } from '../lib/supabase';
 
 // Use environment variable for production, fallback to localhost for dev
-const API_BASE = import.meta.env.VITE_API_URL 
-  ? `${import.meta.env.VITE_API_URL}/api` 
+const API_BASE = import.meta.env.VITE_API_URL
+  ? `${import.meta.env.VITE_API_URL}/api`
   : 'http://localhost:8000/api';
 
 // Helper to get auth headers
@@ -118,6 +118,28 @@ export async function saveConversation(
   });
   if (!response.ok) {
     throw new Error('Failed to save conversation');
+  }
+  return response.json();
+}
+
+export async function appendMessages(
+  conversationId: string,
+  messages: ChatMessage[]
+): Promise<{ appended: number }> {
+  const headers = await getAuthHeaders();
+  const response = await fetch(`${API_BASE}/conversations/${conversationId}/messages`, {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({
+      messages: messages.map(m => ({
+        role: m.role,
+        content: m.content,
+        metadata: m.recommendations ? { recommendations: m.recommendations } : {}
+      }))
+    }),
+  });
+  if (!response.ok) {
+    throw new Error('Failed to append messages');
   }
   return response.json();
 }

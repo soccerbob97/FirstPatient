@@ -49,6 +49,17 @@ class PIRecommender:
             'regeneron', 'vertex', 'moderna', 'astellas', 'daiichi', 'eisai',
             'otsuka', 'teva', 'allergan', 'celgene', 'shire', 'alexion',
         ]
+        
+        # Generic role/placeholder names that are not real PI names
+        self.generic_role_names = [
+            'project leader', 'study director', 'medical director', 'study chair',
+            'principal investigator', 'sub-investigator', 'co-investigator',
+            'medical monitor', 'medical officer', 'clinical director',
+            'research director', 'trial director', 'sponsor', 'investigator',
+        ]
+        
+        # Very short names that are likely placeholders (exact matches)
+        self.placeholder_names = ['md', 'phd', 'dr', 'prof', 'rn', 'do', 'np', 'pa']
     
     def recommend(
         self,
@@ -83,7 +94,7 @@ class PIRecommender:
                     "similarity_threshold": similarity_threshold,
                     "max_results": max_results * 5,
                 }
-            ).execute()
+            )
             
             if not result.data:
                 return self._fallback_recommend(query, phase, country, max_results)
@@ -345,22 +356,26 @@ class PIRecommender:
         """Check if a name looks like a sponsor/organization rather than a real PI."""
         if not name:
             return True
-        name_lower = name.lower()
+        
+        name_lower = name.lower().strip()
+        
+        # Check for exact match placeholder names (e.g., "MD", "PhD")
+        if name_lower in self.placeholder_names:
+            return True
+        
+        # Check for generic role names (e.g., "Project Leader", "Study Director")
+        for role in self.generic_role_names:
+            if name_lower == role or name_lower.startswith(role + ' ') or name_lower.endswith(' ' + role):
+                return True
         
         # Check for sponsor keywords
         for keyword in self.sponsor_keywords:
             if keyword in name_lower:
                 return True
         
-        # Real PIs usually have credentials (MD, PhD, etc.) or comma-separated names
-        has_credentials = any(cred in name for cred in ['MD', 'PhD', 'Dr', 'Prof', 'MBBS', 'FRCP'])
-        has_comma = ',' in name
-        
-        # If no credentials and no comma, likely a sponsor
-        if not has_credentials and not has_comma and len(name.split()) <= 2:
-            # Short names without credentials might still be real (e.g., "John Smith")
-            # But names like "GSK" or "Pfizer" are sponsors
-            pass
+        # Filter out very short names (1-2 chars) that are likely placeholders
+        if len(name_lower) <= 2:
+            return True
         
         return False
     

@@ -280,6 +280,69 @@ TOOLS = [
                 "required": []
             }
         }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "get_investigator_contact",
+            "description": "Get contact information (email, phone) for a Principal Investigator. Use this when the user asks for contact details, how to reach a PI, or wants to contact an investigator.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "investigator_id": {
+                        "type": "integer",
+                        "description": "The ID of the investigator"
+                    },
+                    "investigator_name": {
+                        "type": "string",
+                        "description": "The name of the investigator to search for"
+                    }
+                },
+                "required": []
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "generate_outreach_email",
+            "description": "Generate a professional outreach email to a Principal Investigator for clinical trial recruitment. Use this when the user wants to draft an email, reach out to a PI, or contact an investigator about a trial opportunity.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "investigator_id": {
+                        "type": "integer",
+                        "description": "The ID of the investigator to email"
+                    },
+                    "investigator_name": {
+                        "type": "string",
+                        "description": "The name of the investigator (if ID not known)"
+                    },
+                    "trial_description": {
+                        "type": "string",
+                        "description": "Brief description of the clinical trial opportunity"
+                    },
+                    "therapeutic_area": {
+                        "type": "string",
+                        "description": "The therapeutic area (e.g., oncology, obesity, cardiology)"
+                    },
+                    "phase": {
+                        "type": "string",
+                        "description": "Trial phase (e.g., Phase 1, Phase 2, Phase 3)"
+                    },
+                    "sponsor_name": {
+                        "type": "string",
+                        "description": "Name of the sponsoring company"
+                    },
+                    "tone": {
+                        "type": "string",
+                        "enum": ["formal", "friendly", "concise"],
+                        "description": "Tone of the email (default: formal)"
+                    }
+                },
+                "required": []
+            }
+        }
     }
 ]
 
@@ -298,6 +361,8 @@ AVAILABLE TOOLS:
 - get_pi_publications: Get academic metrics (h-index, papers, citations) from Semantic Scholar
 - get_trial_sites: Get all sites conducting a specific trial
 - get_trial_investigators: Get all PIs working on a specific trial
+- get_investigator_contact: Get contact info (email, phone) for a PI
+- generate_outreach_email: Draft a professional outreach email to a PI about a trial opportunity
 
 IMPORTANT: When you call get_recommendations, the results are AUTOMATICALLY displayed as visual cards in the UI. 
 DO NOT repeat the recommendation details (names, sites, scores, metrics) in your text response.
@@ -316,8 +381,17 @@ TOOL SELECTION GUIDE:
 - User asks for all sites conducting a trial → use get_trial_sites
 - User asks for all investigators on a trial → use get_trial_investigators
 - User wants to find NEW PIs/sites for a trial concept → use get_recommendations
+- User wants to draft/write/generate an email to a PI → use generate_outreach_email (ALWAYS use this tool, don't write emails yourself)
 
 IMPORTANT: When the user asks follow-up questions about a specific PI or site mentioned earlier, use get_investigator_details or get_site_details - NOT get_recommendations.
+
+IMPORTANT: When the user asks to draft, write, or generate an email to contact a PI, ALWAYS use the generate_outreach_email tool. Do NOT write the email yourself in your response.
+
+IMPORTANT: When you receive results from generate_outreach_email, ALWAYS display the FULL email content including:
+- To: (email address)
+- Subject: (subject line)
+- Body: (complete email text)
+Format it as plain text WITHOUT code blocks or dark backgrounds. Do NOT use ``` formatting. Just display the email content directly so the user can easily read and copy it.
 
 Keep responses concise - the cards already show the key data.
 """
@@ -739,6 +813,161 @@ def execute_tool(tool_name: str, arguments: dict, filters: Optional[Filters] = N
         
         return {"investigators": investigators, "count": len(investigators), "trial_id": trial_id}
     
+    elif tool_name == "get_investigator_contact":
+        inv_id = arguments.get("investigator_id")
+        inv_name = arguments.get("investigator_name")
+        
+        if inv_id:
+            result = supabase.table("investigators").select(
+                "id,full_name,affiliation,email,phone"
+            ).eq("id", inv_id).execute()
+        elif inv_name:
+            # Clean up name - remove common prefixes
+            clean_name = inv_name.replace("Dr. ", "").replace("Dr ", "").replace("Prof. ", "").replace("Prof ", "").strip()
+            result = supabase.table("investigators").select(
+                "id,full_name,affiliation,email,phone"
+            ).ilike("full_name", f"%{clean_name}%").limit(10).execute()
+        else:
+            return {"error": "Please provide either investigator_id or investigator_name"}
+        
+        if not result.data:
+            return {"error": "Investigator not found"}
+        
+        # Deduplicate by name - keep the one with contact info if available
+        if inv_id:
+            inv = result.data[0]
+        else:
+            # Normalize name for deduplication (remove titles, suffixes, extra spaces)
+            def normalize_name(name: str) -> str:
+                import re
+                n = name.lower().strip()
+                # Remove common titles and suffixes
+                for suffix in [", md", ", phd", ", do", " md", " phd", " do", ", m.d.", ", ph.d."]:
+                    n = n.replace(suffix, "")
+                # Remove extra whitespace
+                n = re.sub(r'\s+', ' ', n).strip()
+                return n
+            
+            # Group by normalized name, prefer entries with contact info
+            seen_names = {}
+            for r in result.data:
+                name_key = normalize_name(r.get("full_name", ""))
+                has_contact = bool(r.get("email") or r.get("phone"))
+                
+                if name_key not in seen_names:
+                    seen_names[name_key] = r
+                elif has_contact and not (seen_names[name_key].get("email") or seen_names[name_key].get("phone")):
+                    # Replace with this one since it has contact info
+                    seen_names[name_key] = r
+            
+            unique_investigators = list(seen_names.values())
+            
+            if len(unique_investigators) == 1:
+                inv = unique_investigators[0]
+            else:
+                # Multiple unique matches
+                return {
+                    "investigators": unique_investigators,
+                    "count": len(unique_investigators),
+                    "message": f"Found {len(unique_investigators)} investigators matching '{inv_name}'. Showing contact info for all matches."
+                }
+        
+        # Single investigator result
+        has_contact = bool(inv.get("email") or inv.get("phone"))
+        return {
+            "investigator": inv,
+            "has_contact_info": has_contact,
+            "message": "Contact information available" if has_contact else "No contact information on file for this investigator. Contact info is only available for site-level contacts listed in ClinicalTrials.gov."
+        }
+    
+    elif tool_name == "generate_outreach_email":
+        inv_id = arguments.get("investigator_id")
+        inv_name = arguments.get("investigator_name")
+        trial_desc = arguments.get("trial_description", "a clinical trial opportunity")
+        therapeutic_area = arguments.get("therapeutic_area", "")
+        phase = arguments.get("phase", "")
+        sponsor_name = arguments.get("sponsor_name", "our company")
+        tone = arguments.get("tone", "formal")
+        
+        # Get investigator details
+        inv_data = None
+        if inv_id:
+            result = supabase.table("investigators").select(
+                "id,full_name,affiliation,email,phone"
+            ).eq("id", inv_id).execute()
+            if result.data:
+                inv_data = result.data[0]
+        elif inv_name:
+            # Clean up name - remove common prefixes
+            clean_name = inv_name.replace("Dr. ", "").replace("Dr ", "").replace("Prof. ", "").replace("Prof ", "").strip()
+            result = supabase.table("investigators").select(
+                "id,full_name,affiliation,email,phone"
+            ).ilike("full_name", f"%{clean_name}%").limit(1).execute()
+            if result.data:
+                inv_data = result.data[0]
+        
+        if not inv_data:
+            return {"error": "Investigator not found. Please provide a valid investigator ID or name."}
+        
+        # Build context for email generation
+        pi_name = inv_data.get("full_name", "Dr.")
+        pi_affiliation = inv_data.get("affiliation", "your institution")
+        pi_email = inv_data.get("email")
+        pub_count = inv_data.get("publication_count") or 0
+        h_index = inv_data.get("h_index") or 0
+        
+        # Generate email using OpenAI
+        email_prompt = f"""Generate a professional outreach email to recruit a Principal Investigator for a clinical trial.
+
+PI Details:
+- Name: {pi_name}
+- Institution: {pi_affiliation}
+- Publications: {pub_count}, H-index: {h_index}
+
+Trial Details:
+- Description: {trial_desc}
+- Therapeutic Area: {therapeutic_area or 'Not specified'}
+- Phase: {phase or 'Not specified'}
+- Sponsor: {sponsor_name}
+
+Tone: {tone}
+
+Requirements:
+1. Address the PI by name
+2. Reference their expertise/institution if relevant
+3. Briefly describe the trial opportunity
+4. Highlight why they would be a good fit
+5. Include a clear call to action
+6. Keep it concise (under 200 words)
+7. Do NOT include placeholder brackets like [Your Name] - leave signature area blank
+
+Generate ONLY the email body, starting with the greeting."""
+
+        email_response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[{"role": "user", "content": email_prompt}],
+            temperature=0.7,
+            max_tokens=500
+        )
+        
+        email_body = email_response.choices[0].message.content
+        
+        return {
+            "email": {
+                "to": pi_email or f"[{pi_name}'s email not on file]",
+                "to_name": pi_name,
+                "subject": f"Clinical Trial Opportunity: {therapeutic_area or 'Research'} {phase or 'Study'}",
+                "body": email_body
+            },
+            "investigator": {
+                "id": inv_data.get("id"),
+                "name": pi_name,
+                "affiliation": pi_affiliation,
+                "email": pi_email
+            },
+            "message": f"Generated outreach email for {pi_name}" + (f" ({pi_email})" if pi_email else " - note: email address not on file")
+        }
+    
     return {"error": f"Unknown tool: {tool_name}"}
 
 
@@ -752,7 +981,8 @@ def is_search_query(message: str) -> bool:
         r'\bcompare\b', r'\bdifference\b', r'\btell me about\b', r'\bdetails\b', 
         r'\bexplain\b', r'\bwhy\b', r'\bhow\b', r'\bwhat is\b', r'\bwho is\b', 
         r'\bmore info\b', r'\bspecific\b', r'\bwhich one\b', r'\bbetter\b', 
-        r'\bversus\b', r'\bvs\b'
+        r'\bversus\b', r'\bvs\b',
+        r'\bemail\b', r'\bdraft\b', r'\bwrite\b', r'\boutreach\b', r'\bcontact\b'
     ]
     
     # If it's a complex query, use full LLM flow
@@ -1086,6 +1316,41 @@ async def save_conversation(request: SaveConversationRequest, user_id: str = Dep
             }).execute()
         
         return {"conversation_id": conversation_id}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+class AppendMessagesRequest(BaseModel):
+    messages: list[dict]
+
+
+@router.post("/conversations/{conversation_id}/messages")
+async def append_messages(conversation_id: str, request: AppendMessagesRequest, user_id: str = Depends(get_user_id_from_token)):
+    """Append new messages to an existing conversation."""
+    if not check_tables_exist():
+        raise HTTPException(status_code=503, detail="Database tables not created yet")
+    
+    try:
+        # Verify conversation exists and belongs to user
+        query = supabase.table("conversations").select("id").eq("id", conversation_id)
+        if user_id:
+            query = query.eq("user_id", user_id)
+        conv = query.limit(1).execute()
+        if not conv.data:
+            raise HTTPException(status_code=404, detail="Conversation not found")
+        
+        # Insert new messages
+        for msg in request.messages:
+            supabase.table("messages").insert({
+                "conversation_id": conversation_id,
+                "role": msg.get("role"),
+                "content": msg.get("content"),
+                "metadata": msg.get("metadata", {})
+            }).execute()
+        
+        return {"appended": len(request.messages)}
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 

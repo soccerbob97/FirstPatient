@@ -45,9 +45,11 @@ class TableQuery:
         self._select = "*"
         self._filters = []
         self._limit = None
+        self._count = None
     
-    def select(self, columns: str):
+    def select(self, columns: str, count: str = None):
         self._select = columns
+        self._count = count  # 'exact', 'planned', or 'estimated'
         return self
     
     def in_(self, column: str, values: list):
@@ -64,7 +66,16 @@ class TableQuery:
         return self
     
     def ilike(self, column: str, pattern: str):
-        self._filters.append(f"{column}=ilike.{pattern}")
+        from urllib.parse import quote
+        # PostgREST uses * for wildcards, not %
+        # Convert SQL-style % wildcards to PostgREST * wildcards
+        postgrest_pattern = pattern.replace('%', '*')
+        # URL encode special chars, keeping * as wildcard and allowing spaces (will be encoded as %20)
+        # Also allow commas and periods which are common in names
+        encoded_pattern = quote(postgrest_pattern, safe='*,. ')
+        # Replace spaces with %20 for URL
+        encoded_pattern = encoded_pattern.replace(' ', '%20')
+        self._filters.append(f"{column}=ilike.{encoded_pattern}")
         return self
     
     def gt(self, column: str, value):
@@ -95,31 +106,89 @@ class TableQuery:
         self._order.append(f"{column}{direction}")
         return self
     
+    def single(self):
+        """Return a single object instead of an array."""
+        self._single = True
+        self._limit = 1
+        return self
+    
     def limit(self, n: int):
         self._limit = n
         return self
     
+    def range(self, start: int, end: int):
+        """Set range for pagination (start and end are inclusive)."""
+        self._range_start = start
+        self._range_end = end
+        return self
+    
     def execute(self):
-        url = f"{self.url}/rest/v1/{self.table_name}?select={self._select}"
+        from urllib.parse import quote
+        # URL encode the select columns (spaces need encoding)
+        encoded_select = quote(self._select, safe=',*')
+        url = f"{self.url}/rest/v1/{self.table_name}?select={encoded_select}"
         for f in self._filters:
             url += f"&{f}"
         if hasattr(self, '_order') and self._order:
             url += f"&order={','.join(self._order)}"
         if self._limit:
             url += f"&limit={self._limit}"
-        response = requests.get(url, headers=self.headers)
+        
+        headers = self.headers.copy()
+        if hasattr(self, '_range_start') and hasattr(self, '_range_end'):
+            headers["Range"] = f"{self._range_start}-{self._range_end}"
+            headers["Range-Unit"] = "items"
+        
+        # Add count preference if requested
+        if self._count:
+            headers["Prefer"] = f"count={self._count}"
+        
+        # Single row mode
+        if getattr(self, '_single', False):
+            headers["Accept"] = "application/vnd.pgrst.object+json"
+        
+        response = requests.get(url, headers=headers)
         response.raise_for_status()
-        return type('Response', (), {'data': response.json()})()
+        
+        # Parse count from content-range header if available
+        count = None
+        content_range = response.headers.get('content-range', '')
+        if '/' in content_range:
+            try:
+                count = int(content_range.split('/')[-1])
+            except (ValueError, IndexError):
+                pass
+        
+        data = response.json()
+        # For single mode, wrap in consistent format
+        if getattr(self, '_single', False) and isinstance(data, dict):
+            return type('Response', (), {'data': data, 'count': count})()
+        
+        return type('Response', (), {'data': data, 'count': count})()
     
     def update(self, data: dict):
         return UpdateQuery(self.url, self.headers, self.table_name, self._filters, data)
+    
+    def insert(self, data: dict):
+        """Insert a new row. Returns a chainable response (supports .execute() for compatibility)."""
+        url = f"{self.url}/rest/v1/{self.table_name}"
+        headers = {**self.headers, "Prefer": "return=representation"}
+        response = requests.post(url, headers=headers, json=data)
+        response.raise_for_status()
+        result = response.json()
+        return type('Response', (), {'data': result, 'execute': lambda self=None: type('Response', (), {'data': result})()} )()
     
     def upsert(self, data: dict):
         url = f"{self.url}/rest/v1/{self.table_name}"
         headers = {**self.headers, "Prefer": "resolution=merge-duplicates,return=representation"}
         response = requests.post(url, headers=headers, json=data)
         response.raise_for_status()
-        return type('Response', (), {'data': response.json()})()
+        result = response.json()
+        return type('Response', (), {'data': result, 'execute': lambda self=None: type('Response', (), {'data': result})()} )()
+    
+    def delete(self):
+        """Delete rows matching the current filters."""
+        return DeleteQuery(self.url, self.headers, self.table_name, self._filters)
 
 
 class UpdateQuery:
@@ -154,6 +223,29 @@ class UpdateQuery:
             print(f"    Update error: {response.text[:200]}")
         response.raise_for_status()
         return type('Response', (), {'data': []})()  # Return empty on success
+
+
+class DeleteQuery:
+    """Simple delete query."""
+    
+    def __init__(self, url: str, headers: dict, table: str, filters: list):
+        self.url = url
+        self.headers = headers.copy()
+        self.table = table
+        self.filters = list(filters)
+    
+    def eq(self, column: str, value):
+        self.filters.append(f"{column}=eq.{value}")
+        return self
+    
+    def execute(self):
+        url = f"{self.url}/rest/v1/{self.table}"
+        for i, f in enumerate(self.filters):
+            url += ("?" if i == 0 else "&") + f
+        
+        response = requests.delete(url, headers=self.headers)
+        response.raise_for_status()
+        return type('Response', (), {'data': []})()
 
 
 _client = None

@@ -18,11 +18,6 @@ export function Sidebar({ searchHistory, onNewSearch, onSelectSearch }: SidebarP
 
   return (
     <aside className="w-64 bg-slate-50 border-r border-slate-200 flex flex-col h-screen">
-      {/* Logo */}
-      <div className="p-4 border-b border-slate-200">
-        <h1 className="text-xl font-semibold text-blue-600">FirstPatient</h1>
-      </div>
-
       {/* New Search Button */}
       <div className="p-4">
         <button

@@ -4,12 +4,14 @@ import { SearchBar } from './components/SearchBar';
 import { ChatMessage } from './components/ChatMessage';
 import { FilterPanel } from './components/FilterPanel';
 import { LoginPage } from './components/LoginPage';
+import OncologyProtocolIntelligence from './components/OncologyProtocolIntelligence';
 import { useAuth } from './contexts/AuthContext';
-import { 
-  sendChatMessage, 
+import {
+  sendChatMessage,
   listConversations,
   getConversation,
   saveConversation,
+  appendMessages,
   type ChatMessage as ChatMessageType
 } from './api/chat';
 
@@ -38,8 +40,56 @@ function App() {
     return <LoginPage />;
   }
 
-  // User is authenticated, show the chat interface
-  return <ChatApp />;
+  // User is authenticated, show the main app with navigation
+  return <MainApp />;
+}
+
+// MainApp with navigation between Chat and Protocol Intelligence
+function MainApp() {
+  const [activeView, setActiveView] = useState<'chat' | 'protocol'>('chat');
+  const { signOut } = useAuth();
+
+  return (
+    <div className="h-screen flex flex-col">
+      {/* Top Navigation */}
+      <nav className="bg-white border-b border-gray-200 px-4 py-2 flex items-center justify-between">
+        <div className="flex items-center gap-6">
+          <span className="text-xl font-bold text-blue-600">Volta</span>
+          <div className="flex gap-1">
+            <button
+              onClick={() => setActiveView('chat')}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${activeView === 'chat'
+                ? 'bg-blue-100 text-blue-700'
+                : 'text-gray-600 hover:bg-gray-100'
+                }`}
+            >
+              PI Finder
+            </button>
+            <button
+              onClick={() => setActiveView('protocol')}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${activeView === 'protocol'
+                ? 'bg-blue-100 text-blue-700'
+                : 'text-gray-600 hover:bg-gray-100'
+                }`}
+            >
+              Protocol Intelligence
+            </button>
+          </div>
+        </div>
+        <button
+          onClick={signOut}
+          className="text-sm text-gray-500 hover:text-gray-700"
+        >
+          Sign Out
+        </button>
+      </nav>
+
+      {/* Content */}
+      <div className="flex-1 overflow-auto">
+        {activeView === 'chat' ? <ChatApp /> : <OncologyProtocolIntelligence />}
+      </div>
+    </div>
+  );
 }
 
 // ChatApp component contains all the chat logic and hooks
@@ -54,7 +104,7 @@ function ChatApp() {
   const [phase, setPhase] = useState('');
   const [country, setCountry] = useState('');
   const [lastQuery, setLastQuery] = useState('');
-  
+
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const shouldScrollRef = useRef(false);
 
@@ -98,7 +148,7 @@ function ChatApp() {
   // Extract filters from query text
   const extractFiltersFromQuery = (query: string) => {
     const lowerQuery = query.toLowerCase();
-    
+
     // Country detection
     const countryPatterns: Record<string, string> = {
       'united states': 'United States',
@@ -113,7 +163,7 @@ function ChatApp() {
       'canada': 'Canada',
       'australia': 'Australia',
     };
-    
+
     // Phase detection
     const phasePatterns: Record<string, string> = {
       'phase 1': 'PHASE1',
@@ -130,24 +180,24 @@ function ChatApp() {
       'phase iv': 'PHASE4',
       'early phase': 'EARLY_PHASE1',
     };
-    
+
     let detectedCountry: string | undefined;
     let detectedPhase: string | undefined;
-    
+
     for (const [pattern, value] of Object.entries(countryPatterns)) {
       if (lowerQuery.includes(pattern)) {
         detectedCountry = value;
         break;
       }
     }
-    
+
     for (const [pattern, value] of Object.entries(phasePatterns)) {
       if (lowerQuery.includes(pattern)) {
         detectedPhase = value;
         break;
       }
     }
-    
+
     return { country: detectedCountry, phase: detectedPhase };
   };
 
@@ -168,7 +218,7 @@ function ChatApp() {
       content,
       timestamp: new Date(),
     };
-    
+
     shouldScrollRef.current = true; // Enable scroll for user-initiated messages
     setMessages((prev) => [...prev, userMessage]);
     setIsLoading(true);
@@ -182,9 +232,9 @@ function ChatApp() {
       }));
 
       // Use only the filters extracted from this query (not persisted state)
-      const filters = { 
-        phase: newPhase || undefined, 
-        country: newCountry || undefined 
+      const filters = {
+        phase: newPhase || undefined,
+        country: newCountry || undefined
       };
       const response = await sendChatMessage(apiMessages, filters);
 
@@ -204,7 +254,7 @@ function ChatApp() {
       if (!currentConversationId) {
         const title = content.slice(0, 50) + (content.length > 50 ? '...' : '');
         const localId = Date.now().toString();
-        
+
         const newConversation: Conversation = {
           id: localId,
           title,
@@ -213,13 +263,13 @@ function ChatApp() {
         };
         setConversations((prev) => [newConversation, ...prev]);
         setCurrentConversationId(localId);
-        
+
         // Try to save to server if DB is available
         if (dbAvailable) {
           try {
             const result = await saveConversation(title, allMessages);
             // Update with server ID
-            setConversations((prev) => prev.map(c => 
+            setConversations((prev) => prev.map(c =>
               c.id === localId ? { ...c, id: result.conversation_id } : c
             ));
             setCurrentConversationId(result.conversation_id);
@@ -235,6 +285,15 @@ function ChatApp() {
               : c
           )
         );
+
+        // Persist follow-up messages to DB
+        if (dbAvailable) {
+          try {
+            await appendMessages(currentConversationId, [userMessage, assistantMessage]);
+          } catch {
+            // Local state already updated, ignore DB errors
+          }
+        }
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
@@ -256,7 +315,7 @@ function ChatApp() {
   const handleFilterChange = useCallback((newPhase: string, newCountry: string) => {
     setPhase(newPhase);
     setCountry(newCountry);
-    
+
     // If we have a previous query and messages, re-run the search with new filters
     if (lastQuery && messages.length > 0 && !isLoading) {
       // Re-submit with updated filters
@@ -273,7 +332,7 @@ function ChatApp() {
       content: `[Filter updated] ${content}`,
       timestamp: new Date(),
     };
-    
+
     shouldScrollRef.current = true;
     setMessages((prev) => [...prev, userMessage]);
     setIsLoading(true);
@@ -285,9 +344,9 @@ function ChatApp() {
         content: m.content,
       }));
 
-      const filters = { 
-        phase: filterPhase || undefined, 
-        country: filterCountry || undefined 
+      const filters = {
+        phase: filterPhase || undefined,
+        country: filterCountry || undefined
       };
       const response = await sendChatMessage(apiMessages, filters);
 
@@ -315,7 +374,7 @@ function ChatApp() {
       setCurrentConversationId(id);
       return;
     }
-    
+
     // Try to load from server if DB is available
     if (dbAvailable) {
       try {
@@ -328,9 +387,9 @@ function ChatApp() {
         }));
         setMessages(loadedMessages);
         setCurrentConversationId(id);
-        
+
         // Update local cache
-        setConversations(prev => prev.map(c => 
+        setConversations(prev => prev.map(c =>
           c.id === id ? { ...c, messages: loadedMessages } : c
         ));
       } catch {

@@ -4,7 +4,7 @@ import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from api.routes import recommendations, trials, investigators, chat
+from api.routes import recommendations, trials, investigators, chat, protocol, oncology_protocol
 from api.schemas import HealthResponse
 
 # Create FastAPI app
@@ -45,6 +45,8 @@ app.include_router(recommendations.router, prefix="/api")
 app.include_router(trials.router, prefix="/api")
 app.include_router(investigators.router, prefix="/api")
 app.include_router(chat.router, prefix="/api")
+app.include_router(protocol.router, prefix="/api")
+app.include_router(oncology_protocol.router, prefix="/api")
 
 
 @app.get("/", response_model=HealthResponse)

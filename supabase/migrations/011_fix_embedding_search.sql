@@ -1,5 +1,5 @@
--- Migration: Add avoid_search filter to search functions
--- This ensures trials without PIs are excluded from recommendations
+-- Migration: Fix search functions to use trial_embeddings_full table
+-- The embeddings are stored in trial_embeddings_full, not directly on trials table
 
 -- ============================================
 -- UPDATE search_trials_by_embedding FUNCTION
@@ -32,17 +32,12 @@ BEGIN
         1 - (te.embedding <=> query_embedding) AS similarity
     FROM trials t
     JOIN trial_embeddings_full te ON t.id = te.trial_id
-    WHERE t.avoid_search = false  -- Exclude trials without PIs
+    WHERE t.avoid_search = false
       AND 1 - (te.embedding <=> query_embedding) > similarity_threshold
     ORDER BY te.embedding <=> query_embedding
     LIMIT max_results;
 END;
 $$;
-
--- ============================================
--- UPDATE search_investigators_by_embedding FUNCTION
--- ============================================
--- (No change needed - investigators don't have avoid_search)
 
 -- ============================================
 -- UPDATE recommend_pi_site_pairs FUNCTION
@@ -79,7 +74,7 @@ BEGIN
             1 - (te.embedding <=> query_embedding) AS similarity
         FROM trials t
         JOIN trial_embeddings_full te ON t.id = te.trial_id
-        WHERE t.avoid_search = false  -- Exclude trials without PIs
+        WHERE t.avoid_search = false
           AND 1 - (te.embedding <=> query_embedding) > similarity_threshold
           AND (target_phase IS NULL OR t.phase = target_phase)
         ORDER BY te.embedding <=> query_embedding
@@ -114,7 +109,7 @@ BEGIN
             psc.trial_count,
             COALESCE(im.total_trials, 0) AS total_trials,
             COALESCE(im.completion_rate, 0) AS completion_rate,
-            -- Link type bonus: site_contact > affiliation_match > oversight
+            -- Link type bonus
             CASE psc.link_type
                 WHEN 'site_contact' THEN 0.15
                 WHEN 'affiliation_match' THEN 0.10
@@ -132,10 +127,10 @@ BEGIN
         SELECT 
             ec.*,
             (
-                0.40 * ec.avg_similarity +                           -- Semantic relevance
-                0.25 * LEAST(ec.total_trials::float / 20.0, 1.0) +   -- Experience (capped at 20 trials)
-                0.20 * ec.completion_rate +                          -- Track record
-                0.15 * ec.link_bonus                                 -- Link confidence
+                0.40 * ec.avg_similarity +
+                0.25 * LEAST(ec.total_trials::float / 20.0, 1.0) +
+                0.20 * ec.completion_rate +
+                0.15 * ec.link_bonus
             ) AS final_score
         FROM enriched_candidates ec
     )
@@ -158,6 +153,5 @@ BEGIN
 END;
 $$;
 
--- Add comment explaining the filter
-COMMENT ON FUNCTION search_trials_by_embedding IS 'Search trials by semantic similarity. Excludes trials with avoid_search=true (no PI data).';
-COMMENT ON FUNCTION recommend_pi_site_pairs IS 'Recommend PI-site pairs using hybrid search. Excludes trials with avoid_search=true (no PI data).';
+COMMENT ON FUNCTION search_trials_by_embedding IS 'Search trials by semantic similarity using trial_embeddings_full table. Excludes trials with avoid_search=true.';
+COMMENT ON FUNCTION recommend_pi_site_pairs IS 'Recommend PI-site pairs using hybrid search with trial_embeddings_full. Excludes trials with avoid_search=true.';

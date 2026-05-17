@@ -22,7 +22,7 @@ export function LoginPage() {
       <div className="w-full max-w-md">
         {/* Logo/Brand */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-slate-800">FirstPatient</h1>
+          <h1 className="text-3xl font-bold text-slate-800">Volta</h1>
           <p className="text-slate-500 mt-2">Find your ideal clinical trial team</p>
         </div>
 
