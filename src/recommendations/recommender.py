@@ -66,7 +66,7 @@ class PIRecommender:
         query: str,
         phase: Optional[str] = None,
         country: Optional[str] = None,
-        max_results: int = 10,
+        max_results: int = 7,
         similarity_threshold: float = 0.5
     ) -> list[dict]:
         """
@@ -112,7 +112,7 @@ class PIRecommender:
         query: str,
         phase: Optional[str] = None,
         country: Optional[str] = None,
-        max_results: int = 10
+        max_results: int = 7
     ) -> list[dict]:
         """Fallback: Use keyword search on trials when vector search fails."""
         # Extract keywords from query for text search

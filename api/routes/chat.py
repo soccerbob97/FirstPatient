@@ -68,8 +68,8 @@ TOOLS = [
                     },
                     "max_results": {
                         "type": "integer",
-                        "description": "Maximum number of results to return (default 10)",
-                        "default": 10
+                        "description": "Maximum number of results to return (default 7)",
+                        "default": 7
                     }
                 },
                 "required": ["query"]
@@ -434,7 +434,7 @@ def execute_tool(tool_name: str, arguments: dict, filters: Optional[Filters] = N
             query=arguments["query"],
             country=country,
             phase=phase,
-            max_results=arguments.get("max_results", 10)
+            max_results=arguments.get("max_results", 7)
         )
         return {
             "recommendations": results,

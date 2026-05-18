@@ -105,7 +105,7 @@ Sponsors don't have finalized protocols during early site selection. They have:
 > "Volta's vision is to automate the entire operational lifecycle: site selection, protocol optimization, protocol design, CRF generation, risk-based monitoring, and real-time trial oversight. Each stage feeds structured data to the next."
 
 **Say** (closing):
-> "Our long-term goal is to cut the path from drug candidate to approved therapy in half. Additionally, because we see which drugs are being deprioritized and why, we can acquire undervalued assets and bring them to market through our own infrastructure. More drugs reach patients. More lives saved. That's Volta."
+> "Our long-term goal is to cut the path from drug candidate to approved therapy in half. Additionally, as our proprietary clinical data and operational knowledge grows, we can acquire undervalued assets and bring them to market through our own infrastructure. More drugs reach patients. More lives saved. That's Volta."
 
 ---
 
