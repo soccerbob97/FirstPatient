@@ -27,7 +27,7 @@ Sponsors don't have finalized protocols during early site selection. They have:
 ### **0:00–0:20 | Problem Statement**
 
 **Say**:
-> "86% of clinical trials fail to meet enrollment timelines. 30% fail for operational reasons — not scientific ones. The problem starts before the trial even begins: sponsors pick the wrong sites, miss protocol risks, and waste months on feasibility. Volta fixes this."
+> "86% of clinical trials fail to meet enrollment timelines. In fact, 30% fail for operational reasons — not scientific ones. The problem starts before the trial even begins: sponsors pick the wrong sites, miss protocol risks, and waste months on feasibility. Volta fixes this."
 
 **Action**: Have the PI Finder chat open and ready.
 

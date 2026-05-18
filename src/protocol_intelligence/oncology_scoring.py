@@ -650,7 +650,7 @@ class OncologyProtocolScorer:
         if "3l" in lot or "3+" in lot or "heavily pretreated" in lot:
             inferred = "_inferred" in lot
             flags.append(RiskFlag(
-                flag_name="Late-Line Patient Population",
+                flag_name="Late-Line of Therapy",
                 severity="high",
                 description=f"3L+ patients are difficult to find and often have poor performance status{' (inferred from prior therapy requirements)' if inferred else ''}",
                 mitigation="Focus on high-volume academic centers with large referral networks"
