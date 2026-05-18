@@ -1,145 +1,203 @@
-# FirstPatient Tech Demo Plan — 3 Minute Version
+# Volta Tech Demo Script — 3 Minutes
 
-**Date**: May 15, 2026  
+**Date**: May 17, 2026  
 **Duration**: 3 minutes  
-**Focus**: Protocol Intelligence as the wedge
+**Flow**: PI Finder → Protocol Analyzer → Future Vision  
+**Demo Query**: "Phase 2 trial of PM060184 for Colorectal Cancer after standard treatment"
 
 ---
 
-## Demo Flow (~3 min)
+## Why PI Finder First?
 
-| Time | Scene | What to Show | Script |
-|------|-------|--------------|--------|
-| **0:00-0:30** | **Problem Statement** | Title slide or app landing | *"86% of trials fail enrollment timelines. Protocol complexity is a key driver. We help sponsors understand protocol risk and find the right sites before they commit."* |
-| **0:30-1:15** | **Protocol Analysis** | Upload/paste protocol → Show complexity scoring | *"Paste or upload a protocol. We instantly analyze it across 5 domains: study design, patient burden, site burden, regulatory, and operational complexity."* |
-| **1:15-2:00** | **PI/Site Matching** | Click "Find Matching Investigators" → Show ranked cards with match scores | *"Based on the protocol requirements, we find investigators with relevant experience. Each match shows WHY they're a fit — not just that they've done oncology, but that they've done trials LIKE this one."* |
-| **2:00-2:30** | **Contact & Outreach** | Click on a PI card → Show contact info + "Generate Outreach Email" | *"Click any investigator to see their full profile and contact info. We can even draft a personalized outreach email referencing their relevant experience."* |
-| **2:30-3:00** | **Value Prop** | Summary view or closing slide | *"Optimize your protocol. Find the right sites. Faster enrollment. That's FirstPatient."* |
+Sponsors don't have finalized protocols during early site selection. They have:
+- A protocol synopsis
+- A draft protocol
+- A scientific description
+- An IND draft section
+- A plain-English description of the therapy
 
----
-
-## Scene-by-Scene Details
-
-### Scene 1: Problem Statement (0:00-0:30)
-
-**On Screen**: App landing page or title slide
-
-**Say**:
-> "86% of clinical trials fail to meet enrollment timelines. Protocol complexity is a key driver — but most teams don't discover operational issues until they're already in the field. FirstPatient changes that."
-
-**Action**: Navigate to Protocol Intelligence page
+**PI Finder works with just a description. Protocol Analyzer works when you have the full document.**
 
 ---
 
-### Scene 2: Protocol Analysis (0:30-1:15)
-
-**On Screen**: Protocol Intelligence input form
-
-**Say**:
-> "Paste or upload a protocol. We analyze it instantly."
-
-**Action**: 
-- Use Quick Score with pre-filled oncology parameters OR
-- Show a pre-loaded sample analysis
-
-**Show These Scores** (point to each):
-- **Study Design Complexity**: 50
-- **Patient Burden**: 45  
-- **Site Burden**: 55
-- **Regulatory Complexity**: 40
-- **Operational Complexity**: 50
-
-**Say**:
-> "Five domains. Instant scoring. We flag enrollment bottlenecks — like rare biomarkers or mandatory biopsies — before you start."
-
-**Highlight**: Risk flags panel (if visible)
+## Full Demo Script (3 Minutes)
 
 ---
 
-### Scene 3: PI/Site Matching (1:15-2:00)
-
-**On Screen**: Click "Find Matching Investigators" button
+### **0:00–0:20 | Problem Statement**
 
 **Say**:
-> "Now let's find who can execute this protocol."
+> "86% of clinical trials fail to meet enrollment timelines. 30% fail for operational reasons — not scientific ones. The problem starts before the trial even begins: sponsors pick the wrong sites, miss protocol risks, and waste months on feasibility. Volta fixes this."
 
-**Action**: Show ranked investigator cards
-
-**Point Out**:
-- Match scores (e.g., 92%, 89%, 85%)
-- Match reasons (e.g., "15 NSCLC trials", "Phase 2 experience", "Biomarker expertise")
-
-**Say**:
-> "These aren't just oncologists — they're investigators with experience in trials LIKE this one. We score execution fit, not just keyword matches."
+**Action**: Have the PI Finder chat open and ready.
 
 ---
 
-### Scene 4: Contact & Outreach (2:00-2:30)
-
-**On Screen**: Click on top PI card to expand
+### **0:20–1:00 | PI Finder Demo**
 
 **Say**:
-> "Click any investigator for their full profile."
+> "Let's say I'm a sponsor with a new oncology drug. I don't have a finalized protocol yet — just a description. I type: 'Phase 2 trial of PM060184 for Colorectal Cancer after standard treatment.'"
 
-**Show**:
-- Contact information (email, phone)
-- Trial history
-- Publications
-
-**Action**: Click "Generate Outreach Email"
+**Action**: Type or paste the query. Results appear with Dr. Peirong Ding at the top.
 
 **Say**:
-> "We can even draft a personalized outreach email referencing their relevant experience. Ready to send."
+> "Volta returns ranked investigators matched to my trial concept. Dr. Peirong Ding is our top match."
+
+**Say** (explaining the tech):
+> "Under the hood, we've centralized and embedded over 550,000 clinical trials on trial summaries, conditions, mechnasism of action of the drug, PI info, and much more. When a sponsor types a query, we convert it to a vector and find the most similar trials. Then we identify which investigators ran those trials and rank them using a scoring function that includes disease-area match, phase experience, and completion rates."
+
+**Say**:
+> "We're actively enriching our data by scraping data from Lancet, New Enland Journal of Medicine, and the endless FDA websites."
+
+**Action**: Click to ask for more info on Dr. Ding.
+
+**Say**:
+> "I can ask for more details. Here's Dr. Ding's trial history, and as you can see he has strong experience in clinical trials with cancer including colorectal cancer. His contact information is also provided."
 
 ---
 
-### Scene 5: Value Prop (2:30-3:00)
-
-**On Screen**: Return to summary or show closing slide
+### **1:00–2:15 | Protocol Analyzer Demo**
 
 **Say**:
-> "Optimize your protocol. Find the right sites. Faster enrollment. That's FirstPatient — protocol intelligence for clinical trial execution."
+> "Now let's say I have the full protocol document. I upload it to our Protocol Analyzer."
+
+**Action**: Navigate to Protocol Intelligence. Upload or show pre-loaded PM060184 analysis.
+
+**Say**:
+> "Volta parses the protocol and scores it across multiple dimensions. Let me walk you through what it found."
+
+**Point to Enrollment Difficulty (Very High: 73)**:
+
+**Say**:
+> "Enrollment Difficulty is very high, it scored 73 out of 100. This is because the trial requires third-line patients, people who've already failed two prior treatments. "In oncology, 'line of therapy' refers to the sequence of treatments. First-line is the initial treatment. Third-line means the patient has already failed two prior regimens. These patients are sicker and harder to recruit."
+
+**Point to ECOG 0-1 requirement**:
+
+**Say**:
+> "Here's a protocol mismatch Volta caught: the trial requires ECOG 0-1 — meaning patients who are fully active or only slightly restricted. But third-line patients are typically ECOG 2 or higher. This eligibility criteria will screen out the very patients the trial needs. That's a red flag."
+
+**Point to Site Burden (High: 60)**:
+
+**Say**:
+> "Site Burden is high. The protocol requires imaging every 6 weeks and intensive PK sampling. Sites need dedicated research nursing and central imaging connectivity."
+
+**Point to Patient Burden (High: 50)**:
+
+**Say**:
+> "Patient Burden is also elevated — frequent visits and blood draws for a population that's already fatigued from prior treatments."
+
+**Point to Feasibility Questions**:
+
+**Say**:
+> "And here are auto-generated feasibility questions for site outreach: 'How many third-line colorectal patients do you see annually?' 'Do you have research nursing for intensive PK sampling?' These are the questions you'd ask during this process — Volta generates them automatically."
+
+---
+
+### **2:15–3:00 | Future Vision & Close**
+
+**Say**:
+> "What you've seen is site intelligence and protocol intelligence, two steps of a multi-year clinical trial process. But clinical trials have many more operational stages, and they're all expensive."
+
+**Say**:
+> "Legacy CROs charge $15 million for a Phase 1 trial and $25 to $40 million for Phase 2. Phase 3 can exceed $100 million. Source data verification and case report forms alone account for 20 to 40 percent of trial costs."
+
+**Say**:
+> "Volta's vision is to automate the entire operational lifecycle: site selection, protocol optimization, protocol design, CRF generation, risk-based monitoring, and real-time trial oversight. Each stage feeds structured data to the next."
+
+**Say** (closing):
+> "Our long-term goal is to cut the path from drug candidate to approved therapy in half. Additionally, because we see which drugs are being deprioritized and why, we can acquire undervalued assets and bring them to market through our own infrastructure. More drugs reach patients. More lives saved. That's Volta."
+
+---
+
+## Timing Summary
+
+| Time | Section | Duration |
+|------|---------|----------|
+| 0:00–0:20 | Problem Statement | 20 sec |
+| 0:20–1:00 | PI Finder + Tech Explanation | 40 sec |
+| 1:00–2:15 | Protocol Analyzer Deep Dive | 75 sec |
+| 2:15–3:00 | Future Vision + Close | 45 sec |
+| **Total** | | **3:00** |
+
+---
+
+## Key Technical Points to Hit
+
+### Embedding Process (Current)
+- 550K+ trials embedded
+- Each embedding includes: title, summary, conditions, phase, study type
+- Model: OpenAI text-embedding-3-small (1536 dimensions)
+
+### Embedding Process (In Progress)
+- Adding: PI names, drug names, mechanism of action, drug class
+- Planned model: Voyage-3.5-lite (1024 dimensions, better retrieval)
+
+### Ranking Process
+1. User query → vector embedding
+2. Similarity search against trial embeddings
+3. Retrieve top similar trials
+4. Identify PIs who ran those trials
+5. Apply scoring function:
+   - Semantic similarity (35%)
+   - Disease-area match (20%)
+   - Phase experience (10%)
+   - Trial volume (15%)
+   - Completion rate (5%)
+   - Role confidence (15%)
+
+---
+
+## Key Domain Terms to Explain
+
+### Line of Therapy
+- **1L (First-line)**: Initial treatment for newly diagnosed cancer
+- **2L (Second-line)**: Treatment after first-line fails
+- **3L+ (Third-line+)**: Treatment after multiple prior regimens fail
+- **Key insight**: 3L+ patients are sicker, rarer, harder to recruit
+
+### ECOG Performance Status
+- **Scale**: 0 (fully active) to 5 (dead)
+- **ECOG 0**: Fully active, no restrictions
+- **ECOG 1**: Restricted but ambulatory, can do light work
+- **ECOG 2**: Ambulatory, capable of self-care, but unable to work
+- **ECOG 3-4**: Limited self-care, confined to bed/chair
+- **Key insight**: 3L+ patients are typically ECOG 2+, so requiring ECOG 0-1 creates a mismatch
+
+---
+
+## Cost Numbers to Mention
+
+| Phase | Legacy CRO Cost |
+|-------|-----------------|
+| Phase 1 | $15M |
+| Phase 2 | $25M–$40M |
+| Phase 3 | $20M–$100M+ |
+| SDV + CRF | 20–40% of trial cost |
 
 ---
 
 ## Pre-Demo Checklist
 
-- [ ] Backend running (`localhost:8000`)
-- [ ] Frontend running (`localhost:5173`)
-- [ ] Sample protocol data pre-loaded (Quick Score or PDF)
-- [ ] Test PI search returns results with contact info
-- [ ] Outreach email generation working
+- [ ] PI Finder chat ready with query pre-typed
+- [ ] Dr. Peirong Ding appears as top result
+- [ ] Protocol Analyzer has PM060184 analysis loaded
+- [ ] Enrollment Difficulty shows 73 (Very High)
+- [ ] ECOG 0-1 mismatch visible in bottlenecks
+- [ ] Feasibility questions section visible
 - [ ] Practice run completed in under 3 minutes
 
 ---
 
-## Backup Plan
+## If Something Breaks
 
-If something breaks:
-1. **API slow?** → Use pre-loaded sample analysis (already cached)
-2. **No results?** → Have screenshot of successful results ready
-3. **Email gen fails?** → Skip to value prop, mention feature exists
-
----
-
-## Key Phrases to Use
-
-| Instead of... | Say... |
-|---------------|--------|
-| "We have a database" | "We score execution fit" |
-| "Search for investigators" | "Find who can execute THIS protocol" |
-| "Trial count" | "Relevant experience" |
-| "Contact info" | "Ready-to-use outreach" |
-
----
-
-## Don't Forget
-
-- **Pace**: 3 minutes goes fast — practice transitions
-- **Focus**: Protocol → Scores → Matches → Contact → Close
-- **Energy**: End strong with the value prop
+| Issue | Backup |
+|-------|--------|
+| PI search slow | Have screenshot ready |
+| Wrong PI at top | Explain ranking is being refined |
+| Protocol upload fails | Use pre-loaded analysis |
+| Scores look wrong | Focus on bottlenecks section |
 
 ---
 
 *Demo duration: 3 minutes*  
-*Last updated: May 15, 2026*
+*Last updated: May 17, 2026*

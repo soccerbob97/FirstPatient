@@ -305,6 +305,27 @@ TOOLS = [
     {
         "type": "function",
         "function": {
+            "name": "get_investigator_trials",
+            "description": "Get ALL clinical trials for a specific investigator/PI, including NCT IDs, titles, phases, and statuses. Use this when the user asks for a list of trials an investigator has worked on, their trial history, or asks for NCT IDs.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "investigator_id": {
+                        "type": "integer",
+                        "description": "The ID of the investigator"
+                    },
+                    "investigator_name": {
+                        "type": "string",
+                        "description": "The name of the investigator to search for"
+                    }
+                },
+                "required": []
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
             "name": "generate_outreach_email",
             "description": "Generate a professional outreach email to a Principal Investigator for clinical trial recruitment. Use this when the user wants to draft an email, reach out to a PI, or contact an investigator about a trial opportunity.",
             "parameters": {
@@ -361,6 +382,7 @@ AVAILABLE TOOLS:
 - get_pi_publications: Get academic metrics (h-index, papers, citations) from Semantic Scholar
 - get_trial_sites: Get all sites conducting a specific trial
 - get_trial_investigators: Get all PIs working on a specific trial
+- get_investigator_trials: Get ALL trials for an investigator with NCT IDs (use when user asks for trial list/history)
 - get_investigator_contact: Get contact info (email, phone) for a PI
 - generate_outreach_email: Draft a professional outreach email to a PI about a trial opportunity
 
@@ -374,7 +396,8 @@ Instead, your text response should:
 4. Suggest follow-up actions (e.g., "Would you like me to compare the top 2?" or "I can get more details on any of these")
 
 TOOL SELECTION GUIDE:
-- User asks about a specific PI by name (e.g., "tell me about Dr. Smith", "what trials has X worked on") → use get_investigator_details
+- User asks about a specific PI by name (e.g., "tell me about Dr. Smith") → use get_investigator_details
+- User asks for a PI's trials, trial list, NCT IDs, or trial history (e.g., "what trials has X worked on", "give me all their trials", "list NCT IDs") → use get_investigator_trials
 - User asks about a specific site by name → use get_site_details
 - User asks about a specific NCT ID → use get_trial_by_nct_id (fast lookup)
 - User asks for PI's publication/academic record → use get_pi_publications
@@ -383,7 +406,9 @@ TOOL SELECTION GUIDE:
 - User wants to find NEW PIs/sites for a trial concept → use get_recommendations
 - User wants to draft/write/generate an email to a PI → use generate_outreach_email (ALWAYS use this tool, don't write emails yourself)
 
-IMPORTANT: When the user asks follow-up questions about a specific PI or site mentioned earlier, use get_investigator_details or get_site_details - NOT get_recommendations.
+IMPORTANT: When the user asks follow-up questions about a specific PI or site mentioned earlier, use get_investigator_details, get_investigator_trials, or get_site_details - NOT get_recommendations.
+
+IMPORTANT: ALWAYS call a tool when the user asks a question that requires data. NEVER respond with "let me look that up" or "I'll get that for you" without actually calling a tool. If you're unsure which tool to use, default to get_investigator_details for PI questions or search_trials for trial questions.
 
 IMPORTANT: When the user asks to draft, write, or generate an email to contact a PI, ALWAYS use the generate_outreach_email tool. Do NOT write the email yourself in your response.
 
@@ -878,6 +903,42 @@ def execute_tool(tool_name: str, arguments: dict, filters: Optional[Filters] = N
             "investigator": inv,
             "has_contact_info": has_contact,
             "message": "Contact information available" if has_contact else "No contact information on file for this investigator. Contact info is only available for site-level contacts listed in ClinicalTrials.gov."
+        }
+    
+    elif tool_name == "get_investigator_trials":
+        inv_id = arguments.get("investigator_id")
+        inv_name = arguments.get("investigator_name")
+        
+        # Resolve investigator ID from name if needed
+        if not inv_id and inv_name:
+            clean_name = inv_name.replace("Dr. ", "").replace("Dr ", "").replace("Prof. ", "").replace("Prof ", "").strip()
+            inv_result = supabase.table("investigators").select("id, full_name").ilike("full_name", f"%{clean_name}%").limit(1).execute()
+            if inv_result.data:
+                inv_id = inv_result.data[0]["id"]
+                inv_name = inv_result.data[0]["full_name"]
+            else:
+                return {"error": f"Investigator '{inv_name}' not found"}
+        
+        if not inv_id:
+            return {"error": "Please provide either investigator_id or investigator_name"}
+        
+        # Get ALL trials for this investigator (no limit)
+        trial_inv = supabase.table("trial_investigators").select(
+            "trial_id, role, trials(nct_id, brief_title, phase, overall_status, conditions, start_date)"
+        ).eq("investigator_id", inv_id).execute()
+        
+        trials = []
+        for t in trial_inv.data or []:
+            trial_data = t.get("trials")
+            if trial_data:
+                trial_data["role"] = t.get("role")
+                trials.append(trial_data)
+        
+        return {
+            "investigator_name": inv_name,
+            "investigator_id": inv_id,
+            "total_trials": len(trials),
+            "trials": trials
         }
     
     elif tool_name == "generate_outreach_email":

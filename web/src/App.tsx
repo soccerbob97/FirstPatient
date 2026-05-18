@@ -85,7 +85,7 @@ function MainApp() {
       </nav>
 
       {/* Content */}
-      <div className="flex-1 overflow-auto">
+      <div className="flex-1 overflow-hidden">
         {activeView === 'chat' ? <ChatApp /> : <OncologyProtocolIntelligence />}
       </div>
     </div>
@@ -416,7 +416,7 @@ function ChatApp() {
   }));
 
   return (
-    <div className="flex h-screen bg-white">
+    <div className="flex h-full bg-white">
       <Sidebar
         searchHistory={searchHistory}
         onNewSearch={handleNewChat}

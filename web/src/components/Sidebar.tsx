@@ -17,7 +17,7 @@ export function Sidebar({ searchHistory, onNewSearch, onSelectSearch }: SidebarP
   const { user, signOut } = useAuth();
 
   return (
-    <aside className="w-64 bg-slate-50 border-r border-slate-200 flex flex-col h-screen">
+    <aside className="w-64 bg-slate-50 border-r border-slate-200 flex flex-col h-full">
       {/* New Search Button */}
       <div className="p-4">
         <button
@@ -59,9 +59,9 @@ export function Sidebar({ searchHistory, onNewSearch, onSelectSearch }: SidebarP
         {user && (
           <div className="flex items-center gap-3 px-3 py-2 mb-2">
             {user.user_metadata?.avatar_url ? (
-              <img 
-                src={user.user_metadata.avatar_url} 
-                alt="Profile" 
+              <img
+                src={user.user_metadata.avatar_url}
+                alt="Profile"
                 className="w-8 h-8 rounded-full"
               />
             ) : (
@@ -77,8 +77,8 @@ export function Sidebar({ searchHistory, onNewSearch, onSelectSearch }: SidebarP
             </div>
           </div>
         )}
-        
-        <button 
+
+        <button
           onClick={() => signOut()}
           className="w-full flex items-center gap-3 px-3 py-2 text-sm text-slate-600 hover:bg-slate-100 rounded-lg transition-colors"
         >
