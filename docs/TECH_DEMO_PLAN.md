@@ -36,7 +36,7 @@ Sponsors don't have finalized protocols during early site selection. They have:
 ### **0:20–1:00 | PI Finder Demo**
 
 **Say**:
-> "Let's say I'm a sponsor with a new oncology drug. I don't have a finalized protocol yet — just a description. I type: 'Phase 2 trial of PM060184 for Colorectal Cancer after standard treatment.'"
+> "Let's say I'm a sponsor with a new oncology drug and I need to select a physican (PI) and site to run my trial. I don't have a finalized protocol yet — just a description. I type: 'Phase 2 trial of PM060184 for Colorectal Cancer after standard treatment.'"
 
 **Action**: Type or paste the query. Results appear with Dr. Peirong Ding at the top.
 
@@ -44,10 +44,10 @@ Sponsors don't have finalized protocols during early site selection. They have:
 > "Volta returns ranked investigators matched to my trial concept. Dr. Peirong Ding is our top match."
 
 **Say** (explaining the tech):
-> "Under the hood, we've centralized and embedded over 550,000 clinical trials on trial summaries, conditions, mechnasism of action of the drug, PI info, and much more. When a sponsor types a query, we convert it to a vector and find the most similar trials. Then we identify which investigators ran those trials and rank them using a scoring function that includes disease-area match, phase experience, and completion rates."
+> "Under the hood, we've centralized and embedded over 550,000 clinical trials covering conditions, trial summaries, mechnasism of action of the drug, PI info, and much more. When a sponsor types a query, we convert it to a vector and find the most similar trials. Then we identify which investigators ran those trials and rank them using a scoring function that includes PI's disease-area match, phase experience, and completion rates."
 
 **Say**:
-> "We're actively enriching our data by scraping data from Lancet, New Enland Journal of Medicine, and the endless FDA websites."
+> "We're actively enriching our data by scraping data from Lancet, New Enland Journal of Medicine, and the endless FDA websites. We are also experimenting with new ways to improve our recommendations algorithms."
 
 **Action**: Click to ask for more info on Dr. Ding.
 

@@ -274,7 +274,7 @@ const OncologyProtocolIntelligence: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 p-6 overflow-y-auto">
+    <div className="h-full bg-slate-50 p-6 overflow-y-auto">
       <div className="max-w-6xl mx-auto pb-20">
         {/* Header - Clean and minimal like PI Finder */}
         <div className="text-center mb-8">
